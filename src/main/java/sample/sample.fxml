@@ -71,15 +71,7 @@
                         <TextField fx:id="nachnameField" prefWidth="100.0" promptText="Nachname" />
                         <TextField fx:id="vornameField" prefWidth="100.0" promptText="Vorname" />
                         <TextField fx:id="standortField" prefWidth="100" promptText="Standort" />
-                        <MenuButton fx:id="std">
-                           <items>
-                              <MenuItem mnemonicParsing="false" text="standort" />
-
-                           </items>
-                        </MenuButton>
-
-
-                        <MenuButton fx:id="vorkenntnisseField" mnemonicParsing="false" text="Vorkenntnisse">
+                        <MenuButton fx:id="vorkenntnisseMenu" mnemonicParsing="false" text="Vorkenntnisse">
                             <items>
                                 <MenuItem mnemonicParsing="false" text="1" />
                                 <MenuItem mnemonicParsing="false" text="2" />
