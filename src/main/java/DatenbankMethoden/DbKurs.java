@@ -12,7 +12,7 @@ Braucht Datenbanknamen und Connection von ausserhalb um zu funktionieren
 */
 public class DbKurs {
 
-    public static List<Kurs> viewTable(Connection con, String dbName)
+    public static List<Kurs> getKursListe(Connection con, String dbName)
             throws SQLException {
         Statement stmt = null;
         String query =
