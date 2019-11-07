@@ -9,7 +9,7 @@ public class Person {
     private int id;
     private String vorname;
     private String nachname;
-    private Standort standort;
+    private String standort;
     private int vorkenntnisse;
     private int kursId;
 
@@ -36,7 +36,7 @@ public class Person {
 
     }
 
-    public Person(int id, String vorname, String nachname, Standort standort, int vorkenntnisse, int kursId) {
+    public Person(int id, String vorname, String nachname, String standort, int vorkenntnisse, int kursId) {
         this.id = id;
         this.vorname = vorname;
         this.nachname = nachname;
@@ -66,11 +66,11 @@ public class Person {
         this.nachname = nachname;
     }
 
-    public Standort getStandort() {
+    public String getStandort() {
         return standort;
     }
 
-    public void setStandort(Standort standort) {
+    public void setStandort(String standort) {
         this.standort = standort;
     }
 
@@ -85,6 +85,4 @@ public class Person {
     public int getKursId() {
         return kursId;
     }
-
-
 }

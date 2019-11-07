@@ -1,5 +1,6 @@
 package DatenbankMethoden;
 
+import logic.Connector;
 import logic.Kurs;
 
 import java.sql.Connection;
@@ -12,16 +13,14 @@ Braucht Datenbanknamen und Connection von ausserhalb um zu funktionieren
 */
 public class DbKurs {
 
+
     public static List<Kurs> getKursListe(Connection con, String dbName)
             throws SQLException {
         Statement stmt = null;
         String query =
-                "select id, jahrgang, raum, " +
-                        "from " + dbName + ".Kurs";
+                "select * " +"from " + dbName + ".Kurs";
 
         List<Kurs> kursListe = new ArrayList<>();
-
-
 
         try {
             stmt = con.createStatement();
