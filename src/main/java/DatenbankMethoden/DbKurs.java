@@ -26,7 +26,6 @@ public class DbKurs {
                 String jahrgang = rs.getString("jahrgang");
                 String raum = rs.getString("raum");
                 kursListe.add(new Kurs(id,jahrgang,raum));
-
             }
         } catch (SQLException e) {
             System.out.println(e);
