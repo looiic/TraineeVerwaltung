@@ -31,6 +31,7 @@ public final class Connector {
     public static void closeConn() throws SQLException {
         if(conn != null){
             conn.close();
+            conn = null;
         }
     }
 
