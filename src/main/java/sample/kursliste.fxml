@@ -1,12 +1,19 @@
 <?xml version="1.0" encoding="UTF-8"?>
 
-<?import javafx.scene.control.ListView?>
+<?import javafx.scene.control.cell.PropertyValueFactory?>
+<?import javafx.scene.control.TableColumn?>
+<?import javafx.scene.control.TableView?>
 <?import javafx.scene.layout.AnchorPane?>
-<?import javafx.scene.control.Button?>
 <AnchorPane xmlns:fx="http://javafx.com/fxml/1" xmlns="http://javafx.com/javafx/8" fx:controller="sample.KursListeCtrl">
 
-    <ListView fx:id="kursList">
-
-    </ListView>
+    <TableView fx:id="kursTabelle">
+        <columns>
+            <TableColumn fx:id="id" prefWidth="50.0" text="Kurse">
+                <cellValueFactory>
+                    <PropertyValueFactory property="jahrgang" />
+                </cellValueFactory>
+            </TableColumn>
+        </columns>
+    </TableView>
 
 </AnchorPane>
