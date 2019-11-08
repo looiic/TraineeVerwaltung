@@ -14,16 +14,16 @@ Braucht Datenbanknamen und Connection von ausserhalb um zu funktionieren
 public class DbKurs {
 
 
-    public static List<Kurs> getKursListe(Connection con, String dbName)
+    public List<Kurs> getKursListe()
             throws SQLException {
         Statement stmt = null;
         String query =
-                "select * " +"from " + dbName + ".Kurs";
+                "select * " +"from trainee_verwaltung.Kurs";
 
         List<Kurs> kursListe = new ArrayList<>();
 
         try {
-            stmt = con.createStatement();
+            stmt = Connector.getConn().createStatement();
             ResultSet rs = stmt.executeQuery(query);
             while (rs.next()) {
                 int id = rs.getInt("id");

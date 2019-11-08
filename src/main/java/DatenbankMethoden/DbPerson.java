@@ -16,32 +16,41 @@ public class DbPerson {
     //Für Testzwecke
 
     public static void main(String[] args) throws SQLException {
+        new DbPerson().testMethodePradeep();
+    }
+
+    public void testMethodePradeep() throws SQLException {
         Connection con = Connector.getConn();
         String dbName = "trainee_verwaltung";
-        List<Person> personen = getListPersonen(con, dbName);
+        List<Person> personen = getListPersonen();
         for (Person person:personen) {
             System.out.println(person);
         }
-        Person testPerson = new Person(15, "vorname", "nachname", "basilea", 3, 2);
+        Person testPerson = new Person(15, "vorname", "nachname", "basilea", 3, 1);
         insertNewPerson(con, dbName, testPerson);
         System.out.println("Neue Person hinzugefügt");
-        personen = getListPersonen(con, dbName);
+        personen = getListPersonen();
         for (Person person:personen) {
-            System.out.println(person);
+            System.out.println("Vorkentnisse: " + person.getVorkenntnisse());
+            System.out.println("Standort: " + person.getStandort());
+            System.out.println("Nachname: " + person.getNachname());
+            System.out.println("Vorkentnisse: " + person.getVorname());
+            System.out.println("Vorkentnisse: " + person.getId());
+            System.out.println("Vorkentnisse: " + person.getKursId());
         }
     }
 
-    public static List<Person> getListPersonen(Connection con, String dbName)
+    public List<Person> getListPersonen()
             throws SQLException {
         Statement stmt = null;
         String query =
                 "select id, vorname, nachname, " +
                         "standort, vorkenntnisse, kurs_id " +
-                        "from " + dbName + ".Person";
+                        "from trainee_verwaltung.Person";
 
         List<Person> personen = new ArrayList<>();
         try {
-            stmt = con.createStatement();
+            stmt = Connector.getConn().createStatement();
             ResultSet rs = stmt.executeQuery(query);
             while (rs.next()) {
                 int id = rs.getInt("id");
@@ -81,6 +90,7 @@ public class DbPerson {
             uprs.updateString("nachname", person.getNachname());
             uprs.updateString("standort", person.getStandort());
             uprs.updateInt("vorkenntnisse", person.getVorkenntnisse());
+
             uprs.insertRow();
             uprs.beforeFirst();
 
