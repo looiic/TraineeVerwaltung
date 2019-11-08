@@ -38,18 +38,7 @@ public class DbPerson {
             System.out.println("Id: " + person.getId());
             System.out.println("KursId: " + person.getKursId());
         }
-        System.out.println("\n\nJetzt wird eine Person verändert!\n\n");
-
-        personen.get(2).setNachname("neuerName");
-
-        for (Person person:personen) {
-            System.out.println("Vorkentnisse: " + person.getVorkenntnisse());
-            System.out.println("Standort: " + person.getStandort());
-            System.out.println("Nachname: " + person.getNachname());
-            System.out.println("Vorname: " + person.getVorname());
-            System.out.println("Id: " + person.getId());
-            System.out.println("KursId: " + person.getKursId());
-        }
+        deletePerson(personen.get(0));
     }
 
     public ArrayList<Person> getListPersonen()
@@ -146,6 +135,23 @@ public class DbPerson {
     }
 
 
+    public void deletePerson(Person person) throws SQLException {
+        Statement stmt = null;
+        try {
+            stmt = Connector.getConn().createStatement(ResultSet.TYPE_SCROLL_SENSITIVE,
+                    ResultSet.CONCUR_UPDATABLE);
+
+            ResultSet uprs = stmt.executeQuery(
+                    "delete FROM " + "trainee_verwaltung" +
+                            ".Person where Person.id ="+person.getId());
+
+
+        } catch (SQLException e ) {
+            System.out.println(e);
+        } finally {
+            if (stmt != null) { stmt.close(); }
+        }
+    }
 
 
 }
