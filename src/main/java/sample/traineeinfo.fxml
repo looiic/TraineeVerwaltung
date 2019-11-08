@@ -1,36 +1,38 @@
 <?xml version="1.0" encoding="UTF-8"?>
 
 <?import java.lang.*?>
-<?import java.util.*?>
-<?import javafx.scene.*?>
 <?import javafx.scene.control.*?>
 <?import javafx.scene.layout.*?>
 
-<AnchorPane xmlns="http://javafx.com/javafx"
-            xmlns:fx="http://javafx.com/fxml"
-            fx:controller="sample.TraineeInfoCtrl">
-
-    <HBox alignment="bottom_right" spacing="10" GridPane.columnIndex="0" GridPane.rowIndex="2">
-        <TextField fx:id="idField" prefWidth="50.0" promptText="ID" />
-        <TextField fx:id="nachnameField" prefWidth="100.0" promptText="Nachname" />
-        <TextField fx:id="vornameField" prefWidth="100.0" promptText="Vorname" />
-        <TextField fx:id="standortField" prefWidth="100" promptText="Standort" />
-        <MenuButton fx:id="vorkenntnisseMenu" mnemonicParsing="false" text="Vorkenntnisse">
-            <items>
-                <MenuItem mnemonicParsing="false" text="1" />
-                <MenuItem mnemonicParsing="false" text="2" />
-                <MenuItem mnemonicParsing="false" text="3" />
-                <MenuItem mnemonicParsing="false" text="4" />
-                <MenuItem mnemonicParsing="false" text="5" />
-                <MenuItem mnemonicParsing="false" text="6" />
-                <MenuItem mnemonicParsing="false" text="7" />
-                <MenuItem mnemonicParsing="false" text="8" />
-                <MenuItem mnemonicParsing="false" text="9" />
-                <MenuItem mnemonicParsing="false" text="10" />
-            </items>
-        </MenuButton>
-        <TextField fx:id="kursIdField" prefWidth="50" promptText="Kurs-ID" />
-        <Button fx:id="buttonAddPerson"  text="Hinzufügen" />
-    </HBox>
+<AnchorPane xmlns="http://javafx.com/javafx/8" xmlns:fx="http://javafx.com/fxml/1" >
+   <children>
+       <HBox>
+          <children>
+              <Label text="Beschreibung:" />
+          </children>
+       </HBox>
+       <HBox alignment="bottom_right" layoutY="25.0" spacing="10" GridPane.columnIndex="0" GridPane.rowIndex="2">
+          <children>
+              <TextField fx:id="idField" disable="true" opacity="0.0" prefHeight="25.0" prefWidth="0.0" />
+              <TextField fx:id="nachnameField" disable="true" prefHeight="25.0" prefWidth="120.0" promptText="Nachname" />
+              <TextField fx:id="vornameField" disable="true" prefWidth="120.0" promptText="Vorname" />
+              <TextField fx:id="standortField" disable="true" prefWidth="120.0" promptText="Standort" />
+              <MenuButton fx:id="vorkenntnisseMenu" disable="false" cache="true" prefWidth="120.0" text="Vorkenntnisse">
+                  <items>
+                      <MenuItem mnemonicParsing="false" text="1" />
+                      <MenuItem mnemonicParsing="false" text="2" />
+                      <MenuItem mnemonicParsing="false" text="3" />
+                      <MenuItem mnemonicParsing="false" text="4" />
+                      <MenuItem mnemonicParsing="false" text="5" />
+                  </items>
+              </MenuButton>
+              <TextField fx:id="kursId" opacity="0.0" prefHeight="25.0" prefWidth="0.0" />
+      
+              <Button fx:id="saveTrainee" text="Speichern" />
+              <Button fx:id="deleteTrainee" text="Löschen" />
+              <Button fx:id="cancelTrainee" onAction="#cancelEntry" text="Abbrechen" />
+          </children>
+       </HBox>
+   </children>
 
 </AnchorPane>
