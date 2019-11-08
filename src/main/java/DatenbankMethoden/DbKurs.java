@@ -10,8 +10,6 @@ import java.util.ArrayList;
 Braucht Datenbanknamen und Connection von ausserhalb um zu funktionieren
 */
 public class DbKurs {
-
-
     public ArrayList<Kurs> getKursListe()
             throws SQLException {
         Statement stmt = null;
@@ -82,7 +80,23 @@ public class DbKurs {
         }
     }
 
+    public void deleteKurs(Kurs kurs) throws SQLException {
+        Statement stmt = null;
+        try {
+            stmt = Connector.getConn().createStatement(ResultSet.TYPE_SCROLL_SENSITIVE,
+                    ResultSet.CONCUR_UPDATABLE);
 
+            ResultSet uprs = stmt.executeQuery(
+                    "delete FROM " + "trainee_verwaltung" +
+                            ".Kurs where Kurs.id ="+kurs.getId());
+
+
+        } catch (SQLException e ) {
+            System.out.println(e);
+        } finally {
+            if (stmt != null) { stmt.close(); }
+        }
+    }
 
 
 
