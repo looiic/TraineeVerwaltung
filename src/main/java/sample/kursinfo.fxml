@@ -1,21 +1,37 @@
 <?xml version="1.0" encoding="UTF-8"?>
 
+<?import javafx.scene.image.*?>
 <?import java.lang.*?>
-<?import java.util.*?>
-<?import javafx.scene.*?>
 <?import javafx.scene.control.*?>
 <?import javafx.scene.layout.*?>
+<?import javafx.scene.text.*?>
 
-<AnchorPane xmlns="http://javafx.com/javafx"
-            xmlns:fx="http://javafx.com/fxml"
-            fx:controller="sample.KursInfoCtrl">
+<AnchorPane xmlns="http://javafx.com/javafx/8" xmlns:fx="http://javafx.com/fxml/1" fx:controller="sample.KursInfoCtrl">
+    <children>
 
-    <HBox>
-        <children>
-            <TextField />
-            <TextField layoutX="10.0" layoutY="10.0" />
-            <TextField layoutX="159.0" layoutY="10.0" />
-        </children>
-    </HBox>
+        <HBox>
+            <children>
+                <Label prefHeight="17.0" prefWidth="100.0" text="Kursinformation:">
+                    <font>
+                        <Font name="System Bold" size="12.0"/>
+                    </font>
+                </Label>
+                <TextField fx:id="kursField" text=""/>
+                <TextField fx:id="kursId" editable="false" opacity="0.0"/>
+            </children>
+        </HBox>
+        <HBox layoutY="25.0">
+            <children>
+                <Label prefHeight="25.0" prefWidth="100.0" text="Raum:"/>
+                <TextField fx:id="raumField"/>
+            </children>
+        </HBox>
+        <HBox layoutY="50.0">
+            <children>
+                <Label text="Anzahl Teilnehmer:"/>
+                <TextField fx:id="anzahlTN" editable="false"/>
+            </children>
+        </HBox>
+    </children>
 
 </AnchorPane>
