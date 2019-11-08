@@ -7,20 +7,19 @@
 <?import javafx.scene.layout.*?>
 
 <AnchorPane xmlns="http://javafx.com/javafx"
-            xmlns:fx="http://javafx.com/fxml"
-            fx:controller="sample.MainCtrl">
+            xmlns:fx="http://javafx.com/fxml">
 
-    <HBox alignment="CENTER_RIGHT">
-    <children>
-        <fx:include fx:id="embeddedKursListe" source="kursliste.fxml" />
-        <VBox>
-            <children>
-                <fx:include fx:id="embeddedKursInfo" source="kursinfo.fxml" />
-                    <fx:include fx:id="embeddedTraineeListe" source="traineeliste.fxml" />
-                    <fx:include fx:id="embeddedTraineeInfo" source="traineeinfo.fxml" />
-            </children>
-        </VBox>
-    </children>
+    <HBox alignment="CENTER_RIGHT" fx:id="hbox">
+        <children>
+<!--            <fx:include fx:id="embeddedKursListe" source="kursliste.fxml"/>-->
+<!--            <VBox>-->
+<!--                <children>-->
+<!--                    <fx:include fx:id="kursinfoController" source="kursinfo.fxml"/>-->
+<!--                    <fx:include fx:id="embeddedTraineeListe" source="traineeliste.fxml"/>-->
+<!--                    <fx:include fx:id="embeddedTraineeInfo" source="traineeinfo.fxml"/>-->
+<!--                </children>-->
+<!--            </VBox>-->
+        </children>
     </HBox>
 
 </AnchorPane>

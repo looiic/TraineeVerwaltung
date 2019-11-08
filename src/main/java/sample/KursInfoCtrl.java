@@ -12,7 +12,12 @@ public class KursInfoCtrl {
     @FXML TextField anzahlTN;
 
     @FXML
+    public void initialize(){
+
+    }
+
     public void setKursInfos(Kurs kurs) {
+        System.out.println(kursField);
         kursField.setText(kurs.getJahrgang());
         kursId.setText(Integer.toString(kurs.getId()));
         raumField.setText(kurs.getRaum());
