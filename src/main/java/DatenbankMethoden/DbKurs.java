@@ -14,13 +14,13 @@ Braucht Datenbanknamen und Connection von ausserhalb um zu funktionieren
 public class DbKurs {
 
 
-    public List<Kurs> getKursListe()
+    public ArrayList<Kurs> getKursListe()
             throws SQLException {
         Statement stmt = null;
         String query =
                 "select * " +"from trainee_verwaltung.Kurs";
 
-        List<Kurs> kursListe = new ArrayList<>();
+        ArrayList<Kurs> kursListe = new ArrayList<>();
 
         try {
             stmt = Connector.getConn().createStatement();

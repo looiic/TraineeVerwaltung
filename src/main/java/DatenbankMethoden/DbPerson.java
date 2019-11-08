@@ -40,7 +40,7 @@ public class DbPerson {
         }
     }
 
-    public List<Person> getListPersonen()
+    public ArrayList<Person> getListPersonen()
             throws SQLException {
         Statement stmt = null;
         String query =
@@ -48,7 +48,7 @@ public class DbPerson {
                         "standort, vorkenntnisse, kurs_id " +
                         "from trainee_verwaltung.Person";
 
-        List<Person> personen = new ArrayList<>();
+        ArrayList<Person> personen = new ArrayList<>();
         try {
             stmt = Connector.getConn().createStatement();
             ResultSet rs = stmt.executeQuery(query);
