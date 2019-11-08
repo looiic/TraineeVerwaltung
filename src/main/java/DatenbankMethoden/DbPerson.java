@@ -38,7 +38,7 @@ public class DbPerson {
             System.out.println("Id: " + person.getId());
             System.out.println("KursId: " + person.getKursId());
         }
-        deletePerson(personen.get(0));
+        //deletePerson(personen.get(0));
     }
 
     public ArrayList<Person> getListPersonen()
