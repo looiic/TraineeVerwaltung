@@ -43,14 +43,25 @@ public class KursListeCtrl {
         }
     }
 
+    /**
+     * Handler setzt die ausgewählten Kursinfos und läd die Teilnehmerliste neu
+     * @param e
+     * @throws SQLException
+     */
     @FXML
-    public void handleMouseClick(Event e){
+    public void handleMouseClick(Event e) throws SQLException {
         System.out.println(e);
         Object selectedItem = kursTabelle.getSelectionModel().getSelectedItem();
         if(selectedItem instanceof  Kurs){
             Kurs selectedKurs = (Kurs) selectedItem;
+
             KursInfoCtrl kursInfoCtrl = ControllerManager.getKursInfoCtrl();
             kursInfoCtrl.setKursInfos(selectedKurs);
+
+            TraineeListeCtrl traineeListeCtrl = ControllerManager.getTraineeListeCtrl();
+            traineeListeCtrl.reloadTraineeListe(selectedKurs);
+
+
         }
     }
 

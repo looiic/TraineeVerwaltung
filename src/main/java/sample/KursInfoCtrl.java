@@ -11,10 +11,12 @@ public class KursInfoCtrl {
     @FXML TextField raumField;
     @FXML TextField anzahlTN;
 
+    private Kurs selectedKurs;
+
     @FXML
     public void initialize(){
-
     }
+
 
     public void setKursInfos(Kurs kurs) {
         System.out.println(kursField);
@@ -22,5 +24,7 @@ public class KursInfoCtrl {
         kursId.setText(Integer.toString(kurs.getId()));
         raumField.setText(kurs.getRaum());
         anzahlTN.setText("tbd");
+        selectedKurs = kurs;
     }
+
 }

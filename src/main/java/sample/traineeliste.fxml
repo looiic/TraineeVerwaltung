@@ -12,7 +12,7 @@
 <AnchorPane xmlns="http://javafx.com/javafx"
             xmlns:fx="http://javafx.com/fxml">
 
-    <TableView fx:id="tableView" prefHeight="293.0" prefWidth="514.0" GridPane.columnIndex="0" GridPane.rowIndex="1">
+    <TableView fx:id="tableView" onMouseClicked="#handleMouseClick" prefHeight="293.0" prefWidth="514.0" GridPane.columnIndex="0" GridPane.rowIndex="1">
         <columns>
             <TableColumn fx:id="id" prefWidth="50.0" text="ID">
                 <cellValueFactory>

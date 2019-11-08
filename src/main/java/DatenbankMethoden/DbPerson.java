@@ -1,6 +1,7 @@
 package DatenbankMethoden;
 
 import logic.Connector;
+import logic.Kurs;
 import logic.Person;
 import logic.Standort;
 
@@ -31,6 +32,8 @@ public class DbPerson {
         printPersonenListe(personen);
 
          */
+        deletePerson(personen.get(0));
+
         System.out.println("\n\nJetzt wird eine Person verändert!\n\n");
 
         personen.get(0).setNachname("neuerName");
@@ -61,6 +64,47 @@ public class DbPerson {
 
     }
 
+    /**
+     * Lade alle Personen aus einem Kurs.
+     * @param kurs
+     * @return
+     * @throws SQLException
+     */
+    public ArrayList<Person> getListPersonen(Kurs kurs) throws SQLException {
+        Statement stmt = null;
+        String query =
+                "select id, vorname, nachname, " +
+                        "standort, vorkenntnisse, kurs_id " +
+                        "from trainee_verwaltung.Person where kurs_id="+kurs.getId();
+
+        ArrayList<Person> personen = new ArrayList<>();
+        try {
+            stmt = Connector.getConn().createStatement();
+            ResultSet rs = stmt.executeQuery(query);
+            while (rs.next()) {
+                int id = rs.getInt("id");
+                String vorname = rs.getString("vorname");
+                String nachname = rs.getString("nachname");
+                String standort = rs.getString("standort");
+                int vorkenntnisse = rs.getInt("vorkenntnisse");
+                int kurs_id = rs.getInt("kurs_id");
+                personen.add(new Person(id, vorname, nachname, standort, vorkenntnisse, kurs_id));
+            }
+        } catch (SQLException e) {
+            System.out.println(e);
+        } finally {
+            if (stmt != null) {
+                stmt.close();
+            }
+        }
+        return personen;
+    }
+
+    /**
+     * Lade alle Personen..vllt unnötig
+     * @return
+     * @throws SQLException
+     */
     public ArrayList<Person> getListPersonen() throws SQLException {
         Statement stmt = null;
         String query =
