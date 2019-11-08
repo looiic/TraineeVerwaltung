@@ -54,7 +54,7 @@ CREATE TABLE `person` (
   `nachname` varchar(50) NOT NULL,
   `standort` varchar(50) NOT NULL,
   `vorkenntnisse` int(11) DEFAULT NULL,
-  `kurs_id` int(11) NOT NULL
+  `kurs_id` int(11)
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8;
 
 --
