@@ -14,11 +14,9 @@ import javax.tools.Tool;
  */
 public class ShowToolTipHandler implements EventHandler {
     private final Label label;
-    Controller controller;
 
 
     public ShowToolTipHandler(Label label){
-         controller = new Controller();
          this.label = label;
 
     }
