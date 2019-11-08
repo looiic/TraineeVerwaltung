@@ -20,15 +20,35 @@ public class DbPerson {
     }
 
     public void testMethodePradeep() throws SQLException {
-        Connection con = Connector.getConn();
-        String dbName = "trainee_verwaltung";
-        List<Person> personen = getListPersonen();
-        for (Person person:personen) {
-            System.out.println(person);
-        }
-        Person testPerson = new Person("test", "wegen", "id", 2, 3);
-        insertNewPerson(testPerson);
+
         System.out.println("Neue Person hinzugefügt");
+        List<Person> personen = getListPersonen();
+        printPersonenListe(personen);
+        /*System.out.println("\n\nJetzt wird eine Person gelöscht!\n\n");
+        System.out.println(getListPersonen().size());
+        deletePerson(personen.get(0));
+        System.out.println(getListPersonen().size());
+        printPersonenListe(personen);
+
+         */
+        System.out.println("\n\nJetzt wird eine Person verändert!\n\n");
+
+        personen.get(0).setNachname("neuerName");
+        editPerson(personen.get(0));
+        personen = getListPersonen();
+
+        printPersonenListe(personen);
+    }
+
+    private void printPersonenListe(List<Person> personen) throws SQLException {
+        for (Person person : personen) {
+            System.out.println("Vorkentnisse: " + person.getVorkenntnisse());
+            System.out.println("Standort: " + person.getStandort());
+            System.out.println("Nachname: " + person.getNachname());
+            System.out.println("Vorname: " + person.getVorname());
+            System.out.println("Id: " + person.getId());
+            System.out.println("KursId: " + person.getKursId());
+        }
         personen = getListPersonen();
         for (Person person:personen) {
             System.out.println("Vorkentnisse: " + person.getVorkenntnisse());
@@ -38,11 +58,10 @@ public class DbPerson {
             System.out.println("Id: " + person.getId());
             System.out.println("KursId: " + person.getKursId());
         }
-        //deletePerson(personen.get(0));
+
     }
 
-    public ArrayList<Person> getListPersonen()
-            throws SQLException {
+    public ArrayList<Person> getListPersonen() throws SQLException {
         Statement stmt = null;
         String query =
                 "select id, vorname, nachname, " +
@@ -55,7 +74,6 @@ public class DbPerson {
             ResultSet rs = stmt.executeQuery(query);
             while (rs.next()) {
                 int id = rs.getInt("id");
-                System.out.println("Aktuelle id:" + id);
                 String vorname = rs.getString("vorname");
                 String nachname = rs.getString("nachname");
                 String standort = rs.getString("standort");
@@ -73,8 +91,7 @@ public class DbPerson {
         return personen;
     }
 
-    public static void insertNewPerson(Person person)
-            throws SQLException {
+    public static void addNewPerson(Person person) throws SQLException {
 
         Statement stmt = null;
         try {
@@ -107,15 +124,14 @@ public class DbPerson {
      * @param person
      * @throws SQLException
      */
-
-    public static void modifyPerson(Person person)
-            throws SQLException {
+    public static void editPerson(Person person) throws SQLException {
         Statement stmt = null;
         try {
             stmt = Connector.getConn().createStatement(ResultSet.TYPE_SCROLL_SENSITIVE,
                     ResultSet.CONCUR_UPDATABLE);
             ResultSet uprs = stmt.executeQuery(
-                    "SELECT * FROM " + "trainee_verwaltung" + ".Person" + "WHERE id =" + person.getId());
+                    "select * " +
+                            "from trainee_verwaltung.Person" + " WHERE Person.id=" + person.getId()+";");
 
             //Bewege cursor zum element, welches geändert werden soll.
                 uprs.next();
@@ -124,9 +140,10 @@ public class DbPerson {
                 uprs.updateString("nachname", person.getNachname());
                 uprs.updateString("standort", person.getStandort());
                 uprs.updateInt("vorkenntnisse", person.getVorkenntnisse());
-
-                uprs.insertRow();
+                uprs.updateRow();
                 uprs.beforeFirst();
+
+
         } catch (SQLException e ) {
             System.out.println(e);
         } finally {
@@ -141,7 +158,7 @@ public class DbPerson {
             stmt = Connector.getConn().createStatement(ResultSet.TYPE_SCROLL_SENSITIVE,
                     ResultSet.CONCUR_UPDATABLE);
 
-            ResultSet uprs = stmt.executeQuery(
+            stmt.executeQuery(
                     "delete FROM " + "trainee_verwaltung" +
                             ".Person where Person.id ="+person.getId());
 
