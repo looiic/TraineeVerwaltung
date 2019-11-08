@@ -38,6 +38,18 @@ public class DbPerson {
             System.out.println("Id: " + person.getId());
             System.out.println("KursId: " + person.getKursId());
         }
+        System.out.println("\n\nJetzt wird eine Person verändert!\n\n");
+
+        personen.get(2).setNachname("neuerName");
+
+        for (Person person:personen) {
+            System.out.println("Vorkentnisse: " + person.getVorkenntnisse());
+            System.out.println("Standort: " + person.getStandort());
+            System.out.println("Nachname: " + person.getNachname());
+            System.out.println("Vorname: " + person.getVorname());
+            System.out.println("Id: " + person.getId());
+            System.out.println("KursId: " + person.getKursId());
+        }
     }
 
     public ArrayList<Person> getListPersonen()
@@ -106,7 +118,7 @@ public class DbPerson {
      * @param person
      * @throws SQLException
      */
-    /*
+
     public static void modifyPerson(Person person)
             throws SQLException {
         Statement stmt = null;
@@ -116,20 +128,24 @@ public class DbPerson {
             ResultSet uprs = stmt.executeQuery(
                     "SELECT * FROM " + "trainee_verwaltung" + ".Person" + "WHERE id =" + person.getId());
 
-            while (uprs.next()) {
-                float f = uprs.getFloat("PRICE");
-                uprs.updateFloat( "PRICE", f * percentage);
-                uprs.updateRow();
-            }
+            //Bewege cursor zum element, welches geändert werden soll.
+                uprs.next();
+                uprs.updateInt("id", person.getId());                                   //Da wie id wählen?
+                uprs.updateString("vorname", person.getVorname());
+                uprs.updateString("nachname", person.getNachname());
+                uprs.updateString("standort", person.getStandort());
+                uprs.updateInt("vorkenntnisse", person.getVorkenntnisse());
 
+                uprs.insertRow();
+                uprs.beforeFirst();
         } catch (SQLException e ) {
-            JDBCTutorialUtilities.printSQLException(e);
+            System.out.println(e);
         } finally {
             if (stmt != null) { stmt.close(); }
         }
     }
 
- */
+
 
 
 }
