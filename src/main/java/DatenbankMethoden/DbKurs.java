@@ -2,11 +2,9 @@ package DatenbankMethoden;
 
 import logic.Connector;
 import logic.Kurs;
-
-import java.sql.Connection;
 import java.sql.*;
 import java.util.ArrayList;
-import java.util.List;
+
 
 /**
 Braucht Datenbanknamen und Connection von ausserhalb um zu funktionieren
