@@ -5,7 +5,11 @@ import javafx.fxml.FXMLLoader;
 import javafx.scene.Parent;
 import javafx.scene.Scene;
 import javafx.stage.Stage;
+import logic.Connector;
 import logic.Person;
+
+import java.sql.Connection;
+import java.sql.SQLException;
 
 public class Main extends Application {
 
@@ -27,6 +31,11 @@ public class Main extends Application {
         //test commit pradeep
     }
 
+    @Override
+    public void stop() throws SQLException {
+        System.out.println("Stop");
+        Connector.closeConn();
+    }
     public static void main(String[] args) {
         launch(args);
         new Person();

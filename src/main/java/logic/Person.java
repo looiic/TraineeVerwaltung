@@ -36,6 +36,14 @@ public class Person {
 
     }
 
+    public Person(String vorname, String nachname, String standort, int vorkenntnisse, int kursId) {
+        this.vorname = vorname;
+        this.nachname = nachname;
+        this.standort = standort;
+        this.vorkenntnisse = vorkenntnisse;
+        this.kursId = kursId;
+    }
+
     public Person(int id, String vorname, String nachname, String standort, int vorkenntnisse, int kursId) {
         this.id = id;
         this.vorname = vorname;
@@ -44,6 +52,8 @@ public class Person {
         this.vorkenntnisse = vorkenntnisse;
         this.kursId = kursId;
     }
+
+
 
     public int getId() {
         return id;

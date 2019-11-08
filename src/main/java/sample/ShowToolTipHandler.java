@@ -10,7 +10,7 @@ import javafx.scene.input.MouseEvent;
 import javax.tools.Tool;
 
 /**
- * Dieser Handler soll Infos über die Funktion eines Bedienelements in ein Label schreiben wenn der Mauszeiger daraufzeigt
+ * Dieser Handler schriebt Infos über die Funktion eines Bedienelements(Tooltip) in ein Label wenn der Mauszeiger daraufzeigt
  */
 public class ShowToolTipHandler implements EventHandler {
     private final Label label;
