@@ -5,6 +5,9 @@ public class Kurs {
     private String jahrgang;
     private String raum;
 
+    public Kurs() {
+    }
+
     public Kurs(int id, String jahrgang, String raum) {
         this.id = id;
         this.jahrgang = jahrgang;

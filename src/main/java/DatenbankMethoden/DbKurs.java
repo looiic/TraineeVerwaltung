@@ -85,7 +85,7 @@ public class DbKurs {
             stmt = Connector.getConn().createStatement(ResultSet.TYPE_SCROLL_SENSITIVE,
                     ResultSet.CONCUR_UPDATABLE);
 
-            ResultSet uprs = stmt.executeQuery(
+            stmt.executeQuery(
                     "delete FROM " + "trainee_verwaltung" +
                             ".Kurs where Kurs.id ="+kurs.getId());
 
@@ -98,13 +98,30 @@ public class DbKurs {
     }
 
 
+    public Kurs createKurs(Kurs kurs) throws SQLException {
+        Statement stmt = null;
+        Kurs neuerKurs = null;
+        try {
+            stmt = Connector.getConn().createStatement(ResultSet.TYPE_SCROLL_SENSITIVE,
+                    ResultSet.CONCUR_UPDATABLE);
 
+            //TODO: mit prepared Statements ersetzen
+            ResultSet resultSet = stmt.executeQuery("insert into trainee_verwaltung.kurs (jahrgang, raum) values" +
+                    " ('" + kurs.getJahrgang() + "', '" + kurs.getRaum() + "');");
 
+            //TODO: neu erstellter Datensatz zurückliefern damit man vorne die ID hat
+//            while(resultSet.next()){
+//                neuerKurs.setId(resultSet.getInt("id"));
+//                neuerKurs.setRaum(resultSet.getString("raum"));
+//                neuerKurs.setJahrgang(resultSet.getString("jahrgang"));
+//            }
 
-
-
-
-
-
+        } catch (SQLException e ) {
+            System.out.println(e);
+        } finally {
+            if (stmt != null) { stmt.close(); }
+        }
+            return neuerKurs;
+    }
 }
 

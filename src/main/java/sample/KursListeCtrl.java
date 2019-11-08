@@ -21,18 +21,6 @@ public class KursListeCtrl {
 
 
     @FXML public void initialize(){
-
-
-//        FXMLLoader fxmlLoader = new FXMLLoader();
-//        try {
-//            Pane p = fxmlLoader.load(getClass().getResource("kursinfo.fxml").openStream());
-//            kursInfoCtrl = fxmlLoader.getController();
-//
-//        } catch (IOException e) {
-//            e.printStackTrace();
-//        }
-
-
         DbKurs dbKurs = new DbKurs();
         try {
             ArrayList<Kurs> kursListe = dbKurs.getKursListe();
@@ -43,6 +31,12 @@ public class KursListeCtrl {
         }
     }
 
+
+    @FXML
+    public void eventNeuerKurs(){
+        ControllerManager.getKursInfoCtrl().neuerKurs();
+    }
+
     /**
      * Handler setzt die ausgewählten Kursinfos und läd die Teilnehmerliste neu
      * @param e
@@ -50,16 +44,13 @@ public class KursListeCtrl {
      */
     @FXML
     public void handleMouseClick(Event e) throws SQLException {
-        System.out.println(e);
         Object selectedItem = kursTabelle.getSelectionModel().getSelectedItem();
         if(selectedItem instanceof  Kurs){
             Kurs selectedKurs = (Kurs) selectedItem;
-
             KursInfoCtrl kursInfoCtrl = ControllerManager.getKursInfoCtrl();
             kursInfoCtrl.setKursInfos(selectedKurs);
 
-            TraineeListeCtrl traineeListeCtrl = ControllerManager.getTraineeListeCtrl();
-            traineeListeCtrl.reloadTraineeListe(selectedKurs);
+            ControllerManager.getTraineeListeCtrl().reloadTraineeListe(selectedKurs);
 
 
         }

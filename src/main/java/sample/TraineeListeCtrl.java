@@ -23,19 +23,10 @@ public class TraineeListeCtrl {
     @FXML public void initialize(){
 
 
-//        FXMLLoader fxmlLoader = new FXMLLoader();
-//        try {
-//            Pane p = fxmlLoader.load(getClass().getResource("kursinfo.fxml").openStream());
-//            kursInfoCtrl = fxmlLoader.getController();
-//
-//        } catch (IOException e) {
-//            e.printStackTrace();
-//        }
 
 
         dbPerson = new DbPerson();
         try {
-            KursInfoCtrl kursInfoCtrl = ControllerManager.getKursInfoCtrl();
             ArrayList<Person> personenListe = dbPerson.getListPersonen();
             ObservableList<Person> obsList = FXCollections.observableArrayList(personenListe);
             tableView.setItems(obsList);
@@ -69,4 +60,7 @@ public class TraineeListeCtrl {
         }
     }
 
+    public void clearTable() {
+        tableView.getItems().clear();
+    }
 }
