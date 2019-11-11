@@ -69,7 +69,6 @@ public class TraineeListeCtrl {
 
     @FXML
     public void chooseTrainee(Event e) {
-        System.out.println(e);
         Object selectedItem = tableView.getSelectionModel().getSelectedItem();
         if (selectedItem instanceof Person) {
             selectedPerson = (Person) selectedItem;

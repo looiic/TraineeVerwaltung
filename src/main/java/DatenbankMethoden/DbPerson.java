@@ -5,10 +5,7 @@ import logic.Kurs;
 import logic.Person;
 import logic.Standort;
 
-import java.sql.Connection;
-import java.sql.ResultSet;
-import java.sql.SQLException;
-import java.sql.Statement;
+import java.sql.*;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -46,7 +43,7 @@ public class DbPerson {
         printPersonenListe(personen);
     }
 
-    private void printPersonenListe(List<Person> personen) throws SQLException {
+    void printPersonenListe(List<Person> personen) throws SQLException {
         for (Person person : personen) {
             System.out.println("Vorkentnisse: " + person.getVorkenntnisse());
             System.out.println("Standort: " + person.getStandort());
@@ -128,37 +125,27 @@ public class DbPerson {
         return personen;
     }
 
-    public static Person addNewPerson(Person person) throws SQLException {
+    public int addNewPerson(Person person) throws SQLException {
+        int newPersonId = 0;
 
-        Statement stmt = null;
-        try {
-            stmt = Connector.getConn().createStatement(ResultSet.TYPE_SCROLL_SENSITIVE,
-                    ResultSet.CONCUR_UPDATABLE);
+        String query = " insert into trainee_verwaltung.person (vorname, nachname, " +
+                "standort, vorkenntnisse, kurs_id) values (?, ?, ?, ?, ?)";
+        PreparedStatement preparedStmt = Connector.getConn().prepareStatement(query, Statement.RETURN_GENERATED_KEYS);
+        preparedStmt.setString(1, person.getVorname());
+        preparedStmt.setString(2, person.getNachname());
+        preparedStmt.setString(3, person.getStandort());
+        preparedStmt.setInt(4, person.getVorkenntnisse());
+        preparedStmt.setInt(5, person.getKursId());
 
-            ResultSet uprs = stmt.executeQuery(
-                    "SELECT * FROM " + "trainee_verwaltung" +
-                            ".Person");
+        preparedStmt.executeUpdate();
 
-            uprs.moveToInsertRow();
-            //Test ohne id einzugeben:
-            //uprs.updateInt("id", person.getId());                                   //Da wie id wählen?
-            uprs.updateString("vorname", person.getVorname());
-            uprs.updateString("nachname", person.getNachname());
-            uprs.updateString("standort", person.getStandort());
-            uprs.updateInt("vorkenntnisse", person.getVorkenntnisse());
-            uprs.insertRow();
-            int newId = uprs.getInt("id");
-            uprs.beforeFirst();
-
-            person.setId(newId);
-
-
-        } catch (SQLException e ) {
-            System.out.println(e);
-        } finally {
-            if (stmt != null) { stmt.close(); }
+        ResultSet resultSet = preparedStmt.getGeneratedKeys();
+        if (resultSet.next()) {
+            newPersonId = resultSet.getInt(1);
         }
-        return person;
+
+        preparedStmt.close();
+        return newPersonId;
     }
 
     /**Gib die Person, wie sie in der Datenbank sein sollte. Über die id der Person
@@ -166,7 +153,7 @@ public class DbPerson {
      * @param person
      * @throws SQLException
      */
-    public static void editPerson(Person person) throws SQLException {
+    public void editPerson(Person person) throws SQLException {
         Statement stmt = null;
         try {
             stmt = Connector.getConn().createStatement(ResultSet.TYPE_SCROLL_SENSITIVE,
