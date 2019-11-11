@@ -23,20 +23,22 @@ public class TraineeInfoCtrl {
     @FXML
     public void cancelEntry(ActionEvent actionEvent) {
         idField.setText(null);
-        idField.setDisable(true);
+//        idField.setDisable(true);
         nachnameField.setText(null);
-        nachnameField.setDisable(true);
+//        nachnameField.setDisable(true);
         vornameField.setText(null);
-        vornameField.setDisable(true);
+//        vornameField.setDisable(true);
         standortField.setText(null);
-        standortField.setDisable(true);
+//        standortField.setDisable(true);
         vorkenntnisseMenu.setText("Vorkenntnisse");
-        vorkenntnisseMenu.setDisable(true);
+//        vorkenntnisseMenu.setDisable(true);
         kursId.setText(null);
-        kursId.setDisable(true);
-        cancelTrainee.setDisable(true);
-        saveTrainee.setDisable(true);
-        deleteTrainee.setDisable(true);
+//        kursId.setDisable(true);
+//        cancelTrainee.setDisable(true);
+//        saveTrainee.setDisable(true);
+//        deleteTrainee.setDisable(true);
+
+        setTraineeInfoDisabled(true);
     }
 
     /**
@@ -49,6 +51,17 @@ public class TraineeInfoCtrl {
         Integer vorkenntnisse = (Integer) selectedPerson.getVorkenntnisse(); //correct later
         vorkenntnisseMenu.setText(vorkenntnisse.toString());
         standortField.setText(selectedPerson.getStandort());
+    }
 
+    public void setTraineeInfoDisabled(boolean bool) {
+        idField.setDisable(bool);
+        nachnameField.setDisable(bool);
+        vornameField.setDisable(bool);
+        standortField.setDisable(bool);
+        vorkenntnisseMenu.setDisable(bool);
+        kursId.setDisable(bool);
+        cancelTrainee.setDisable(bool);
+        saveTrainee.setDisable(bool);
+        deleteTrainee.setDisable(bool);
     }
 }
