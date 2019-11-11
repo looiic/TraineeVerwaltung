@@ -3,11 +3,14 @@ package DatenbankMethoden;
 import javafx.animation.ScaleTransition;
 import logic.Connector;
 import logic.Kurs;
+import logic.Person;
 import logic.Standort;
 
 import java.sql.*;
 import java.util.ArrayList;
 import java.util.List;
+
+import DatenbankMethoden.DbPerson;
 
 //ToDo: Aktuelles Problem: Die KursListe ist nicht immer konsistent mit der DB. Dies kann eine Fehleranfälligkeit sein!
 
@@ -21,12 +24,22 @@ public class DbKurs {
     private void testMethodePradeep() throws SQLException {
         ArrayList<Kurs> kursListe = getKursListe();
         printKursListe(kursListe);
-        kursListe.get(0).setJahrgang("neuerJahrgangEditiert");
-        editKurs(kursListe.get(0));
-        printKursListe(getKursListe());
-        System.out.println("Jetzt wurde deleted");
+        System.out.println("Kurs wird hinzugefügt:");
+        createKurs(new Kurs("2021-01", "Frauenfeld"));
+        kursListe = getKursListe();
+        printAllPersonenNachKurs();
         deleteKurs(kursListe.get(0));
-        printKursListe(getKursListe());
+        printAllPersonenNachKurs();
+
+    }
+
+    private void printAllPersonenNachKurs() throws SQLException {
+        ArrayList<Kurs> kursListe;
+        kursListe = getKursListe();
+        for (Kurs kurs : kursListe){
+            System.out.println("Neuer Kurs");
+            DbPerson.printPersonenListe(DbPerson.getListPersonen(kurs));
+        }
     }
 
     private void printKursListe(ArrayList<Kurs> kurse) {
@@ -141,7 +154,7 @@ public class DbKurs {
     }
 
     public void deleteKurs(Kurs kurs) throws SQLException {
-        //ToDo: Methode deleteAllTraineesFromKurs(); implementieren. Macht Pradeep noch am 11.11.
+        deleteAllTraineesFromKurs(kurs);
         Statement stmt = null;
         stmt = Connector.getConn().createStatement(ResultSet.TYPE_SCROLL_SENSITIVE,
                 ResultSet.CONCUR_UPDATABLE);
@@ -154,6 +167,13 @@ public class DbKurs {
             stmt.close();
         }
 
+    }
+
+    private void deleteAllTraineesFromKurs(Kurs kurs) throws SQLException {
+        ArrayList<Person> personen = DbPerson.getListPersonen(kurs);
+        for (Person person : personen) {
+            DbPerson.deletePerson(person);
+        }
     }
 
 
