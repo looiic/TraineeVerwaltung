@@ -17,7 +17,7 @@
               <TextField fx:id="nachnameField" disable="true" prefHeight="25.0" prefWidth="120.0" promptText="Nachname" />
               <TextField fx:id="vornameField" disable="true" prefWidth="120.0" promptText="Vorname" />
               <TextField fx:id="standortField" disable="true" prefWidth="120.0" promptText="Standort" />
-              <MenuButton fx:id="vorkenntnisseMenu" disable="false" cache="true" prefWidth="120.0" text="Vorkenntnisse">
+              <MenuButton fx:id="vorkenntnisseMenu" disable="true" cache="true" prefWidth="120.0" text="Vorkenntnisse">
                   <items>
                       <MenuItem mnemonicParsing="false" text="1" />
                       <MenuItem mnemonicParsing="false" text="2" />
@@ -28,9 +28,9 @@
               </MenuButton>
               <TextField fx:id="kursId" opacity="0.0" prefHeight="25.0" prefWidth="0.0" />
       
-              <Button fx:id="saveTrainee" text="Speichern" />
-              <Button fx:id="deleteTrainee" text="Löschen" />
-              <Button fx:id="cancelTrainee" onAction="#cancelEntry" text="Abbrechen" />
+              <Button fx:id="saveTrainee" text="Speichern" disable="true"/>
+              <Button fx:id="deleteTrainee" text="Löschen" disable="true"/>
+              <Button fx:id="cancelTrainee" onAction="#cancelEntry" text="Abbrechen" disable="true" />
           </children>
        </HBox>
    </children>

@@ -8,7 +8,7 @@
 <?import javafx.scene.layout.VBox?>
 <AnchorPane xmlns:fx="http://javafx.com/fxml/1" xmlns="http://javafx.com/javafx/8">
     <VBox>
-        <Button text="Kurs hinzufügen" onMouseClicked="#eventNeuerKurs"/>
+        <Button fx:id="addKurs" text="Kurs hinzufügen" onMouseClicked="#eventNeuerKurs"/>
         <TableView fx:id="kursTabelle" onMouseClicked="#handleMouseClick">
             <columns>
                 <TableColumn fx:id="id" prefWidth="100.0" text="Kurse">

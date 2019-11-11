@@ -6,6 +6,7 @@ import javafx.collections.ObservableList;
 import javafx.event.Event;
 import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
+import javafx.scene.control.Button;
 import javafx.scene.control.TableView;
 import javafx.scene.layout.Pane;
 import logic.Kurs;
@@ -17,6 +18,7 @@ import java.util.ArrayList;
 public class KursListeCtrl {
 
     @FXML private TableView kursTabelle;
+    @FXML private Button addKurs;
 
 
 
@@ -56,4 +58,8 @@ public class KursListeCtrl {
         }
     }
 
+    public void setKursListeDisabled(boolean b) {
+        kursTabelle.setDisable(b);
+        addKurs.setDisable(b);
+    }
 }

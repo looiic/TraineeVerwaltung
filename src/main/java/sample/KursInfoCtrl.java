@@ -71,4 +71,11 @@ public class KursInfoCtrl {
         }
     }
 
+    public void setKursInfoDisabled(boolean b) {
+        kursField.setDisable(b);
+        raumField.setDisable(b);
+        btnAbbrechen.setDisable(b);
+        btnBearbeiten.setDisable(b);
+        btnSpeichern.setDisable(b);
+    }
 }

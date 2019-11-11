@@ -11,49 +11,55 @@
 <?import logic.Person?>
 <AnchorPane xmlns="http://javafx.com/javafx"
             xmlns:fx="http://javafx.com/fxml">
-
-    <TableView fx:id="tableView" onMouseClicked="#handleMouseClick" prefHeight="293.0" prefWidth="514.0" GridPane.columnIndex="0" GridPane.rowIndex="1">
-        <columns>
-            <TableColumn fx:id="id" prefWidth="50.0" text="ID">
-                <cellValueFactory>
-                    <PropertyValueFactory property="id" />
-                </cellValueFactory>
-            </TableColumn>
-            <TableColumn fx:id="nachname" prefWidth="100.0" text="Nachname">
-                <cellValueFactory>
-                    <PropertyValueFactory property="nachname" />
-                </cellValueFactory>
-            </TableColumn>
-            <TableColumn fx:id="vorname" prefWidth="100.0" text="Vorname">
-                <cellValueFactory>
-                    <PropertyValueFactory property="vorname" />
-                </cellValueFactory>
-            </TableColumn>
-            <TableColumn fx:id="standort" prefWidth="100.0" text="Standort">
-                <cellValueFactory>
-                    <PropertyValueFactory property="standort" />
-                </cellValueFactory>
-            </TableColumn>
-            <TableColumn fx:id="vorkenntnisse" prefWidth="100.0" text="Vorkenntnisse">
-                <cellValueFactory>
-                    <PropertyValueFactory property="vorkenntnisse" />
-                </cellValueFactory>
-            </TableColumn>
-            <TableColumn fx:id="kursId" prefWidth="50.0" text="Kurs-ID">
-                <cellValueFactory>
-                    <PropertyValueFactory property="kursId" />
-                </cellValueFactory>
-            </TableColumn>
-        </columns>
-        <items>
-            <FXCollections fx:factory="observableArrayList">
-                <Person nachname="Muster" standort="BASEL" vorkenntnisse="3" vorname="Hans" />
-                <Person nachname="Meier" standort="BUKAREST" vorkenntnisse="7" vorname="Anna" />
-            </FXCollections>
-        </items>
-        <sortOrder>
-            <fx:reference source="nachname" />
-        </sortOrder>
-    </TableView>
+    <HBox fx:id="traineeListeHBox">
+        <TableView fx:id="tableView" onMouseClicked="#chooseTrainee" prefHeight="293.0" prefWidth="514.0"
+                   GridPane.columnIndex="0" GridPane.rowIndex="1">
+            <columns>
+                <TableColumn fx:id="id" prefWidth="50.0" text="ID">
+                    <cellValueFactory>
+                        <PropertyValueFactory property="id"/>
+                    </cellValueFactory>
+                </TableColumn>
+                <TableColumn fx:id="nachname" prefWidth="100.0" text="Nachname">
+                    <cellValueFactory>
+                        <PropertyValueFactory property="nachname"/>
+                    </cellValueFactory>
+                </TableColumn>
+                <TableColumn fx:id="vorname" prefWidth="100.0" text="Vorname">
+                    <cellValueFactory>
+                        <PropertyValueFactory property="vorname"/>
+                    </cellValueFactory>
+                </TableColumn>
+                <TableColumn fx:id="standort" prefWidth="100.0" text="Standort">
+                    <cellValueFactory>
+                        <PropertyValueFactory property="standort"/>
+                    </cellValueFactory>
+                </TableColumn>
+                <TableColumn fx:id="vorkenntnisse" prefWidth="100.0" text="Vorkenntnisse">
+                    <cellValueFactory>
+                        <PropertyValueFactory property="vorkenntnisse"/>
+                    </cellValueFactory>
+                </TableColumn>
+                <TableColumn fx:id="kursId" prefWidth="50.0" text="Kurs-ID">
+                    <cellValueFactory>
+                        <PropertyValueFactory property="kursId"/>
+                    </cellValueFactory>
+                </TableColumn>
+            </columns>
+            <items>
+                <FXCollections fx:factory="observableArrayList">
+                    <Person nachname="Muster" standort="BASEL" vorkenntnisse="3" vorname="Hans"/>
+                    <Person nachname="Meier" standort="BUKAREST" vorkenntnisse="7" vorname="Anna"/>
+                </FXCollections>
+            </items>
+            <sortOrder>
+                <fx:reference source="nachname"/>
+            </sortOrder>
+        </TableView>
+        <VBox fx:id="editTraineeVBox" alignment="TOP_CENTER">
+            <Label fx:id="editTraineeInfo" text="Zum Bearbeiten eines Trainees bitte eine Zeile auswählen!"/>
+            <Button fx:id="editTrainee" onMouseClicked="#editTrainee" disable="true"  text="Bearbeiten"/>
+        </VBox>
+    </HBox>
 
 </AnchorPane>
