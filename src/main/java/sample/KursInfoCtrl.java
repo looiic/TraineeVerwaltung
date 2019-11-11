@@ -29,17 +29,19 @@ public class KursInfoCtrl {
 
     @FXML
     public void initialize() {
-        btnBearbeiten.setVisible(true);
+        btnBearbeiten.setVisible(false);
         btnSpeichern.setVisible(false);
         btnAbbrechen.setVisible(false);
     }
 
     @FXML
     public void setKursInfos(Kurs kurs) {
+        selectedKurs = kurs;
+
+        btnBearbeiten.setVisible(true);
         kursField.setText(kurs.getJahrgang());
         raumField.setText(kurs.getRaum());
-        anzahlTN.setText("tbd");
-        selectedKurs = kurs;
+        anzahlTN.setText("");
 
     }
 
@@ -59,13 +61,57 @@ public class KursInfoCtrl {
     }
 
     @FXML
-    public void handleSpeichern(){
+    public void handleBearbeiten() {
+        btnBearbeiten.setVisible(false);
+        btnAbbrechen.setVisible(true);
+        btnSpeichern.setVisible(true);
+
+        kursField.setDisable(false);
+        raumField.setDisable(false);
+    }
+
+    @FXML
+    public void handleSpeichern() {
+        btnBearbeiten.setVisible(true);
+        btnAbbrechen.setVisible(false);
+        btnSpeichern.setVisible(false);
+
+        kursField.setDisable(true);
+        raumField.setDisable(true);
+
         DbKurs dbKurs = new DbKurs();
         this.selectedKurs.setJahrgang(kursField.getText());
         this.selectedKurs.setRaum(raumField.getText());
         try {
-            this.selectedKurs = dbKurs.createKurs(this.selectedKurs);
-            System.out.println("neue ID: " + selectedKurs.getId());
+            if(this.selectedKurs.getId() == 0){
+                this.selectedKurs.setId(dbKurs.createKurs(this.selectedKurs));
+            }else{
+                dbKurs.editKurs(this.selectedKurs);
+            }
+        } catch (SQLException e) {
+            e.printStackTrace();
+        }
+        ControllerManager.getKursListeCtrl().initialize();
+    }
+
+    @FXML
+    public void handleAbbrechen() {
+        btnBearbeiten.setVisible(true);
+        btnAbbrechen.setVisible(false);
+        btnSpeichern.setVisible(false);
+
+        kursField.setDisable(true);
+        raumField.setDisable(true);
+        DbKurs dbKurs = new DbKurs();
+        try {
+            if (this.selectedKurs.getId() == 0) {
+                kursField.clear();
+                raumField.clear();
+            } else {
+                this.selectedKurs = dbKurs.getKurs(this.selectedKurs.getId());
+                kursField.setText(selectedKurs.getJahrgang());
+                raumField.setText(selectedKurs.getRaum());
+            }
         } catch (SQLException e) {
             e.printStackTrace();
         }

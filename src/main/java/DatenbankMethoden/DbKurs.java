@@ -29,155 +29,151 @@ public class DbKurs {
         printKursListe(getKursListe());
     }
 
-    private void printKursListe(ArrayList<Kurs> kurse){
-        for (Kurs kurs:kurse){
+    private void printKursListe(ArrayList<Kurs> kurse) {
+        for (Kurs kurs : kurse) {
             System.out.println("id: " + kurs.getId());
             System.out.println("Jahrgang: " + kurs.getJahrgang());
             System.out.println("Raum: " + kurs.getRaum());
         }
     }
 
-    public static ArrayList<Kurs> getKursListe() throws SQLException {
+    public ArrayList<Kurs> getKursListe() throws SQLException {
         Statement stmt = null;
         String query =
-                "select * " +"from trainee_verwaltung.Kurs";
+                "select * from trainee_verwaltung.kurs;";
 
         ArrayList<Kurs> kursListe = new ArrayList<>();
 
-        try {
-            stmt = Connector.getConn().createStatement();
-            ResultSet rs = stmt.executeQuery(query);
-            while (rs.next()) {
-                int id = rs.getInt("id");
-                String jahrgang = rs.getString("jahrgang");
-                String raum = rs.getString("raum");
-                kursListe.add(new Kurs(id,jahrgang,raum));
-            }
-        } catch (SQLException e) {
-            System.out.println(e);
-        } finally {
-            if (stmt != null) {
-                stmt.close();
-            }
+        stmt = Connector.getConn().createStatement();
+        ResultSet rs = stmt.executeQuery(query);
+        while (rs.next()) {
+            int id = rs.getInt("id");
+            String jahrgang = rs.getString("jahrgang");
+            String raum = rs.getString("raum");
+            kursListe.add(new Kurs(id, jahrgang, raum));
         }
+        stmt.close();
+
+
         return kursListe;
+    }
+
+    public Kurs getKurs(int id) throws SQLException{
+        Statement stmt = null;
+        String query =
+                "select * from trainee_verwaltung.kurs where id = " + id + ";";
+
+        Kurs kurs = new Kurs();
+
+        stmt = Connector.getConn().createStatement();
+        ResultSet rs = stmt.executeQuery(query);
+        while (rs.next()) {
+            kurs.setId(rs.getInt("id"));
+            kurs.setJahrgang(rs.getString("jahrgang"));
+            kurs.setRaum(rs.getString("raum"));
+        }
+        stmt.close();
+
+        return kurs;
     }
 
     /**
      * Übergebe dieser Methode einen veränderten Kurs. Anhand der id des jeweiligen Kurses
      * wird jener Kurs in der Datenbank nach dem übergebenen Objekt Kurs verändert.
-     *
+     * <p>
      * PS: Habe nur Author hinzugefügt, damit ihr wisst zu wen ihr euch bei Fragen zu dieser
      * Methode wenden könnt ;)
+     *
      * @param kurs
      * @throws SQLException
      * @Author Pradeep
      */
-    public static void editKurs(Kurs kurs) throws SQLException{
+    public void editKurs(Kurs kurs) throws SQLException {
         Statement stmt = null;
-        try {
-            stmt = Connector.getConn().createStatement(ResultSet.TYPE_SCROLL_SENSITIVE,
-                    ResultSet.CONCUR_UPDATABLE);
-            ResultSet uprs = stmt.executeQuery("SELECT * FROM trainee_verwaltung.kurs" +
-                    " WHERE kURS.ID=" + kurs.getId() + ";");
-            uprs.next();
-            uprs.updateInt("id", kurs.getId());
-            uprs.updateString("jahrgang", kurs.getJahrgang());
-            uprs.updateString("raum", kurs.getRaum());
-            uprs.updateRow();
-            uprs.beforeFirst();
-        } catch (SQLException e){
-            System.out.println(e);
-        } finally {
-            if (stmt != null) { stmt.close();}
+        stmt = Connector.getConn().createStatement(ResultSet.TYPE_SCROLL_SENSITIVE,
+                ResultSet.CONCUR_UPDATABLE);
+        ResultSet uprs = stmt.executeQuery("SELECT * FROM trainee_verwaltung.kurs" +
+                " WHERE kURS.ID=" + kurs.getId() + ";");
+        uprs.next();
+        uprs.updateInt("id", kurs.getId());
+        uprs.updateString("jahrgang", kurs.getJahrgang());
+        uprs.updateString("raum", kurs.getRaum());
+        uprs.updateRow();
+        uprs.beforeFirst();
+        if (stmt != null) {
+            stmt.close();
+        }
+
+    }
+
+    public void changeJahrgang(Kurs kurs) throws SQLException {
+        Statement stmt = null;
+        stmt = Connector.getConn().createStatement(ResultSet.TYPE_SCROLL_SENSITIVE,
+                ResultSet.CONCUR_UPDATABLE);
+        ResultSet uprs = stmt.executeQuery(
+                "SELECT * FROM " + "trainee_verwaltung" + ".Kurs " + "WHERE Kurs.jahrgang =" + kurs.getJahrgang());
+
+        //Bewege cursor zum element, welches geändert werden soll.
+        uprs.next();
+        uprs.updateString("jahrgang", kurs.getJahrgang());
+        uprs.insertRow();
+        uprs.beforeFirst();
+        if (stmt != null) {
+            stmt.close();
         }
     }
 
-    public static void changeJahrgang(Kurs kurs)
-            throws SQLException {
+    public void changeRaum(Kurs kurs) throws SQLException {
         Statement stmt = null;
-        try {
-            stmt = Connector.getConn().createStatement(ResultSet.TYPE_SCROLL_SENSITIVE,
-                    ResultSet.CONCUR_UPDATABLE);
-            ResultSet uprs = stmt.executeQuery(
-                    "SELECT * FROM " + "trainee_verwaltung" + ".Kurs " + "WHERE Kurs.jahrgang =" + kurs.getJahrgang());
+        stmt = Connector.getConn().createStatement(ResultSet.TYPE_SCROLL_SENSITIVE,
+                ResultSet.CONCUR_UPDATABLE);
+        ResultSet uprs = stmt.executeQuery(
+                "SELECT * FROM " + "trainee_verwaltung" + ".Kurs" + "WHERE raum =" + kurs.getRaum());
 
-            //Bewege cursor zum element, welches geändert werden soll.
-            uprs.next();
-            uprs.updateString("jahrgang", kurs.getJahrgang());
-            uprs.insertRow();
-            uprs.beforeFirst();
-        } catch (SQLException e ) {
-            System.out.println(e);
-        } finally {
-            if (stmt != null) { stmt.close(); }
-        }
-    }
-
-    public static void changeRaum(Kurs kurs)
-            throws SQLException {
-        Statement stmt = null;
-        try {
-            stmt = Connector.getConn().createStatement(ResultSet.TYPE_SCROLL_SENSITIVE,
-                    ResultSet.CONCUR_UPDATABLE);
-            ResultSet uprs = stmt.executeQuery(
-                    "SELECT * FROM " + "trainee_verwaltung" + ".Kurs" + "WHERE raum =" + kurs.getRaum());
-
-            //Bewege cursor zum element, welches geändert werden soll.
-            uprs.next();
-            uprs.updateString("raum", kurs.getRaum());
-            uprs.insertRow();
-            uprs.beforeFirst();
-        } catch (SQLException e ) {
-            System.out.println(e);
-        } finally {
-            if (stmt != null) { stmt.close(); }
+        //Bewege cursor zum element, welches geändert werden soll.
+        uprs.next();
+        uprs.updateString("raum", kurs.getRaum());
+        uprs.insertRow();
+        uprs.beforeFirst();
+        if (stmt != null) {
+            stmt.close();
         }
     }
 
     public void deleteKurs(Kurs kurs) throws SQLException {
         //ToDo: Methode deleteAllTraineesFromKurs(); implementieren. Macht Pradeep noch am 11.11.
         Statement stmt = null;
-        try {
-            stmt = Connector.getConn().createStatement(ResultSet.TYPE_SCROLL_SENSITIVE,
-                    ResultSet.CONCUR_UPDATABLE);
+        stmt = Connector.getConn().createStatement(ResultSet.TYPE_SCROLL_SENSITIVE,
+                ResultSet.CONCUR_UPDATABLE);
 
-            stmt.executeQuery(
-                    "delete FROM " + "trainee_verwaltung" +
-                            ".Kurs where Kurs.id ="+kurs.getId());
+        stmt.executeQuery(
+                "delete FROM " + "trainee_verwaltung" +
+                        ".Kurs where Kurs.id =" + kurs.getId());
 
-        } catch (SQLException e ) {
-            System.out.println(e);
-        } finally {
-            if (stmt != null) { stmt.close(); }
+        if (stmt != null) {
+            stmt.close();
         }
+
     }
 
 
-    public Kurs createKurs(Kurs kurs) throws SQLException {
-        Statement stmt = null;
-        Kurs neuerKurs = null;
-        try {
-            stmt = Connector.getConn().createStatement(ResultSet.TYPE_SCROLL_SENSITIVE,
-                    ResultSet.CONCUR_UPDATABLE);
+    public int createKurs(Kurs kurs) throws SQLException {
+        int newKursId = 0;
 
-            //TODO: mit prepared Statements ersetzen
-            ResultSet resultSet = stmt.executeQuery("insert into trainee_verwaltung.kurs (jahrgang, raum) values" +
-                    " ('" + kurs.getJahrgang() + "', '" + kurs.getRaum () + "');");
+        String query = " insert into trainee_verwaltung.kurs (jahrgang, raum) values (?, ?)";
+        PreparedStatement preparedStmt = Connector.getConn().prepareStatement(query, Statement.RETURN_GENERATED_KEYS);
+        preparedStmt.setString(1, kurs.getJahrgang());
+        preparedStmt.setString(2, kurs.getRaum());
 
-            //TODO: neu erstellter Datensatz zurückliefern damit man vorne die ID hat
-//            while(resultSet.next()){
-//                neuerKurs.setId(resultSet.getInt("id"));
-//                neuerKurs.setRaum(resultSet.getString("raum"));
-//                neuerKurs.setJahrgang(resultSet.getString("jahrgang"));
-//            }
+        preparedStmt.executeUpdate();
 
-        } catch (SQLException e ) {
-            System.out.println(e);
-        } finally {
-            if (stmt != null) { stmt.close(); }
+        ResultSet resultSet = preparedStmt.getGeneratedKeys();
+        if (resultSet.next()) {
+            newKursId = resultSet.getInt(1);
         }
-            return neuerKurs;
+
+        preparedStmt.close();
+        return newKursId;
     }
 }
 

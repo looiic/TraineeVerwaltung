@@ -33,7 +33,6 @@ public class Main extends Application {
 
     @Override
     public void stop() throws SQLException {
-        System.out.println("Stop");
         Connector.closeConn();
     }
     public static void main(String[] args) {
