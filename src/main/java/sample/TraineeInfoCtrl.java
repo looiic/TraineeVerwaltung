@@ -23,23 +23,6 @@ public class TraineeInfoCtrl {
     @FXML private Button deleteTrainee;
 
 
-    @FXML
-    private TextField nachnameField;
-    @FXML
-    private TextField vornameField;
-    @FXML
-    private TextField standortField;
-    @FXML
-    private MenuButton vorkenntnisseMenu;
-    @FXML
-    private TextField kursId;
-    @FXML
-    private Button cancelTrainee;
-    @FXML
-    private Button saveTrainee;
-    @FXML
-    private Button deleteTrainee;
-
 
     @FXML
     public void initialize() {
