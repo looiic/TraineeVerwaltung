@@ -125,7 +125,7 @@ public class DbPerson {
         return personen;
     }
 
-    public int addNewPerson(Person person) throws SQLException {
+    public static int addNewPerson(Person person) throws SQLException {
         int newPersonId = 0;
 
         String query = " insert into trainee_verwaltung.person (vorname, nachname, " +
@@ -153,7 +153,7 @@ public class DbPerson {
      * @param person
      * @throws SQLException
      */
-    public void editPerson(Person person) throws SQLException {
+    public static void editPerson(Person person) throws SQLException {
         Statement stmt = null;
         try {
             stmt = Connector.getConn().createStatement(ResultSet.TYPE_SCROLL_SENSITIVE,
@@ -179,7 +179,7 @@ public class DbPerson {
     }
 
 
-    public void deletePerson(Person person) throws SQLException {
+    public static void deletePerson(Person person) throws SQLException {
         Statement stmt = null;
         try {
             stmt = Connector.getConn().createStatement(ResultSet.TYPE_SCROLL_SENSITIVE,

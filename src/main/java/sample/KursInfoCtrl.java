@@ -152,4 +152,8 @@ public class KursInfoCtrl {
         btnBearbeiten.setDisable(b);
         btnSpeichern.setDisable(b);
     }
+
+    public Kurs getSelectedKurs() {
+        return this.selectedKurs;
+    }
 }

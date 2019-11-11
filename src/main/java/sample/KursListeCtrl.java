@@ -21,16 +21,25 @@ public class KursListeCtrl {
     @FXML private Button addKurs;
 
 
-
-    @FXML public void initialize(){
+    @FXML
+    public void initialize() {
         DbKurs dbKurs = new DbKurs();
         try {
             ArrayList<Kurs> kursListe = dbKurs.getKursListe();
             ObservableList<Kurs> obsList = FXCollections.observableArrayList(kursListe);
             kursTabelle.setItems(obsList);
-        } catch (SQLException e) {
+            kursTabelle.getSelectionModel().select(0);
+            Kurs selectedKurs = (Kurs) kursTabelle.getSelectionModel().getSelectedItem();
+
+            KursInfoCtrl kursInfoCtrl = ControllerManager.getKursInfoCtrl();
+            System.out.println(selectedKurs.getJahrgang());
+            // kursInfoCtrl.setKursInfos(selectedKurs);  /...warum funktioniert das nicht?
+
+        } catch (
+                SQLException e) {
             e.printStackTrace();
         }
+
     }
 
 

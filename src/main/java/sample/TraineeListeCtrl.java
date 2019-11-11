@@ -112,6 +112,7 @@ public class TraineeListeCtrl {
     public void setTraineeListDisabled(boolean bool){
         tableView.setDisable(bool);
         addTrainee.setDisable(bool);
+        addTrainee.setSelected(false);
         //editTrainee.setDisable(bool);
     }
 
