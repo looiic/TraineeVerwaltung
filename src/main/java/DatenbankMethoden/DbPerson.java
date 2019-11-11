@@ -46,7 +46,7 @@ public class DbPerson {
         printPersonenListe(personen);
     }
 
-    static void printPersonenListe(List<Person> personen) throws SQLException {
+    void printPersonenListe(List<Person> personen) throws SQLException {
         for (Person person : personen) {
             System.out.println("Vorkentnisse: " + person.getVorkenntnisse());
             System.out.println("Standort: " + person.getStandort());
@@ -63,7 +63,7 @@ public class DbPerson {
      * @return
      * @throws SQLException
      */
-    public static ArrayList<Person> getListPersonen(Kurs kurs) throws SQLException {
+    public ArrayList<Person> getListPersonen(Kurs kurs) throws SQLException {
         Statement stmt = null;
         String query =
                 "select id, vorname, nachname, " +
@@ -128,7 +128,7 @@ public class DbPerson {
         return personen;
     }
 
-    public static Person addNewPerson(Person person) throws SQLException {
+    public Person addNewPerson(Person person) throws SQLException {
 
         Statement stmt = null;
         try {
@@ -166,7 +166,7 @@ public class DbPerson {
      * @param person
      * @throws SQLException
      */
-    public static void editPerson(Person person) throws SQLException {
+    public void editPerson(Person person) throws SQLException {
         Statement stmt = null;
         try {
             stmt = Connector.getConn().createStatement(ResultSet.TYPE_SCROLL_SENSITIVE,
@@ -192,7 +192,7 @@ public class DbPerson {
     }
 
 
-    public static void deletePerson(Person person) throws SQLException {
+    public void deletePerson(Person person) throws SQLException {
         Statement stmt = null;
         try {
             stmt = Connector.getConn().createStatement(ResultSet.TYPE_SCROLL_SENSITIVE,

@@ -34,11 +34,12 @@ public class DbKurs {
     }
 
     private void printAllPersonenNachKurs() throws SQLException {
+        DbPerson dbPerson = new DbPerson();
         ArrayList<Kurs> kursListe;
         kursListe = getKursListe();
         for (Kurs kurs : kursListe){
             System.out.println("Neuer Kurs");
-            DbPerson.printPersonenListe(DbPerson.getListPersonen(kurs));
+            dbPerson.printPersonenListe(dbPerson.getListPersonen(kurs));
         }
     }
 
@@ -113,45 +114,10 @@ public class DbKurs {
         uprs.updateString("raum", kurs.getRaum());
         uprs.updateRow();
         uprs.beforeFirst();
-        if (stmt != null) {
             stmt.close();
-        }
 
     }
 
-    public void changeJahrgang(Kurs kurs) throws SQLException {
-        Statement stmt = null;
-        stmt = Connector.getConn().createStatement(ResultSet.TYPE_SCROLL_SENSITIVE,
-                ResultSet.CONCUR_UPDATABLE);
-        ResultSet uprs = stmt.executeQuery(
-                "SELECT * FROM " + "trainee_verwaltung" + ".Kurs " + "WHERE Kurs.jahrgang =" + kurs.getJahrgang());
-
-        //Bewege cursor zum element, welches geändert werden soll.
-        uprs.next();
-        uprs.updateString("jahrgang", kurs.getJahrgang());
-        uprs.insertRow();
-        uprs.beforeFirst();
-        if (stmt != null) {
-            stmt.close();
-        }
-    }
-
-    public void changeRaum(Kurs kurs) throws SQLException {
-        Statement stmt = null;
-        stmt = Connector.getConn().createStatement(ResultSet.TYPE_SCROLL_SENSITIVE,
-                ResultSet.CONCUR_UPDATABLE);
-        ResultSet uprs = stmt.executeQuery(
-                "SELECT * FROM " + "trainee_verwaltung" + ".Kurs" + "WHERE raum =" + kurs.getRaum());
-
-        //Bewege cursor zum element, welches geändert werden soll.
-        uprs.next();
-        uprs.updateString("raum", kurs.getRaum());
-        uprs.insertRow();
-        uprs.beforeFirst();
-        if (stmt != null) {
-            stmt.close();
-        }
-    }
 
     public void deleteKurs(Kurs kurs) throws SQLException {
         deleteAllTraineesFromKurs(kurs);
@@ -163,16 +129,15 @@ public class DbKurs {
                 "delete FROM " + "trainee_verwaltung" +
                         ".Kurs where Kurs.id =" + kurs.getId());
 
-        if (stmt != null) {
             stmt.close();
-        }
 
     }
 
     private void deleteAllTraineesFromKurs(Kurs kurs) throws SQLException {
-        ArrayList<Person> personen = DbPerson.getListPersonen(kurs);
+        DbPerson dbPerson = new DbPerson();
+        ArrayList<Person> personen = dbPerson.getListPersonen(kurs);
         for (Person person : personen) {
-            DbPerson.deletePerson(person);
+            dbPerson.deletePerson(person);
         }
     }
 
