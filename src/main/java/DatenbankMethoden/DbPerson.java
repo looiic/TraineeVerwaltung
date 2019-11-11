@@ -12,6 +12,9 @@ import java.sql.Statement;
 import java.util.ArrayList;
 import java.util.List;
 
+//ToDo: Aktuelles Problem: Die PersonenListe ist nicht immer konsistent mit der DB. Dies kann eine Fehleranfälligkeit sein!
+
+
 public class DbPerson {
 
     //Für Testzwecke
@@ -52,16 +55,6 @@ public class DbPerson {
             System.out.println("Id: " + person.getId());
             System.out.println("KursId: " + person.getKursId());
         }
-        personen = getListPersonen();
-        for (Person person:personen) {
-            System.out.println("Vorkentnisse: " + person.getVorkenntnisse());
-            System.out.println("Standort: " + person.getStandort());
-            System.out.println("Nachname: " + person.getNachname());
-            System.out.println("Vorname: " + person.getVorname());
-            System.out.println("Id: " + person.getId());
-            System.out.println("KursId: " + person.getKursId());
-        }
-
     }
 
     /**
@@ -135,7 +128,7 @@ public class DbPerson {
         return personen;
     }
 
-    public static void addNewPerson(Person person) throws SQLException {
+    public static Person addNewPerson(Person person) throws SQLException {
 
         Statement stmt = null;
         try {
@@ -147,20 +140,25 @@ public class DbPerson {
                             ".Person");
 
             uprs.moveToInsertRow();
-            uprs.updateInt("id", person.getId());                                   //Da wie id wählen?
+            //Test ohne id einzugeben:
+            //uprs.updateInt("id", person.getId());                                   //Da wie id wählen?
             uprs.updateString("vorname", person.getVorname());
             uprs.updateString("nachname", person.getNachname());
             uprs.updateString("standort", person.getStandort());
             uprs.updateInt("vorkenntnisse", person.getVorkenntnisse());
-
             uprs.insertRow();
+            int newId = uprs.getInt("id");
             uprs.beforeFirst();
+
+            person.setId(newId);
+
 
         } catch (SQLException e ) {
             System.out.println(e);
         } finally {
             if (stmt != null) { stmt.close(); }
         }
+        return person;
     }
 
     /**Gib die Person, wie sie in der Datenbank sein sollte. Über die id der Person
@@ -186,8 +184,6 @@ public class DbPerson {
                 uprs.updateInt("vorkenntnisse", person.getVorkenntnisse());
                 uprs.updateRow();
                 uprs.beforeFirst();
-
-
         } catch (SQLException e ) {
             System.out.println(e);
         } finally {

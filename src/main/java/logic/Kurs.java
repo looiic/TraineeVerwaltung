@@ -14,6 +14,11 @@ public class Kurs {
         this.raum = raum;
     }
 
+    public Kurs(String jahrgang, String raum) {
+        this.jahrgang = jahrgang;
+        this.raum = raum;
+    }
+
     public int getId() {
         return id;
     }

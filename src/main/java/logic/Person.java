@@ -95,4 +95,7 @@ public class Person {
     public int getKursId() {
         return kursId;
     }
+    public void setId(int id) {
+        this.id = id;
+    }
 }
