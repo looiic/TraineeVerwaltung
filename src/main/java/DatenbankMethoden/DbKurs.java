@@ -136,6 +136,7 @@ public class DbKurs {
     }
 
     public void deleteKurs(Kurs kurs) throws SQLException {
+        //ToDo: Methode deleteAllTraineesFromKurs(); implementieren. Macht Pradeep noch am 11.11.
         Statement stmt = null;
         try {
             stmt = Connector.getConn().createStatement(ResultSet.TYPE_SCROLL_SENSITIVE,
