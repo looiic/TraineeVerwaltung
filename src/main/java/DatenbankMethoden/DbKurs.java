@@ -5,6 +5,7 @@ import logic.Kurs;
 import logic.Person;
 import java.sql.*;
 import java.util.ArrayList;
+import java.util.List;
 
 
 public class DbKurs {
@@ -18,7 +19,7 @@ public class DbKurs {
      * @return ArrayList<Kurs> mit allen Kursen aus der Datenbank
      * @throws SQLException
      */
-    public ArrayList<Kurs> getKursListe() throws SQLException {
+    public List<Kurs> getKursListe() throws SQLException {
         Statement stmt = null;
         String query =
                 "select * from trainee_verwaltung.kurs;";
@@ -101,7 +102,7 @@ public class DbKurs {
 
     private void deleteAllTraineesFromKurs(Kurs kurs) throws SQLException {
         DbPerson dbPerson = new DbPerson();
-        ArrayList<Person> personen = dbPerson.getListPersonen(kurs);
+        List<Person> personen = dbPerson.getListPersonen(kurs);
         for (Person person : personen) {
             dbPerson.deletePerson(person);
         }

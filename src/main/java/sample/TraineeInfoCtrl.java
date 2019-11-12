@@ -1,10 +1,14 @@
 package sample;
 
 import DatenbankMethoden.DbPerson;
+import DatenbankMethoden.DbStandort;
+import javafx.event.ActionEvent;
 import javafx.event.Event;
+import javafx.event.EventHandler;
 import javafx.fxml.FXML;
 import javafx.scene.control.*;
 import logic.Person;
+import logic.Standort;
 
 import java.sql.SQLException;
 import java.util.ArrayList;
@@ -15,11 +19,11 @@ public class TraineeInfoCtrl {
     @FXML
     private TextField idField;
     @FXML
-    private TextField nachnameField;
+    private TextFieldLimited nachnameField;
     @FXML
-    private TextField vornameField;
+    private TextFieldLimited vornameField;
     @FXML
-    private TextField standortField;
+    private MenuButton standortField;
     @FXML
     private MenuButton vorkenntnisseMenu;
     @FXML
@@ -59,6 +63,20 @@ public class TraineeInfoCtrl {
         kursListeCtrl = ControllerManager.getKursListeCtrl();
         selectedPerson = traineeListeCtrl.getSelectedPerson();
         dbPerson = new DbPerson();
+
+        DbStandort dbStandort = new DbStandort();
+        try {
+            for(Standort standort : dbStandort.getStandorte()){
+                MenuItem menuItem = new MenuItem(standort.getStandort());
+                menuItem.setOnAction(event -> {
+                    MenuItem source = (MenuItem) event.getSource();
+                    standortField.setText(source.getText());
+                });
+                standortField.getItems().add(menuItem);
+            }
+        } catch (SQLException e) {
+            e.printStackTrace();
+        }
     }
 
     /**
@@ -81,6 +99,7 @@ public class TraineeInfoCtrl {
     }
 
     private void editExistingTrainee() throws SQLException {
+        selectedPerson = ControllerManager.getTraineeListeCtrl().getSelectedPerson();
         setChanges(selectedPerson);
         dbPerson.editPerson(selectedPerson);
     }
@@ -123,6 +142,11 @@ public class TraineeInfoCtrl {
     public void selectVorkenntnisse(Event e) {
         MenuItem item = (MenuItem) e.getSource();
         vorkenntnisseMenu.setText(item.getText());
+    }
+
+    @FXML
+    public void selectStandort(Event e){
+        System.out.println(e);
     }
 
     /**

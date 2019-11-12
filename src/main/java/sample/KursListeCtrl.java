@@ -12,6 +12,7 @@ import logic.Kurs;
 import java.io.IOException;
 import java.sql.SQLException;
 import java.util.ArrayList;
+import java.util.List;
 
 public class KursListeCtrl {
 
@@ -23,7 +24,7 @@ public class KursListeCtrl {
     public void initialize() {
         DbKurs dbKurs = new DbKurs();
         try {
-            ArrayList<Kurs> kursListe = dbKurs.getKursListe();
+            List<Kurs> kursListe = dbKurs.getKursListe();
             ObservableList<Kurs> obsList = FXCollections.observableArrayList(kursListe);
             kursTabelle.setItems(obsList);
             kursTabelle.getSelectionModel().select(0);

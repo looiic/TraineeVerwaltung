@@ -3,7 +3,6 @@ package sample;
 import DatenbankMethoden.DbKurs;
 import DatenbankMethoden.DbPerson;
 import javafx.beans.binding.Bindings;
-import javafx.beans.value.ChangeListener;
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
 import javafx.event.Event;
@@ -15,9 +14,8 @@ import javafx.scene.control.ToggleButton;
 import logic.Kurs;
 import logic.Person;
 
-import java.awt.event.MouseEvent;
 import java.sql.SQLException;
-import java.util.ArrayList;
+import java.util.List;
 
 public class TraineeListeCtrl {
 
@@ -40,12 +38,11 @@ public class TraineeListeCtrl {
     @FXML
     public void initialize() {
         editTrainee.disableProperty().bind(Bindings.isEmpty(tableView.getSelectionModel().getSelectedItems()));
-        //tableView.getSelectionModel().selectedIndexProperty().getValue().bind();
         dbPerson = new DbPerson();
         DbKurs dbKurs = new DbKurs();
 
         try {
-            ArrayList<Person> personenListe = dbPerson.getListPersonen(dbKurs.getKursListe().get(0));
+            List<Person> personenListe = dbPerson.getListPersonen(dbKurs.getKursListe().get(0));
             ObservableList<Person> obsList = FXCollections.observableArrayList(personenListe);
             tableView.setItems(obsList);
         } catch (SQLException e) {
@@ -61,7 +58,7 @@ public class TraineeListeCtrl {
      */
     public void reloadTraineeListe(Kurs kurs) throws SQLException {
         KursInfoCtrl kursInfoCtrl = ControllerManager.getKursInfoCtrl();
-        ArrayList<Person> personenListe = dbPerson.getListPersonen(kurs);
+        List<Person> personenListe = dbPerson.getListPersonen(kurs);
         ObservableList<Person> obsList = FXCollections.observableArrayList(personenListe);
         tableView.setItems(obsList);
         kursInfoCtrl.setAnzahlTeilnehmer(kursInfoCtrl.getSelectedKurs());
