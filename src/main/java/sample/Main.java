@@ -6,9 +6,7 @@ import javafx.scene.Parent;
 import javafx.scene.Scene;
 import javafx.stage.Stage;
 import logic.Connector;
-import logic.Person;
 
-import java.sql.Connection;
 import java.sql.SQLException;
 
 public class Main extends Application {
@@ -21,14 +19,10 @@ public class Main extends Application {
         loader.setController(mainController);
         Parent root = loader.load();
 
-        //Parent root = FXMLLoader.load(getClass().getResource("main.fxml"));
         primaryStage.setTitle("Hello World");
         primaryStage.setScene(new Scene(root));
         primaryStage.setResizable(false);
         primaryStage.show();
-        //test commit Nadine
-        //test commit oliver
-        //test commit pradeep
     }
 
     @Override
@@ -37,6 +31,5 @@ public class Main extends Application {
     }
     public static void main(String[] args) {
         launch(args);
-        new Person();
     }
 }
