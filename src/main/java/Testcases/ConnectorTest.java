@@ -1,6 +1,6 @@
 package Testcases;
 
-import logic.Connector;
+import DatenbankMethoden.Connector;
 import org.junit.*;
 import java.sql.Connection;
 import java.sql.SQLException;
