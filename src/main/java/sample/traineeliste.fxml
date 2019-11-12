@@ -14,6 +14,7 @@
     <HBox fx:id="traineeListeHBox">
         <TableView fx:id="tableView" onMouseClicked="#chooseTrainee" prefHeight="293.0" prefWidth="514.0"
                    GridPane.columnIndex="0" GridPane.rowIndex="1">
+            <columnResizePolicy><TableView fx:constant="CONSTRAINED_RESIZE_POLICY"/></columnResizePolicy>
             <columns>
                 <TableColumn fx:id="id" prefWidth="50.0" text="ID">
                     <cellValueFactory>
