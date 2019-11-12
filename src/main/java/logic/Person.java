@@ -7,7 +7,7 @@ public class Person {
     private String vorname;
     private String nachname;
     private String standort;
-    private int vorkenntnisse;
+    private String vorkenntnisse;
     private int kursId;
 
     public Person() {
@@ -33,7 +33,7 @@ public class Person {
 
     }
 
-    public Person(String vorname, String nachname, String standort, int vorkenntnisse, int kursId) {
+    public Person(String vorname, String nachname, String standort, String vorkenntnisse, int kursId) {
         this.vorname = vorname;
         this.nachname = nachname;
         this.standort = standort;
@@ -41,7 +41,7 @@ public class Person {
         this.kursId = kursId;
     }
 
-    public Person(int id, String vorname, String nachname, String standort, int vorkenntnisse, int kursId) {
+    public Person(int id, String vorname, String nachname, String standort, String vorkenntnisse, int kursId) {
         this.id = id;
         this.vorname = vorname;
         this.nachname = nachname;
@@ -81,11 +81,11 @@ public class Person {
         this.standort = standort;
     }
 
-    public int getVorkenntnisse() {
+    public String getVorkenntnisse() {
         return vorkenntnisse;
     }
 
-    public void setVorkenntnisse(int vorkenntnisse) {
+    public void setVorkenntnisse(String vorkenntnisse) {
         this.vorkenntnisse = vorkenntnisse;
     }
 

@@ -53,7 +53,7 @@ CREATE TABLE `person` (
   `vorname` varchar(50) NOT NULL,
   `nachname` varchar(50) NOT NULL,
   `standort` varchar(50) NOT NULL,
-  `vorkenntnisse` int(11) DEFAULT NULL,
+  `vorkenntnisse` varchar(50) NOT NULL,
   `kurs_id` int(11)
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8;
 
