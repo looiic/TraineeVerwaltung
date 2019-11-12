@@ -5,7 +5,7 @@ import javafx.scene.control.TextField;
 public class TextFieldLimited extends TextField {
     private int maxlength;
     public TextFieldLimited() {
-        this.maxlength = 20;
+        this.maxlength = 50;
     }
     public void setMaxlength(int maxlength) {
         this.maxlength = maxlength;
