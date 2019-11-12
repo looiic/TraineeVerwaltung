@@ -113,7 +113,6 @@ public class TraineeInfoCtrl {
     @FXML
     public void cancelEntry(Event e) throws SQLException {
         resetDisabledState(false);
-
     }
 
     /**
@@ -125,7 +124,6 @@ public class TraineeInfoCtrl {
         MenuItem item = (MenuItem) e.getSource();
         vorkenntnisseMenu.setText(item.getText());
     }
-
 
     /**
      * Übernimmt den UserInput für die ausgewählte Person

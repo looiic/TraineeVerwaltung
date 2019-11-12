@@ -10,6 +10,14 @@ import java.util.ArrayList;
 public class DbKurs {
 
 
+    /**
+     * Holt sich aus der Datenbank trainee_verwaltung alle Elemente
+     * aus der Tabelle kurs, aus diesen werden Kurs-Objekte erstellt,
+     * welche in einer ArrayList<Kurs> gespeichert werden.
+     *
+     * @return ArrayList<Kurs> mit allen Kursen aus der Datenbank
+     * @throws SQLException
+     */
     public ArrayList<Kurs> getKursListe() throws SQLException {
         Statement stmt = null;
         String query =
