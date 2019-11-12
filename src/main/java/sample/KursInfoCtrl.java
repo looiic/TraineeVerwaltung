@@ -108,9 +108,8 @@ public class KursInfoCtrl {
     public void handleLoeschen() {
         if (this.selectedKurs.getId() != 0) {
             DbKurs dbKurs = new DbKurs();
-            Alert alert = new Alert(Alert.AlertType.CONFIRMATION, "Möchten Sie diesen Kurs wirklich löschen?", ButtonType.YES, ButtonType.NO, ButtonType.CANCEL);
-            alert.showAndWait();
-            if (alert.getResult() == ButtonType.YES) {
+            UserWarnung warnung = new UserWarnung("Willst du den kompletten Kurs und alle Teilnehmer wirklich löschen?");
+            if (warnung.getResult() == ButtonType.YES) {
                 try {
                     dbKurs.deleteKurs(this.selectedKurs);
                     ControllerManager.getKursListeCtrl().initialize();
