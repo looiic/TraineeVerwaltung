@@ -1,11 +1,11 @@
 package DatenbankMethoden;
 
-import logic.Connector;
 import logic.Kurs;
 import logic.Person;
 
 import java.sql.*;
 import java.util.ArrayList;
+import java.util.List;
 
 
 public class DbPerson {
@@ -18,12 +18,12 @@ public class DbPerson {
      * @return
      * @throws SQLException
      */
-    public ArrayList<Person> getListPersonen(Kurs kurs) throws SQLException {
+    public List<Person> getListPersonen(Kurs kurs) throws SQLException {
         Statement stmt = null;
         String query =
                 "select id, vorname, nachname, " +
-                        "standort, vorkenntnisse, kurs_id " +
-                        "from trainee_verwaltung.Person where kurs_id=" + kurs.getId();
+                        "fk_standort, vorkenntnisse, fk_kurs_id " +
+                        "from trainee_verwaltung.Person where fk_kurs_id=" + kurs.getId();
 
         ArrayList<Person> personen = new ArrayList<>();
         stmt = Connector.getConn().createStatement();
@@ -32,10 +32,10 @@ public class DbPerson {
             int id = rs.getInt("id");
             String vorname = rs.getString("vorname");
             String nachname = rs.getString("nachname");
-            String standort = rs.getString("standort");
+            String standort = rs.getString("fk_standort");
             String vorkenntnisse = rs.getString("vorkenntnisse");
-            int kurs_id = rs.getInt("kurs_id");
-            personen.add(new Person(id, vorname, nachname, standort, vorkenntnisse, kurs_id));
+            int kursId = rs.getInt("fk_kurs_id");
+            personen.add(new Person(id, vorname, nachname, standort, vorkenntnisse, kursId));
         }
         stmt.close();
         return personen;
@@ -46,7 +46,7 @@ public class DbPerson {
         int newPersonId = 0;
 
         String query = " insert into trainee_verwaltung.person (vorname, nachname, " +
-                "standort, vorkenntnisse, kurs_id) values (?, ?, ?, ?, ?)";
+                "fk_standort, vorkenntnisse, fk_kurs_id) values (?, ?, ?, ?, ?)";
         PreparedStatement preparedStmt = Connector.getConn().prepareStatement(query, Statement.RETURN_GENERATED_KEYS);
         preparedStmt.setString(1, person.getVorname());
         preparedStmt.setString(2, person.getNachname());
@@ -85,7 +85,7 @@ public class DbPerson {
         uprs.updateInt("id", person.getId());                                   //Da wie id wählen?
         uprs.updateString("vorname", person.getVorname());
         uprs.updateString("nachname", person.getNachname());
-        uprs.updateString("standort", person.getStandort());
+        uprs.updateString("fk_standort", person.getStandort());
         uprs.updateString("vorkenntnisse", person.getVorkenntnisse());
         uprs.updateRow();
         uprs.beforeFirst();

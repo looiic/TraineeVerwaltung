@@ -1,9 +1,10 @@
 <?xml version="1.0" encoding="UTF-8"?>
-
+<?import sample.TextFieldLimited.*?>
 <?import java.lang.*?>
 <?import javafx.scene.control.*?>
 <?import javafx.scene.layout.*?>
 
+<?import sample.TextFieldLimited?>
 <AnchorPane xmlns="http://javafx.com/javafx/8" xmlns:fx="http://javafx.com/fxml/1" >
    <children>
        <HBox>
@@ -14,9 +15,13 @@
        <HBox alignment="bottom_right" layoutY="25.0" spacing="10" GridPane.columnIndex="0" GridPane.rowIndex="2">
           <children>
               <TextField fx:id="idField" disable="true" opacity="0.0" prefHeight="25.0" prefWidth="0.0" />
-              <TextField fx:id="nachnameField" disable="true" prefHeight="25.0" prefWidth="120.0" promptText="Nachname" />
-              <TextField fx:id="vornameField" disable="true" prefWidth="120.0" promptText="Vorname" />
-              <TextField fx:id="standortField" disable="true" prefWidth="120.0" promptText="Standort" />
+              <TextFieldLimited fx:id="nachnameField" disable="true" prefHeight="25.0" prefWidth="120.0" promptText="Nachname" />
+              <TextFieldLimited fx:id="vornameField" disable="true" prefWidth="120.0" promptText="Vorname" />
+              <MenuButton fx:id="standortField" disable="true" prefWidth="120.0" text="Standort" onAction="#selectStandort">
+                  <items>
+
+                  </items>
+              </MenuButton>
               <MenuButton fx:id="vorkenntnisseMenu" disable="true" cache="true" prefWidth="120.0" text="Vorkenntnisse">
                   <items>
                       <MenuItem mnemonicParsing="false" text="Keine" onAction="#selectVorkenntnisse" />

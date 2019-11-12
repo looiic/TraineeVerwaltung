@@ -6,6 +6,7 @@
 <?import javafx.scene.layout.*?>
 <?import javafx.scene.text.*?>
 
+<?import sample.TextFieldLimited?>
 <AnchorPane xmlns="http://javafx.com/javafx/8" xmlns:fx="http://javafx.com/fxml/1">
     <children>
         <HBox>
@@ -17,13 +18,13 @@
                                 <Font name="System Bold" size="12.0"/>
                             </font>
                         </Label>
-                        <TextField fx:id="kursField" disable="true"/>
+                        <TextFieldLimited fx:id="kursField" disable="true"/>
                     </HBox>
                 </children>
                 <children>
                     <HBox>
                         <Label prefHeight="25.0" prefWidth="100.0" text="Raum:"/>
-                        <TextField fx:id="raumField" disable="true"/>
+                        <TextFieldLimited fx:id="raumField" disable="true"/>
                     </HBox>
                 </children>
                 <children>

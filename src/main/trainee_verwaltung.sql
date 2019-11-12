@@ -58,21 +58,47 @@ CREATE TABLE `person` (
   `id` int(11) NOT NULL,
   `vorname` varchar(50) NOT NULL,
   `nachname` varchar(50) NOT NULL,
-  `standort` varchar(50) NOT NULL,
+  `fk_standort` varchar(50) NOT NULL,
   `vorkenntnisse` varchar(50) NOT NULL,
-  `kurs_id` int(11)
+  `fk_kurs_id` int(11)
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8;
 
 --
 -- Daten für Tabelle `person`
 --
 
-INSERT INTO `person` (`id`, `vorname`, `nachname`, `standort`, `vorkenntnisse`, `kurs_id`) VALUES
-(1, 'Oliver', 'Wack', 'MANNHEIM', 10, 1),
-(2, 'Nadine', 'Burkert', 'ZURICH', 10, 1),
-(3, 'Pradeep', 'Kadavil', 'ZURICH', 10, 1),
-(4, 'Loïc', 'Jermann', 'BASEL', 10, 1),
-(5, 'Andrada', 'Serban', 'MANNHEIM', 10, 2);
+INSERT INTO `person` (`id`, `vorname`, `nachname`, `fk_standort`, `vorkenntnisse`, `fk_kurs_id`) VALUES
+(1, 'Hansi', 'Hinterseer', 'Istanbul', 'Guru', 1),
+(2, 'DJ', 'Ötzi', 'Istanbul', 'Guru', 1),
+(3, 'Helene', 'Fischer', 'Istanbul', 'Guru', 1),
+(4, 'Andreas', 'Gabalier', 'Istanbul', 'Guru', 1),
+(5, 'Beatrice', 'Egli', 'Istanbul', 'Guru', 2);
+
+
+CREATE TABLE `standort` (
+    `standort` varchar(50) NOT NULL
+) ENGINE=InnoDB DEFAULT CHARSET=utf8;
+
+ALTER TABLE `standort` ADD PRIMARY KEY (`standort`);
+
+INSERT INTO `standort` (`standort`) VALUES
+('Istanbul'),
+('New York'),
+('Berlin'),
+('Mumbai'),
+('Teheran'),
+('Tel Aviv'),
+('Moskau'),
+('Rom'),
+('Bari'),
+('Edinbourgh'),
+('Liverpool'),
+('London'),
+('Nizza'),
+('Stockholm'),
+('Tschappina'),
+('Marrakech');
+
 
 --
 -- Indizes der exportierten Tabellen
@@ -89,7 +115,8 @@ ALTER TABLE `kurs`
 --
 ALTER TABLE `person`
   ADD PRIMARY KEY (`id`),
-  ADD KEY `fk_Person_Kurs` (`kurs_id`);
+  ADD KEY `fk_Person_Kurs` (`fk_kurs_id`),
+  ADD KEY `fk_Person_Standort` (`fk_standort`);
 
 --
 -- AUTO_INCREMENT für exportierte Tabellen
@@ -115,7 +142,11 @@ ALTER TABLE `person`
 -- Constraints der Tabelle `person`
 --
 ALTER TABLE `person`
-  ADD CONSTRAINT `fk_Person_Kurs` FOREIGN KEY (`kurs_id`) REFERENCES `kurs` (`id`);
+  ADD CONSTRAINT `fk_Person_Kurs` FOREIGN KEY (`fk_kurs_id`) REFERENCES `kurs` (`id`);
+
+ALTER TABLE `person`
+  ADD CONSTRAINT `fk_Person_Standort` FOREIGN KEY (`fk_standort`) REFERENCES `standort` (`standort`);
+
 COMMIT;
 
 /*!40101 SET CHARACTER_SET_CLIENT=@OLD_CHARACTER_SET_CLIENT */;

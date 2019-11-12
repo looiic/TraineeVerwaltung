@@ -1,68 +1,115 @@
 package sample;
 
 import DatenbankMethoden.DbPerson;
+import DatenbankMethoden.DbStandort;
+import javafx.event.ActionEvent;
 import javafx.event.Event;
+import javafx.event.EventHandler;
 import javafx.fxml.FXML;
-import javafx.scene.control.Button;
-import javafx.scene.control.MenuButton;
-import javafx.scene.control.MenuItem;
-import javafx.scene.control.TextField;
+import javafx.scene.control.*;
 import logic.Person;
+import logic.Standort;
 
 import java.sql.SQLException;
+import java.util.ArrayList;
+import java.util.List;
 
 public class TraineeInfoCtrl {
 
-    @FXML private TextField idField;
-    @FXML private TextField nachnameField;
-    @FXML private TextField vornameField;
-    @FXML private TextField standortField;
-    @FXML private MenuButton vorkenntnisseMenu;
-    @FXML private TextField kursId;
-    @FXML private Button cancelTrainee;
-    @FXML private Button saveTrainee;
-    @FXML private Button deleteTrainee;
+    @FXML
+    private TextField idField;
+    @FXML
+    private TextFieldLimited nachnameField;
+    @FXML
+    private TextFieldLimited vornameField;
+    @FXML
+    private MenuButton standortField;
+    @FXML
+    private MenuButton vorkenntnisseMenu;
+    @FXML
+    private TextField kursId;
+    @FXML
+    private Button cancelTrainee;
+    @FXML
+    private Button saveTrainee;
+    @FXML
+    private Button deleteTrainee;
 
-
+    /**
+     * Liste aller Controller-Nodes dieses Controllers
+     */
+    List<Control> traineeInfoControllers;
+    private TraineeListeCtrl traineeListeCtrl;
+    private KursInfoCtrl kursInfoCtrl;
+    private KursListeCtrl kursListeCtrl;
+    private Person selectedPerson;
+    private DbPerson dbPerson;
 
     @FXML
     public void initialize() {
+        traineeInfoControllers = new ArrayList<Control>(){
+            {
+                add(nachnameField);
+                add(vornameField);
+                add(standortField);
+                add(vorkenntnisseMenu);
+                add(cancelTrainee);
+                add(saveTrainee);
+                add(deleteTrainee);
+            }
+        };
+        traineeListeCtrl = ControllerManager.getTraineeListeCtrl();
+        kursInfoCtrl = ControllerManager.getKursInfoCtrl();
+        kursListeCtrl = ControllerManager.getKursListeCtrl();
+        selectedPerson = traineeListeCtrl.getSelectedPerson();
+        dbPerson = new DbPerson();
+
+        DbStandort dbStandort = new DbStandort();
+        try {
+            for(Standort standort : dbStandort.getStandorte()){
+                MenuItem menuItem = new MenuItem(standort.getStandort());
+                menuItem.setOnAction(event -> {
+                    MenuItem source = (MenuItem) event.getSource();
+                    standortField.setText(source.getText());
+                });
+                standortField.getItems().add(menuItem);
+            }
+        } catch (SQLException e) {
+            e.printStackTrace();
+        }
     }
 
-
     /**
-     * Speichert den Traineee in der Datenbank. Lädt die TraineeListe neu und gibt andere Felder wieder frei.
+     * Speichert den Trainee in der Datenbank. Lädt die TraineeListe neu und gibt andere Felder wieder frei.
      */
     @FXML
     public void saveEntry(Event e) throws SQLException {
 
-        //Unterscheidung wenn Trainee neu hinzugefügt wird
-
-        TraineeListeCtrl traineeListeCtrl = ControllerManager.getTraineeListeCtrl();
-        KursInfoCtrl kursInfoCtrl = ControllerManager.getKursInfoCtrl();
-        Person selectedPerson = traineeListeCtrl.getSelectedPerson();
-
-        DbPerson dbPerson = new DbPerson();
-
         if (traineeListeCtrl.getAddTrainee().selectedProperty().getValue()) {
-            System.out.println("new person will be generated");
-                selectedPerson = new Person();
-                setChanges(selectedPerson);
-                selectedPerson.setKursId(kursInfoCtrl.getSelectedKurs().getId());
-            dbPerson.addNewPerson(selectedPerson);
-                traineeListeCtrl.getAddTrainee().setSelected(false);
-       }
-            else{
-
-            setChanges(selectedPerson);
-            dbPerson.editPerson(selectedPerson);
+            createNewTrainee();
+        }
+        else
+            {
+                editExistingTrainee();
             }
 
-
         traineeListeCtrl.reloadTraineeListe(kursInfoCtrl.getSelectedKurs());
+        traineeListeCtrl.getAddTrainee().setSelected(false);
         resetDisabledState(false);
     }
 
+    private void editExistingTrainee() throws SQLException {
+        selectedPerson = ControllerManager.getTraineeListeCtrl().getSelectedPerson();
+        setChanges(selectedPerson);
+        dbPerson.editPerson(selectedPerson);
+    }
+
+    private void createNewTrainee() throws SQLException {
+        selectedPerson = new Person();
+        setChanges(selectedPerson);
+        selectedPerson.setKursId(kursInfoCtrl.getSelectedKurs().getId());
+        dbPerson.addNewPerson(selectedPerson);
+    }
 
 
     /**
@@ -70,32 +117,37 @@ public class TraineeInfoCtrl {
      */
     @FXML
     public void deleteEntry(Event e) throws SQLException {
-
-        TraineeListeCtrl traineeListeCtrl = ControllerManager.getTraineeListeCtrl();
-        KursInfoCtrl kursInfoCtrl = ControllerManager.getKursInfoCtrl();
-        DbPerson dbPerson = new DbPerson();
-        dbPerson.deletePerson(traineeListeCtrl.getSelectedPerson());
-
-        traineeListeCtrl.reloadTraineeListe(kursInfoCtrl.getSelectedKurs());
-        resetDisabledState(false);
-
+        String name = traineeListeCtrl.getSelectedPerson().getVorname() + " " + traineeListeCtrl.getSelectedPerson().getNachname();
+        UserWarnung warnung = new UserWarnung("Willst du " + name + " wirklich löschen?");
+        if (warnung.getResult() == ButtonType.YES) {
+            dbPerson.deletePerson(traineeListeCtrl.getSelectedPerson());
+            traineeListeCtrl.reloadTraineeListe(kursInfoCtrl.getSelectedKurs());
+            resetDisabledState(false);
+        }
     }
 
     /**
-     * Bricht die Trainee Bearbeitung ab. Alle Felder außer In TraineeInfo werden wieder freigegeben. Eigene Felder werden wieder disabled.
+     * Bricht die Trainee Bearbeitung ab. Gibt andere Felder wieder frei.
      */
     @FXML
     public void cancelEntry(Event e) throws SQLException {
         resetDisabledState(false);
-
     }
 
+    /**
+     * Schreibt den Text des gewählten Items in den MenuButton
+     * @param e
+     */
     @FXML
     public void selectVorkenntnisse(Event e) {
-        MenuItem item = (MenuItem)e.getSource();
+        MenuItem item = (MenuItem) e.getSource();
         vorkenntnisseMenu.setText(item.getText());
     }
 
+    @FXML
+    public void selectStandort(Event e){
+        System.out.println(e);
+    }
 
     /**
      * Übernimmt den UserInput für die ausgewählte Person
@@ -109,23 +161,20 @@ public class TraineeInfoCtrl {
         selectedPerson.setVorkenntnisse(vorkenntnisseMenu.getText());
     }
 
+    /**
+     * Reaktiviert andere Control(s) und deaktiviert die eigenen.
+     * @param bool
+     */
     private void resetDisabledState(boolean bool) {
-        TraineeListeCtrl traineeListeCtrl = ControllerManager.getTraineeListeCtrl();
         traineeListeCtrl.setTraineeListDisabled(bool);
-
-        setTraineeInfoDisabled(!bool);
-
-        KursInfoCtrl kursInfoCtrl = ControllerManager.getKursInfoCtrl();
-        kursInfoCtrl.setKursInfoDisabled(bool);
-
-        KursListeCtrl kursListeCtrl = ControllerManager.getKursListeCtrl();
         kursListeCtrl.setKursListeDisabled(bool);
+        setTraineeInfoDisabled(!bool);
     }
 
     /**
-     * Überschreibt die Felder mit der selektierten Person
+     * Leert die Felder wo ein Trainee bearbeitet werden kann
      */
-    public void setTraineeInfos() {
+    public void clearTraineeInfos() {
         nachnameField.setText("");
         vornameField.setText("");
         vorkenntnisseMenu.setText("Vorkenntnisse");
@@ -144,16 +193,15 @@ public class TraineeInfoCtrl {
         standortField.setText(selectedPerson.getStandort());
     }
 
+    /**
+     * Deaktiviert alle eigenen Control(s)
+     *
+     * @param bool
+     */
     public void setTraineeInfoDisabled(boolean bool) {
-        idField.setDisable(bool);
-        nachnameField.setDisable(bool);
-        vornameField.setDisable(bool);
-        standortField.setDisable(bool);
-        vorkenntnisseMenu.setDisable(bool);
-        kursId.setDisable(bool);
-        cancelTrainee.setDisable(bool);
-        saveTrainee.setDisable(bool);
-        deleteTrainee.setDisable(bool);
+        for (Control node : traineeInfoControllers) {
+            node.setDisable(bool);
+        }
     }
 
     public void handleDeleteTraineeButton(boolean bool) {

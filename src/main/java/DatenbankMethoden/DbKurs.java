@@ -1,17 +1,25 @@
 package DatenbankMethoden;
 
 
-import logic.Connector;
 import logic.Kurs;
 import logic.Person;
 import java.sql.*;
 import java.util.ArrayList;
+import java.util.List;
 
 
 public class DbKurs {
 
 
-    public ArrayList<Kurs> getKursListe() throws SQLException {
+    /**
+     * Holt sich aus der Datenbank trainee_verwaltung alle Elemente
+     * aus der Tabelle kurs, aus diesen werden Kurs-Objekte erstellt,
+     * welche in einer ArrayList<Kurs> gespeichert werden.
+     *
+     * @return ArrayList<Kurs> mit allen Kursen aus der Datenbank
+     * @throws SQLException
+     */
+    public List<Kurs> getKursListe() throws SQLException {
         Statement stmt = null;
         String query =
                 "select * from trainee_verwaltung.kurs;";
@@ -94,7 +102,7 @@ public class DbKurs {
 
     private void deleteAllTraineesFromKurs(Kurs kurs) throws SQLException {
         DbPerson dbPerson = new DbPerson();
-        ArrayList<Person> personen = dbPerson.getListPersonen(kurs);
+        List<Person> personen = dbPerson.getListPersonen(kurs);
         for (Person person : personen) {
             dbPerson.deletePerson(person);
         }
