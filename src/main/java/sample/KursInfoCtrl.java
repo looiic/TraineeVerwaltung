@@ -1,6 +1,10 @@
 package sample;
 
 import DatenbankMethoden.DbKurs;
+import DatenbankMethoden.DbPerson;
+import javafx.beans.property.IntegerProperty;
+import javafx.beans.property.SimpleStringProperty;
+import javafx.beans.property.StringProperty;
 import javafx.fxml.FXML;
 import javafx.scene.control.Alert;
 import javafx.scene.control.Button;
@@ -9,6 +13,7 @@ import javafx.scene.control.TextField;
 import logic.Kurs;
 
 import java.sql.SQLException;
+import java.util.ArrayList;
 
 public class KursInfoCtrl {
 
@@ -30,22 +35,35 @@ public class KursInfoCtrl {
     private Button btnAbbrechen;
 
     private Kurs selectedKurs;
+    StringProperty anzahlTeilnehmer = new SimpleStringProperty();
+
+    public KursInfoCtrl() {
+    }
 
     @FXML
-    public void initialize() {
+    public void initialize() throws SQLException {
         Kurs selectedKurs = ControllerManager.getKursListeCtrl().getSelectedKurs();
+
+        anzahlTN.textProperty().bind(setAnzahlTeilnehmer(selectedKurs));
         if(selectedKurs != null){
             setKursInfos(selectedKurs);
         }
     }
 
+    public StringProperty setAnzahlTeilnehmer(Kurs selectedKurs) throws SQLException {
+        DbPerson dbPerson = new DbPerson();
+        Integer temp = dbPerson.getListPersonen(selectedKurs).size();
+        anzahlTeilnehmer.setValue(temp.toString());
+        return anzahlTeilnehmer;
+    }
+
     @FXML
-    public void setKursInfos(Kurs kurs) {
+    public void setKursInfos(Kurs kurs) throws SQLException {
         selectedKurs = kurs;
 
         kursField.setText(kurs.getJahrgang());
         raumField.setText(kurs.getRaum());
-        anzahlTN.setText("");
+        setAnzahlTeilnehmer(selectedKurs);
 
     }
 
@@ -62,6 +80,7 @@ public class KursInfoCtrl {
     @FXML
     public void handleBearbeiten() {
         resetDisabledState(true);
+        btnBearbeiten.setDisable(true);
     }
 
     @FXML
