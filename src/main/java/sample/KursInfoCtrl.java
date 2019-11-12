@@ -33,18 +33,15 @@ public class KursInfoCtrl {
 
     @FXML
     public void initialize() {
-        btnBearbeiten.setVisible(false);
-        btnSpeichern.setVisible(false);
-        btnLoeschen.setVisible(false);
-        btnAbbrechen.setVisible(false);
+        setKursInfos(ControllerManager.getKursListeCtrl().getSelectedKurs());
+        setReadMode();
     }
 
     @FXML
     public void setKursInfos(Kurs kurs) {
         selectedKurs = kurs;
 
-        btnBearbeiten.setVisible(true);
-        btnLoeschen.setVisible(true);
+        setReadMode();
         kursField.setText(kurs.getJahrgang());
         raumField.setText(kurs.getRaum());
         anzahlTN.setText("");
@@ -58,34 +55,17 @@ public class KursInfoCtrl {
         raumField.clear();
         ControllerManager.getTraineeListeCtrl().clearTable();
 
-        btnBearbeiten.setVisible(false);
-        btnAbbrechen.setVisible(true);
-        btnSpeichern.setVisible(true);
-
-        kursField.setDisable(false);
-        raumField.setDisable(false);
+        setEditMode();
     }
 
     @FXML
     public void handleBearbeiten() {
-        btnBearbeiten.setVisible(false);
-        btnLoeschen.setVisible(false);
-        btnAbbrechen.setVisible(true);
-        btnSpeichern.setVisible(true);
-
-        kursField.setDisable(false);
-        raumField.setDisable(false);
+        setEditMode();
     }
 
     @FXML
     public void handleSpeichern() {
-        btnBearbeiten.setVisible(true);
-        btnLoeschen.setVisible(true);
-        btnAbbrechen.setVisible(false);
-        btnSpeichern.setVisible(false);
-
-        kursField.setDisable(true);
-        raumField.setDisable(true);
+        setReadMode();
 
         DbKurs dbKurs = new DbKurs();
         this.selectedKurs.setJahrgang(kursField.getText());
@@ -123,13 +103,9 @@ public class KursInfoCtrl {
 
     @FXML
     public void handleAbbrechen() {
-        btnBearbeiten.setVisible(true);
-        btnLoeschen.setVisible(true);
-        btnAbbrechen.setVisible(false);
-        btnSpeichern.setVisible(false);
+        setReadMode();
 
-        kursField.setDisable(true);
-        raumField.setDisable(true);
+
         DbKurs dbKurs = new DbKurs();
         try {
             if (this.selectedKurs.getId() == 0) {
@@ -156,4 +132,26 @@ public class KursInfoCtrl {
     public Kurs getSelectedKurs() {
         return this.selectedKurs;
     }
+
+
+    private void setEditMode() {
+        btnBearbeiten.setVisible(false);
+        btnLoeschen.setVisible(false);
+        btnAbbrechen.setVisible(true);
+        btnSpeichern.setVisible(true);
+
+        kursField.setDisable(false);
+        raumField.setDisable(false);
+    }
+
+    private void setReadMode() {
+        btnBearbeiten.setVisible(true);
+        btnLoeschen.setVisible(true);
+        btnAbbrechen.setVisible(false);
+        btnSpeichern.setVisible(false);
+
+        kursField.setDisable(true);
+        raumField.setDisable(true);
+    }
+
 }

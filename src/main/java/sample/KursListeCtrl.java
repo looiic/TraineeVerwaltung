@@ -5,10 +5,8 @@ import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
 import javafx.event.Event;
 import javafx.fxml.FXML;
-import javafx.fxml.FXMLLoader;
 import javafx.scene.control.Button;
 import javafx.scene.control.TableView;
-import javafx.scene.layout.Pane;
 import logic.Kurs;
 
 import java.io.IOException;
@@ -29,11 +27,6 @@ public class KursListeCtrl {
             ObservableList<Kurs> obsList = FXCollections.observableArrayList(kursListe);
             kursTabelle.setItems(obsList);
             kursTabelle.getSelectionModel().select(0);
-            Kurs selectedKurs = (Kurs) kursTabelle.getSelectionModel().getSelectedItem();
-
-            KursInfoCtrl kursInfoCtrl = ControllerManager.getKursInfoCtrl();
-            System.out.println(selectedKurs.getJahrgang());
-            // kursInfoCtrl.setKursInfos(selectedKurs);  /...warum funktioniert das nicht?
 
         } catch (
                 SQLException e) {
@@ -71,4 +64,14 @@ public class KursListeCtrl {
         kursTabelle.setDisable(b);
         addKurs.setDisable(b);
     }
+
+    public Kurs getSelectedKurs(){
+        Object selectedItem = kursTabelle.getSelectionModel().getSelectedItem();
+        if(selectedItem instanceof Kurs){
+            return (Kurs) selectedItem;
+        }else{
+            return null;
+        }
+    }
+
 }

@@ -1,16 +1,14 @@
 package DatenbankMethoden;
 
-import javafx.animation.ScaleTransition;
+
 import logic.Connector;
 import logic.Kurs;
 import logic.Person;
-import logic.Standort;
-
 import java.sql.*;
 import java.util.ArrayList;
-import java.util.List;
 
-import DatenbankMethoden.DbPerson;
+
+
 
 //ToDo: Aktuelles Problem: Die KursListe ist nicht immer konsistent mit der DB. Dies kann eine Fehleranfälligkeit sein!
 
