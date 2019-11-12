@@ -18,6 +18,12 @@ SET time_zone = "+00:00";
 /*!40101 SET @OLD_COLLATION_CONNECTION=@@COLLATION_CONNECTION */;
 /*!40101 SET NAMES utf8mb4 */;
 
+
+drop database if exists trainee_verwaltung;
+create DATABASE trainee_verwaltung;
+
+use trainee_verwaltung;
+
 --
 -- Datenbank: `trainee_verwaltung`
 --
