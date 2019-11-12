@@ -46,9 +46,44 @@ public class DbPerson {
                 String vorname = rs.getString("vorname");
                 String nachname = rs.getString("nachname");
                 String standort = rs.getString("standort");
-                int vorkenntnisse = rs.getInt("vorkenntnisse");
-                int kursId = rs.getInt("kurs_id");
-                personen.add(new Person(id, vorname, nachname, standort, vorkenntnisse, kursId));
+                String vorkenntnisse = rs.getString("vorkenntnisse");
+                int kurs_id = rs.getInt("kurs_id");
+                personen.add(new Person(id, vorname, nachname, standort, vorkenntnisse, kurs_id));
+            }
+        } catch (SQLException e) {
+            System.out.println(e);
+        } finally {
+            if (stmt != null) {
+                stmt.close();
+            }
+        }
+        return personen;
+    }
+
+    /**
+     * Lade alle Personen..vllt unnötig
+     * @return
+     * @throws SQLException
+     */
+    public ArrayList<Person> getListPersonen() throws SQLException {
+        Statement stmt = null;
+        String query =
+                "select id, vorname, nachname, " +
+                        "standort, vorkenntnisse, kurs_id " +
+                        "from trainee_verwaltung.Person";
+
+        ArrayList<Person> personen = new ArrayList<>();
+        try {
+            stmt = Connector.getConn().createStatement();
+            ResultSet rs = stmt.executeQuery(query);
+            while (rs.next()) {
+                int id = rs.getInt("id");
+                String vorname = rs.getString("vorname");
+                String nachname = rs.getString("nachname");
+                String standort = rs.getString("standort");
+                String vorkenntnisse = rs.getString("vorkenntnisse");
+                int kurs_id = rs.getInt("kurs_id");
+                personen.add(new Person(id, vorname, nachname, standort, vorkenntnisse, kurs_id));
             }
         } catch (SQLException e) {
             System.out.println(e);
@@ -69,7 +104,7 @@ public class DbPerson {
         preparedStmt.setString(1, person.getVorname());
         preparedStmt.setString(2, person.getNachname());
         preparedStmt.setString(3, person.getStandort());
-        preparedStmt.setInt(4, person.getVorkenntnisse());
+        preparedStmt.setString(4, person.getVorkenntnisse());
         preparedStmt.setInt(5, person.getKursId());
 
         preparedStmt.executeUpdate();
@@ -78,6 +113,7 @@ public class DbPerson {
         if (resultSet.next()) {
             newPersonId = resultSet.getInt(1);
         }
+
         preparedStmt.close();
         return newPersonId;
     }
@@ -102,7 +138,7 @@ public class DbPerson {
                 uprs.updateString("vorname", person.getVorname());
                 uprs.updateString("nachname", person.getNachname());
                 uprs.updateString("standort", person.getStandort());
-                uprs.updateInt("vorkenntnisse", person.getVorkenntnisse());
+                uprs.updateString("vorkenntnisse", person.getVorkenntnisse());
                 uprs.updateRow();
                 uprs.beforeFirst();
         } catch (SQLException e ) {
@@ -111,6 +147,7 @@ public class DbPerson {
             if (stmt != null) { stmt.close(); }
         }
     }
+
 
     public static void deletePerson(Person person) throws SQLException {
         Statement stmt = null;
@@ -121,10 +158,14 @@ public class DbPerson {
             stmt.executeQuery(
                     "delete FROM " + "trainee_verwaltung" +
                             ".Person where Person.id ="+person.getId());
+
+
         } catch (SQLException e ) {
             System.out.println(e);
         } finally {
             if (stmt != null) { stmt.close(); }
         }
     }
+
+
 }
