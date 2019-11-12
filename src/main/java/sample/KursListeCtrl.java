@@ -5,6 +5,7 @@ import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
 import javafx.event.Event;
 import javafx.fxml.FXML;
+import javafx.scene.control.Alert;
 import javafx.scene.control.Button;
 import javafx.scene.control.TableView;
 import logic.Kurs;
@@ -19,7 +20,10 @@ public class KursListeCtrl {
     @FXML private TableView kursTabelle;
     @FXML private Button addKurs;
 
-
+    /**
+     * in einer Tabelle werden die bestehenden Kurse aus der Datenbank geladen.
+     * Exception Handling: Falls keine initiale Verbindung zur Datenbank hergestellt werden kann, zeigt Popup-Fenster die Fehlermeldung an
+     */
     @FXML
     public void initialize() {
         DbKurs dbKurs = new DbKurs();
@@ -29,13 +33,12 @@ public class KursListeCtrl {
             kursTabelle.setItems(obsList);
             kursTabelle.getSelectionModel().select(0);
 
-        } catch (
-                SQLException e) {
-            e.printStackTrace();
+        } catch (SQLException e) {
+            Alert error = new Alert(Alert.AlertType.ERROR);
+            error.setContentText("Folgender Fehler ist aufgetreten:" + "\n\n" + e.getMessage());
+            error.showAndWait();
         }
-
     }
-
 
     @FXML
     public void eventNeuerKurs(){
