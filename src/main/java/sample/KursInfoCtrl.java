@@ -127,6 +127,7 @@ public class KursInfoCtrl {
         btnAbbrechen.setDisable(b);
         btnBearbeiten.setDisable(b);
         btnSpeichern.setDisable(b);
+        btnLoeschen.setDisable(b);
     }
 
     public Kurs getSelectedKurs() {
