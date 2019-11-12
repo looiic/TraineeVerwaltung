@@ -8,7 +8,6 @@ import javafx.scene.control.MenuButton;
 import javafx.scene.control.MenuItem;
 import javafx.scene.control.TextField;
 import logic.Person;
-import logic.Vorkenntnisse;
 
 import java.sql.SQLException;
 
@@ -43,19 +42,20 @@ public class TraineeInfoCtrl {
         KursInfoCtrl kursInfoCtrl = ControllerManager.getKursInfoCtrl();
         Person selectedPerson = traineeListeCtrl.getSelectedPerson();
 
+        DbPerson dbPerson = new DbPerson();
 
         if (traineeListeCtrl.getAddTrainee().selectedProperty().getValue()) {
             System.out.println("new person will be generated");
                 selectedPerson = new Person();
                 setChanges(selectedPerson);
                 selectedPerson.setKursId(kursInfoCtrl.getSelectedKurs().getId());
-                DbPerson.addNewPerson(selectedPerson);
+            dbPerson.addNewPerson(selectedPerson);
                 traineeListeCtrl.getAddTrainee().setSelected(false);
        }
             else{
 
             setChanges(selectedPerson);
-            DbPerson.editPerson(selectedPerson);
+            dbPerson.editPerson(selectedPerson);
             }
 
 
@@ -73,8 +73,8 @@ public class TraineeInfoCtrl {
 
         TraineeListeCtrl traineeListeCtrl = ControllerManager.getTraineeListeCtrl();
         KursInfoCtrl kursInfoCtrl = ControllerManager.getKursInfoCtrl();
-
-        DbPerson.deletePerson(traineeListeCtrl.getSelectedPerson());
+        DbPerson dbPerson = new DbPerson();
+        dbPerson.deletePerson(traineeListeCtrl.getSelectedPerson());
 
         traineeListeCtrl.reloadTraineeListe(kursInfoCtrl.getSelectedKurs());
         resetDisabledState();
