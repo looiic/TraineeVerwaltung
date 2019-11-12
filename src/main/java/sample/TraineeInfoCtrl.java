@@ -31,7 +31,7 @@ public class TraineeInfoCtrl {
 
 
     /**
-     * Speichert den Traineee in der Datenbank. Läd die TraineeListe neu und gibt andere Felder wieder frei.
+     * Speichert den Traineee in der Datenbank. Lädt die TraineeListe neu und gibt andere Felder wieder frei.
      */
     @FXML
     public void saveEntry(Event e) throws SQLException {
@@ -60,7 +60,7 @@ public class TraineeInfoCtrl {
 
 
         traineeListeCtrl.reloadTraineeListe(kursInfoCtrl.getSelectedKurs());
-        resetDisabledState();
+        resetDisabledState(false);
     }
 
 
@@ -77,7 +77,7 @@ public class TraineeInfoCtrl {
         dbPerson.deletePerson(traineeListeCtrl.getSelectedPerson());
 
         traineeListeCtrl.reloadTraineeListe(kursInfoCtrl.getSelectedKurs());
-        resetDisabledState();
+        resetDisabledState(false);
 
     }
 
@@ -86,7 +86,7 @@ public class TraineeInfoCtrl {
      */
     @FXML
     public void cancelEntry(Event e) throws SQLException {
-        resetDisabledState();
+        resetDisabledState(false);
 
     }
 
@@ -109,17 +109,17 @@ public class TraineeInfoCtrl {
         selectedPerson.setVorkenntnisse(vorkenntnisseMenu.getText());
     }
 
-    private void resetDisabledState() {
+    private void resetDisabledState(boolean bool) {
         TraineeListeCtrl traineeListeCtrl = ControllerManager.getTraineeListeCtrl();
-        traineeListeCtrl.setTraineeListDisabled(false);
+        traineeListeCtrl.setTraineeListDisabled(bool);
 
-        setTraineeInfoDisabled(true);
+        setTraineeInfoDisabled(!bool);
 
         KursInfoCtrl kursInfoCtrl = ControllerManager.getKursInfoCtrl();
-        kursInfoCtrl.setKursInfoDisabled(false);
+        kursInfoCtrl.setKursInfoDisabled(bool);
 
         KursListeCtrl kursListeCtrl = ControllerManager.getKursListeCtrl();
-        kursListeCtrl.setKursListeDisabled(false);
+        kursListeCtrl.setKursListeDisabled(bool);
     }
 
     /**
@@ -153,6 +153,10 @@ public class TraineeInfoCtrl {
         kursId.setDisable(bool);
         cancelTrainee.setDisable(bool);
         saveTrainee.setDisable(bool);
+        deleteTrainee.setDisable(bool);
+    }
+
+    public void handleDeleteTraineeButton(boolean bool) {
         deleteTrainee.setDisable(bool);
     }
 }

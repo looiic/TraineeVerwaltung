@@ -40,6 +40,7 @@ public class TraineeListeCtrl {
     @FXML
     public void initialize() {
         editTrainee.disableProperty().bind(Bindings.isEmpty(tableView.getSelectionModel().getSelectedItems()));
+        //tableView.getSelectionModel().selectedIndexProperty().getValue().bind();
         dbPerson = new DbPerson();
         DbKurs dbKurs = new DbKurs();
 
@@ -59,9 +60,11 @@ public class TraineeListeCtrl {
      * @throws SQLException
      */
     public void reloadTraineeListe(Kurs kurs) throws SQLException {
+        KursInfoCtrl kursInfoCtrl = ControllerManager.getKursInfoCtrl();
         ArrayList<Person> personenListe = dbPerson.getListPersonen(kurs);
         ObservableList<Person> obsList = FXCollections.observableArrayList(personenListe);
         tableView.setItems(obsList);
+        kursInfoCtrl.setAnzahlTeilnehmer(kursInfoCtrl.getSelectedKurs());
     }
 
 
@@ -76,7 +79,7 @@ public class TraineeListeCtrl {
     }
 
     /**
-     * Erstellt einen neues Trainee-Objekt. Alles weitere passiert später
+     * Erstellt einen neues Trainee-Objekt. Deaktiviert den Löschen-Button. Alles weitere passiert später
      */
     @FXML
     public void addTrainee(Event e) throws SQLException {
@@ -84,6 +87,7 @@ public class TraineeListeCtrl {
         personInfoCtrl.setTraineeInfos();
         tableView.getSelectionModel().clearSelection();
         setEnabledState();
+        personInfoCtrl.handleDeleteTraineeButton(true);
     }
 
 
@@ -110,11 +114,15 @@ public class TraineeListeCtrl {
 
         KursListeCtrl kursListeCtrl = ControllerManager.getKursListeCtrl();
         kursListeCtrl.setKursListeDisabled(true);
+
+
     }
 
     public void setTraineeListDisabled(boolean bool){
         tableView.setDisable(bool);
         addTrainee.setDisable(bool);
+        //editTrainee.setDisable(bool);
+        tableView.getSelectionModel().clearSelection();
     }
 
     public void clearTable() {

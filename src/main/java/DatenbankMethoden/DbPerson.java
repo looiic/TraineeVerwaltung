@@ -40,34 +40,6 @@ public class DbPerson {
         return personen;
     }
 
-    /**
-     * Lade alle Personen..vllt unnötig
-     *
-     * @return
-     * @throws SQLException
-     */
-    public ArrayList<Person> getListPersonen() throws SQLException {
-        Statement stmt = null;
-        String query =
-                "select id, vorname, nachname, " +
-                        "standort, vorkenntnisse, kurs_id " +
-                        "from trainee_verwaltung.Person";
-
-        ArrayList<Person> personen = new ArrayList<>();
-        stmt = Connector.getConn().createStatement();
-        ResultSet rs = stmt.executeQuery(query);
-        while (rs.next()) {
-            int id = rs.getInt("id");
-            String vorname = rs.getString("vorname");
-            String nachname = rs.getString("nachname");
-            String standort = rs.getString("standort");
-            String vorkenntnisse = rs.getString("vorkenntnisse");
-            int kurs_id = rs.getInt("kurs_id");
-            personen.add(new Person(id, vorname, nachname, standort, vorkenntnisse, kurs_id));
-        }
-        stmt.close();
-        return personen;
-    }
 
     public int addNewPerson(Person person) throws SQLException {
         int newPersonId = 0;
@@ -118,8 +90,7 @@ public class DbPerson {
         uprs.beforeFirst();
         stmt.close();
     }
-
-
+    
     public void deletePerson(Person person) throws SQLException {
         Statement stmt = null;
         stmt = Connector.getConn().createStatement(ResultSet.TYPE_SCROLL_SENSITIVE,

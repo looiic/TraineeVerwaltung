@@ -10,6 +10,7 @@
     <VBox>
         <Button fx:id="addKurs" text="Kurs hinzufügen" onMouseClicked="#eventNeuerKurs"/>
         <TableView fx:id="kursTabelle" onMouseClicked="#handleMouseClick">
+            <columnResizePolicy><TableView fx:constant="CONSTRAINED_RESIZE_POLICY"/></columnResizePolicy>
             <columns>
                 <TableColumn fx:id="id" prefWidth="100.0" text="Kurse">
                     <cellValueFactory>
