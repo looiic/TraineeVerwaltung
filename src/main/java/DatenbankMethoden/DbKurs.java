@@ -8,46 +8,8 @@ import java.sql.*;
 import java.util.ArrayList;
 
 
-
-
-//ToDo: Aktuelles Problem: Die KursListe ist nicht immer konsistent mit der DB. Dies kann eine Fehleranfälligkeit sein!
-
-
 public class DbKurs {
 
-    public static void main(String[] args) throws SQLException {
-        new DbKurs().testMethodePradeep();
-    }
-
-    private void testMethodePradeep() throws SQLException {
-        ArrayList<Kurs> kursListe = getKursListe();
-        printKursListe(kursListe);
-        System.out.println("Kurs wird hinzugefügt:");
-        createKurs(new Kurs("2021-01", "Frauenfeld"));
-        kursListe = getKursListe();
-        printAllPersonenNachKurs();
-        deleteKurs(kursListe.get(0));
-        printAllPersonenNachKurs();
-
-    }
-
-    private void printAllPersonenNachKurs() throws SQLException {
-        DbPerson dbPerson = new DbPerson();
-        ArrayList<Kurs> kursListe;
-        kursListe = getKursListe();
-        for (Kurs kurs : kursListe){
-            System.out.println("Neuer Kurs");
-            dbPerson.printPersonenListe(dbPerson.getListPersonen(kurs));
-        }
-    }
-
-    private void printKursListe(ArrayList<Kurs> kurse) {
-        for (Kurs kurs : kurse) {
-            System.out.println("id: " + kurs.getId());
-            System.out.println("Jahrgang: " + kurs.getJahrgang());
-            System.out.println("Raum: " + kurs.getRaum());
-        }
-    }
 
     public ArrayList<Kurs> getKursListe() throws SQLException {
         Statement stmt = null;
@@ -65,7 +27,6 @@ public class DbKurs {
             kursListe.add(new Kurs(id, jahrgang, raum));
         }
         stmt.close();
-
 
         return kursListe;
     }

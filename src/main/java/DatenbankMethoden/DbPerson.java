@@ -3,29 +3,17 @@ package DatenbankMethoden;
 import logic.Connector;
 import logic.Kurs;
 import logic.Person;
-import logic.Standort;
 
 import java.sql.*;
 import java.util.ArrayList;
-import java.util.List;
 
-//ToDo: Aktuelles Problem: Die PersonenListe ist nicht immer konsistent mit der DB. Dies kann eine Fehleranfälligkeit sein!
 
 public class DbPerson {
 
-    static void printPersonenListe(ArrayList<Person> personen) throws SQLException {
-        for (Person person : personen) {
-            System.out.println("Vorkentnisse: " + person.getVorkenntnisse());
-            System.out.println("Standort: " + person.getStandort());
-            System.out.println("Nachname: " + person.getNachname());
-            System.out.println("Vorname: " + person.getVorname());
-            System.out.println("Id: " + person.getId());
-            System.out.println("KursId: " + person.getKursId());
-        }
-    }
 
     /**
      * Lade alle Personen aus einem Kurs.
+     *
      * @param kurs
      * @return
      * @throws SQLException
@@ -35,33 +23,27 @@ public class DbPerson {
         String query =
                 "select id, vorname, nachname, " +
                         "standort, vorkenntnisse, kurs_id " +
-                        "from trainee_verwaltung.Person where kurs_id="+kurs.getId();
+                        "from trainee_verwaltung.Person where kurs_id=" + kurs.getId();
 
         ArrayList<Person> personen = new ArrayList<>();
-        try {
-            stmt = Connector.getConn().createStatement();
-            ResultSet rs = stmt.executeQuery(query);
-            while (rs.next()) {
-                int id = rs.getInt("id");
-                String vorname = rs.getString("vorname");
-                String nachname = rs.getString("nachname");
-                String standort = rs.getString("standort");
-                String vorkenntnisse = rs.getString("vorkenntnisse");
-                int kurs_id = rs.getInt("kurs_id");
-                personen.add(new Person(id, vorname, nachname, standort, vorkenntnisse, kurs_id));
-            }
-        } catch (SQLException e) {
-            System.out.println(e);
-        } finally {
-            if (stmt != null) {
-                stmt.close();
-            }
+        stmt = Connector.getConn().createStatement();
+        ResultSet rs = stmt.executeQuery(query);
+        while (rs.next()) {
+            int id = rs.getInt("id");
+            String vorname = rs.getString("vorname");
+            String nachname = rs.getString("nachname");
+            String standort = rs.getString("standort");
+            String vorkenntnisse = rs.getString("vorkenntnisse");
+            int kurs_id = rs.getInt("kurs_id");
+            personen.add(new Person(id, vorname, nachname, standort, vorkenntnisse, kurs_id));
         }
+        stmt.close();
         return personen;
     }
 
     /**
      * Lade alle Personen..vllt unnötig
+     *
      * @return
      * @throws SQLException
      */
@@ -73,29 +55,22 @@ public class DbPerson {
                         "from trainee_verwaltung.Person";
 
         ArrayList<Person> personen = new ArrayList<>();
-        try {
-            stmt = Connector.getConn().createStatement();
-            ResultSet rs = stmt.executeQuery(query);
-            while (rs.next()) {
-                int id = rs.getInt("id");
-                String vorname = rs.getString("vorname");
-                String nachname = rs.getString("nachname");
-                String standort = rs.getString("standort");
-                String vorkenntnisse = rs.getString("vorkenntnisse");
-                int kurs_id = rs.getInt("kurs_id");
-                personen.add(new Person(id, vorname, nachname, standort, vorkenntnisse, kurs_id));
-            }
-        } catch (SQLException e) {
-            System.out.println(e);
-        } finally {
-            if (stmt != null) {
-                stmt.close();
-            }
+        stmt = Connector.getConn().createStatement();
+        ResultSet rs = stmt.executeQuery(query);
+        while (rs.next()) {
+            int id = rs.getInt("id");
+            String vorname = rs.getString("vorname");
+            String nachname = rs.getString("nachname");
+            String standort = rs.getString("standort");
+            String vorkenntnisse = rs.getString("vorkenntnisse");
+            int kurs_id = rs.getInt("kurs_id");
+            personen.add(new Person(id, vorname, nachname, standort, vorkenntnisse, kurs_id));
         }
+        stmt.close();
         return personen;
     }
 
-    public static int addNewPerson(Person person) throws SQLException {
+    public int addNewPerson(Person person) throws SQLException {
         int newPersonId = 0;
 
         String query = " insert into trainee_verwaltung.person (vorname, nachname, " +
@@ -118,53 +93,45 @@ public class DbPerson {
         return newPersonId;
     }
 
-    /**Gib die Person, wie sie in der Datenbank sein sollte. Über die id der Person
+    /**
+     * Gib die Person, wie sie in der Datenbank sein sollte. Über die id der Person
      * wird die richtige Person mit den Werten im Objekt Person.
+     *
      * @param person
      * @throws SQLException
      */
-    public static void editPerson(Person person) throws SQLException {
+    public void editPerson(Person person) throws SQLException {
         Statement stmt = null;
-        try {
-            stmt = Connector.getConn().createStatement(ResultSet.TYPE_SCROLL_SENSITIVE,
-                    ResultSet.CONCUR_UPDATABLE);
-            ResultSet uprs = stmt.executeQuery(
-                    "select * " +
-                            "from trainee_verwaltung.Person" + " WHERE Person.id=" + person.getId()+";");
+        stmt = Connector.getConn().createStatement(ResultSet.TYPE_SCROLL_SENSITIVE,
+                ResultSet.CONCUR_UPDATABLE);
+        ResultSet uprs = stmt.executeQuery(
+                "select * " +
+                        "from trainee_verwaltung.Person" + " WHERE Person.id=" + person.getId() + ";");
 
-            //Bewege cursor zum element, welches geändert werden soll.
-                uprs.next();
-                uprs.updateInt("id", person.getId());                                   //Da wie id wählen?
-                uprs.updateString("vorname", person.getVorname());
-                uprs.updateString("nachname", person.getNachname());
-                uprs.updateString("standort", person.getStandort());
-                uprs.updateString("vorkenntnisse", person.getVorkenntnisse());
-                uprs.updateRow();
-                uprs.beforeFirst();
-        } catch (SQLException e ) {
-            System.out.println(e);
-        } finally {
-            if (stmt != null) { stmt.close(); }
-        }
+        //Bewege cursor zum element, welches geändert werden soll.
+        uprs.next();
+        uprs.updateInt("id", person.getId());                                   //Da wie id wählen?
+        uprs.updateString("vorname", person.getVorname());
+        uprs.updateString("nachname", person.getNachname());
+        uprs.updateString("standort", person.getStandort());
+        uprs.updateString("vorkenntnisse", person.getVorkenntnisse());
+        uprs.updateRow();
+        uprs.beforeFirst();
+        stmt.close();
     }
 
 
-    public static void deletePerson(Person person) throws SQLException {
+    public void deletePerson(Person person) throws SQLException {
         Statement stmt = null;
-        try {
-            stmt = Connector.getConn().createStatement(ResultSet.TYPE_SCROLL_SENSITIVE,
-                    ResultSet.CONCUR_UPDATABLE);
+        stmt = Connector.getConn().createStatement(ResultSet.TYPE_SCROLL_SENSITIVE,
+                ResultSet.CONCUR_UPDATABLE);
 
-            stmt.executeQuery(
-                    "delete FROM " + "trainee_verwaltung" +
-                            ".Person where Person.id ="+person.getId());
+        stmt.executeQuery(
+                "delete FROM " + "trainee_verwaltung" +
+                        ".Person where Person.id =" + person.getId());
 
 
-        } catch (SQLException e ) {
-            System.out.println(e);
-        } finally {
-            if (stmt != null) { stmt.close(); }
-        }
+        stmt.close();
     }
 
 
