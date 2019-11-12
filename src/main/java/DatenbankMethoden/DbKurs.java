@@ -1,7 +1,6 @@
 package DatenbankMethoden;
 
 
-import logic.Connector;
 import logic.Kurs;
 import logic.Person;
 import java.sql.*;
