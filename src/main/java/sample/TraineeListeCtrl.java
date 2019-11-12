@@ -79,7 +79,7 @@ public class TraineeListeCtrl {
     }
 
     /**
-     * Erstellt einen neues Trainee-Objekt. Alles weitere passiert später
+     * Erstellt einen neues Trainee-Objekt. Deaktiviert den Löschen-Button. Alles weitere passiert später
      */
     @FXML
     public void addTrainee(Event e) throws SQLException {
@@ -87,6 +87,7 @@ public class TraineeListeCtrl {
         personInfoCtrl.setTraineeInfos();
         tableView.getSelectionModel().clearSelection();
         setEnabledState();
+        personInfoCtrl.handleDeleteTraineeButton(true);
     }
 
 
@@ -113,6 +114,8 @@ public class TraineeListeCtrl {
 
         KursListeCtrl kursListeCtrl = ControllerManager.getKursListeCtrl();
         kursListeCtrl.setKursListeDisabled(true);
+
+
     }
 
     public void setTraineeListDisabled(boolean bool){
