@@ -34,10 +34,10 @@
                 </children>
             </VBox>
             <VBox>
-                <Button text="Bearbeiten" fx:id="btnBearbeiten" onAction="#handleBearbeiten"/>
-                <Button text="Speichern" fx:id="btnSpeichern" onAction="#handleSpeichern"/>
-                <Button text="Löschen" fx:id="btnLoeschen" onAction="#handleLoeschen" />
-                <Button text="Abbrechen" fx:id="btnAbbrechen" onAction="#handleAbbrechen"/>
+                <Button text="Bearbeiten" fx:id="btnBearbeiten" disable="false" onAction="#handleBearbeiten"/>
+                <Button text="Speichern" fx:id="btnSpeichern" disable="true" onAction="#handleSpeichern"/>
+                <Button text="Löschen" fx:id="btnLoeschen" disable="true" onAction="#handleLoeschen" />
+                <Button text="Abbrechen" fx:id="btnAbbrechen" disable="true" onAction="#handleAbbrechen"/>
             </VBox>
         </HBox>
     </children>
