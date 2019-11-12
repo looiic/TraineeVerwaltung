@@ -34,14 +34,14 @@ public class KursInfoCtrl {
     @FXML
     public void initialize() {
         setKursInfos(ControllerManager.getKursListeCtrl().getSelectedKurs());
-        setReadMode();
+        //setReadMode();
     }
 
     @FXML
     public void setKursInfos(Kurs kurs) {
         selectedKurs = kurs;
 
-        setReadMode();
+        //setReadMode();
         kursField.setText(kurs.getJahrgang());
         raumField.setText(kurs.getRaum());
         anzahlTN.setText("");
@@ -54,18 +54,21 @@ public class KursInfoCtrl {
         kursField.clear();
         raumField.clear();
         ControllerManager.getTraineeListeCtrl().clearTable();
+        resetDisabledState(true);
+        btnBearbeiten.setDisable(true);
 
-        setEditMode();
+       // setEditMode();
     }
 
     @FXML
     public void handleBearbeiten() {
-        setEditMode();
+        resetDisabledState(true);
+        //setEditMode();
     }
 
     @FXML
     public void handleSpeichern() {
-        setReadMode();
+        //setReadMode();
 
         DbKurs dbKurs = new DbKurs();
         this.selectedKurs.setJahrgang(kursField.getText());
@@ -80,6 +83,9 @@ public class KursInfoCtrl {
             e.printStackTrace();
         }
         ControllerManager.getKursListeCtrl().initialize();
+
+        resetDisabledState(false);
+
     }
 
     @FXML
@@ -99,11 +105,13 @@ public class KursInfoCtrl {
                 }
             }
         }
+        resetDisabledState(false);
+
     }
 
     @FXML
     public void handleAbbrechen() {
-        setReadMode();
+        //setReadMode();
 
 
         DbKurs dbKurs = new DbKurs();
@@ -119,6 +127,8 @@ public class KursInfoCtrl {
         } catch (SQLException e) {
             e.printStackTrace();
         }
+        resetDisabledState(false);
+
     }
 
     public void setKursInfoDisabled(boolean b) {
@@ -132,6 +142,18 @@ public class KursInfoCtrl {
 
     public Kurs getSelectedKurs() {
         return this.selectedKurs;
+    }
+
+    private void resetDisabledState(boolean bool) {
+        TraineeListeCtrl traineeListeCtrl = ControllerManager.getTraineeListeCtrl();
+        traineeListeCtrl.setTraineeListDisabled(bool);
+
+
+        setKursInfoDisabled(!bool);
+        btnBearbeiten.setDisable(false);
+
+        KursListeCtrl kursListeCtrl = ControllerManager.getKursListeCtrl();
+        kursListeCtrl.setKursListeDisabled(bool);
     }
 
 
