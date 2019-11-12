@@ -5,8 +5,10 @@ import javafx.event.Event;
 import javafx.fxml.FXML;
 import javafx.scene.control.Button;
 import javafx.scene.control.MenuButton;
+import javafx.scene.control.MenuItem;
 import javafx.scene.control.TextField;
 import logic.Person;
+import logic.Vorkenntnisse;
 
 import java.sql.SQLException;
 
@@ -22,23 +24,6 @@ public class TraineeInfoCtrl {
     @FXML private Button saveTrainee;
     @FXML private Button deleteTrainee;
 
-
-    @FXML
-    private TextField nachnameField;
-    @FXML
-    private TextField vornameField;
-    @FXML
-    private TextField standortField;
-    @FXML
-    private MenuButton vorkenntnisseMenu;
-    @FXML
-    private TextField kursId;
-    @FXML
-    private Button cancelTrainee;
-    @FXML
-    private Button saveTrainee;
-    @FXML
-    private Button deleteTrainee;
 
 
     @FXML
@@ -105,6 +90,12 @@ public class TraineeInfoCtrl {
 
     }
 
+    @FXML
+    public void selectVorkenntnisse(Event e) {
+        MenuItem item = (MenuItem)e.getSource();
+        vorkenntnisseMenu.setText(item.getText());
+    }
+
 
     /**
      * Übernimmt den UserInput für die ausgewählte Person
@@ -115,7 +106,7 @@ public class TraineeInfoCtrl {
         selectedPerson.setNachname(nachnameField.getText());
         selectedPerson.setVorname(vornameField.getText());
         selectedPerson.setStandort(standortField.getText());
-        selectedPerson.setVorkenntnisse(1); //dummy implementation. Needs some actionhandler
+        selectedPerson.setVorkenntnisse(vorkenntnisseMenu.getText());
     }
 
     private void resetDisabledState() {
@@ -133,14 +124,23 @@ public class TraineeInfoCtrl {
 
     /**
      * Überschreibt die Felder mit der selektierten Person
+     */
+    public void setTraineeInfos() {
+        nachnameField.setText("");
+        vornameField.setText("");
+        vorkenntnisseMenu.setText("Vorkenntnisse");
+        standortField.setText("");
+    }
+
+    /**
+     * Überschreibt die Felder mit der selektierten Person
      *
      * @param selectedPerson
      */
     public void setTraineeInfos(Person selectedPerson) {
         nachnameField.setText(selectedPerson.getNachname());
         vornameField.setText(selectedPerson.getVorname());
-        Integer vorkenntnisse = (Integer) selectedPerson.getVorkenntnisse(); //correct later
-        vorkenntnisseMenu.setText(vorkenntnisse.toString());
+        vorkenntnisseMenu.setText(selectedPerson.getVorkenntnisse());
         standortField.setText(selectedPerson.getStandort());
     }
 
