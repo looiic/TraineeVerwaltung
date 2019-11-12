@@ -84,7 +84,7 @@ public class TraineeListeCtrl {
     @FXML
     public void addTrainee(Event e) throws SQLException {
         TraineeInfoCtrl personInfoCtrl = ControllerManager.getTraineeInfoCtrl();
-        personInfoCtrl.setTraineeInfos();
+        personInfoCtrl.clearTraineeInfos();
         tableView.getSelectionModel().clearSelection();
         setEnabledState();
         personInfoCtrl.handleDeleteTraineeButton(true);
