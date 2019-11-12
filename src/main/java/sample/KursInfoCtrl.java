@@ -33,15 +33,16 @@ public class KursInfoCtrl {
 
     @FXML
     public void initialize() {
-        setKursInfos(ControllerManager.getKursListeCtrl().getSelectedKurs());
-        //setReadMode();
+        Kurs selectedKurs = ControllerManager.getKursListeCtrl().getSelectedKurs();
+        if(selectedKurs != null){
+            setKursInfos(selectedKurs);
+        }
     }
 
     @FXML
     public void setKursInfos(Kurs kurs) {
         selectedKurs = kurs;
 
-        //setReadMode();
         kursField.setText(kurs.getJahrgang());
         raumField.setText(kurs.getRaum());
         anzahlTN.setText("");
@@ -56,19 +57,15 @@ public class KursInfoCtrl {
         ControllerManager.getTraineeListeCtrl().clearTable();
         resetDisabledState(true);
         btnBearbeiten.setDisable(true);
-
-       // setEditMode();
     }
 
     @FXML
     public void handleBearbeiten() {
         resetDisabledState(true);
-        //setEditMode();
     }
 
     @FXML
     public void handleSpeichern() {
-        //setReadMode();
 
         DbKurs dbKurs = new DbKurs();
         this.selectedKurs.setJahrgang(kursField.getText());
@@ -111,7 +108,6 @@ public class KursInfoCtrl {
 
     @FXML
     public void handleAbbrechen() {
-        //setReadMode();
 
 
         DbKurs dbKurs = new DbKurs();
@@ -154,27 +150,6 @@ public class KursInfoCtrl {
 
         KursListeCtrl kursListeCtrl = ControllerManager.getKursListeCtrl();
         kursListeCtrl.setKursListeDisabled(bool);
-    }
-
-
-    private void setEditMode() {
-        btnBearbeiten.setVisible(false);
-        btnLoeschen.setVisible(false);
-        btnAbbrechen.setVisible(true);
-        btnSpeichern.setVisible(true);
-
-        kursField.setDisable(false);
-        raumField.setDisable(false);
-    }
-
-    private void setReadMode() {
-        btnBearbeiten.setVisible(true);
-        btnLoeschen.setVisible(true);
-        btnAbbrechen.setVisible(false);
-        btnSpeichern.setVisible(false);
-
-        kursField.setDisable(true);
-        raumField.setDisable(true);
     }
 
 }

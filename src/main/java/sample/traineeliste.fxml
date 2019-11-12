@@ -46,12 +46,6 @@
                     </cellValueFactory>
                 </TableColumn>
             </columns>
-            <items>
-                <FXCollections fx:factory="observableArrayList">
-                    <Person nachname="Muster" standort="BASEL"  vorname="Hans"/>
-                    <Person nachname="Meier" standort="BUKAREST"  vorname="Anna"/>
-                </FXCollections>
-            </items>
             <sortOrder>
                 <fx:reference source="nachname"/>
             </sortOrder>
