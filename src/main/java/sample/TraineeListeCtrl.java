@@ -82,6 +82,9 @@ public class TraineeListeCtrl {
      */
     @FXML
     public void addTrainee(Event e) throws SQLException {
+        TraineeInfoCtrl personInfoCtrl = ControllerManager.getTraineeInfoCtrl();
+        personInfoCtrl.setTraineeInfos();
+        tableView.getSelectionModel().clearSelection();
         setEnabledState();
     }
 
@@ -99,6 +102,8 @@ public class TraineeListeCtrl {
     }
 
     private void setEnabledState() {
+        setTraineeListDisabled(true);
+
         TraineeInfoCtrl personInfoCtrl = ControllerManager.getTraineeInfoCtrl();
         personInfoCtrl.setTraineeInfoDisabled(false);
 
@@ -112,7 +117,6 @@ public class TraineeListeCtrl {
     public void setTraineeListDisabled(boolean bool){
         tableView.setDisable(bool);
         addTrainee.setDisable(bool);
-        addTrainee.setSelected(false);
         //editTrainee.setDisable(bool);
     }
 

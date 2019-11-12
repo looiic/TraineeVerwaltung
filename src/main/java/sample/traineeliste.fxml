@@ -48,8 +48,8 @@
             </columns>
             <items>
                 <FXCollections fx:factory="observableArrayList">
-                    <Person nachname="Muster" standort="BASEL" vorkenntnisse="3" vorname="Hans"/>
-                    <Person nachname="Meier" standort="BUKAREST" vorkenntnisse="7" vorname="Anna"/>
+                    <Person nachname="Muster" standort="BASEL"  vorname="Hans"/>
+                    <Person nachname="Meier" standort="BUKAREST"  vorname="Anna"/>
                 </FXCollections>
             </items>
             <sortOrder>

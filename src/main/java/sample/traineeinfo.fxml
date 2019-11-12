@@ -19,11 +19,11 @@
               <TextField fx:id="standortField" disable="true" prefWidth="120.0" promptText="Standort" />
               <MenuButton fx:id="vorkenntnisseMenu" disable="true" cache="true" prefWidth="120.0" text="Vorkenntnisse">
                   <items>
-                      <MenuItem mnemonicParsing="false" text="1" />
-                      <MenuItem mnemonicParsing="false" text="2" />
-                      <MenuItem mnemonicParsing="false" text="3" />
-                      <MenuItem mnemonicParsing="false" text="4" />
-                      <MenuItem mnemonicParsing="false" text="5" />
+                      <MenuItem mnemonicParsing="false" text="Keine" onAction="#selectVorkenntnisse" />
+                      <MenuItem mnemonicParsing="false" text="Theorie" onAction="#selectVorkenntnisse"/>
+                      <MenuItem mnemonicParsing="false" text="Praxis" onAction="#selectVorkenntnisse"/>
+                      <MenuItem mnemonicParsing="false" text="Experte" onAction="#selectVorkenntnisse"/>
+                      <MenuItem mnemonicParsing="false" text="Guru" onAction="#selectVorkenntnisse"/>
                   </items>
               </MenuButton>
               <TextField fx:id="kursId" opacity="0.0" prefHeight="25.0" prefWidth="0.0" />
