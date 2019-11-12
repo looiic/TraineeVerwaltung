@@ -91,8 +91,7 @@ public class DbPerson {
         uprs.beforeFirst();
         stmt.close();
     }
-
-
+    
     public void deletePerson(Person person) throws SQLException {
         Statement stmt = null;
         stmt = Connector.getConn().createStatement(ResultSet.TYPE_SCROLL_SENSITIVE,
