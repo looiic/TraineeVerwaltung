@@ -44,6 +44,7 @@ public class DbPerson {
     }
 
     void printPersonenListe(List<Person> personen) throws SQLException {
+    static void printPersonenListe(List<Person> personen) throws SQLException {
         for (Person person : personen) {
             System.out.println("Vorkentnisse: " + person.getVorkenntnisse());
             System.out.println("Standort: " + person.getStandort());
@@ -77,8 +78,8 @@ public class DbPerson {
                 String nachname = rs.getString("nachname");
                 String standort = rs.getString("standort");
                 int vorkenntnisse = rs.getInt("vorkenntnisse");
-                int kurs_id = rs.getInt("kurs_id");
-                personen.add(new Person(id, vorname, nachname, standort, vorkenntnisse, kurs_id));
+                int kursId = rs.getInt("kurs_id");
+                personen.add(new Person(id, vorname, nachname, standort, vorkenntnisse, kursId));
             }
         } catch (SQLException e) {
             System.out.println(e);
@@ -90,11 +91,12 @@ public class DbPerson {
         return personen;
     }
 
-    /**
+    /*
+
      * Lade alle Personen..vllt unnötig
      * @return
      * @throws SQLException
-     */
+
     public ArrayList<Person> getListPersonen() throws SQLException {
         Statement stmt = null;
         String query =
@@ -188,14 +190,10 @@ public class DbPerson {
             stmt.executeQuery(
                     "delete FROM " + "trainee_verwaltung" +
                             ".Person where Person.id ="+person.getId());
-
-
         } catch (SQLException e ) {
             System.out.println(e);
         } finally {
             if (stmt != null) { stmt.close(); }
         }
     }
-
-
 }
