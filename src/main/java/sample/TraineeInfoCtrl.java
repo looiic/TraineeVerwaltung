@@ -31,7 +31,7 @@ public class TraineeInfoCtrl {
 
 
     /**
-     * Speichert den Traineee in der Datenbank. Läd die TraineeListe neu und gibt andere Felder wieder frei.
+     * Speichert den Traineee in der Datenbank. Lädt die TraineeListe neu und gibt andere Felder wieder frei.
      */
     @FXML
     public void saveEntry(Event e) throws SQLException {
@@ -153,6 +153,10 @@ public class TraineeInfoCtrl {
         kursId.setDisable(bool);
         cancelTrainee.setDisable(bool);
         saveTrainee.setDisable(bool);
+        deleteTrainee.setDisable(bool);
+    }
+
+    public void handleDeleteTraineeButton(boolean bool) {
         deleteTrainee.setDisable(bool);
     }
 }
