@@ -7,7 +7,9 @@ import java.sql.*;
 import java.util.ArrayList;
 import java.util.List;
 
-
+/**
+ * Die Klasse DbPerson verwaltet alle Datenbankabfragen zur DB Tabelle Person
+ */
 public class DbPerson {
 
 

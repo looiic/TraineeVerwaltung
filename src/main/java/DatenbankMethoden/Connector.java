@@ -5,7 +5,9 @@ import java.sql.DriverManager;
 import java.sql.SQLException;
 
 
-
+/**
+ * Die Connector Klasse managed die Connection zur DB. Es kann immer nur eine Connection geben (Singleton)
+ */
 public final class Connector {
 
     /** Verbindungspunkt */

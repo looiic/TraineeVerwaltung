@@ -8,6 +8,9 @@ import java.sql.Statement;
 import java.util.ArrayList;
 import java.util.List;
 
+/**
+ * Die Klasse DbStandort verwaltet alle Datenbankabfragen zur DB Tabelle Standort
+ */
 public class DbStandort {
 
 

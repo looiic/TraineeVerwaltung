@@ -7,7 +7,9 @@ import java.sql.*;
 import java.util.ArrayList;
 import java.util.List;
 
-
+/**
+ * Die Klasse DbKurs verwaltet alle Datenbankabfragen zur DB Tabelle Kurs
+ */
 public class DbKurs {
 
 
