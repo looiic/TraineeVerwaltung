@@ -122,6 +122,7 @@ public class KursInfoCtrl {
                 dbKurs.editKurs(this.selectedKurs);
             }
             ControllerManager.getKursListeCtrl().initialize();
+            ControllerManager.getKursListeCtrl().setSelectedKurs();
 
                 resetDisabledState(false);
         } else {
@@ -137,8 +138,10 @@ public class KursInfoCtrl {
             if (warnung.getResult() == ButtonType.YES) {
 
                 dbKurs.deleteKurs(this.selectedKurs);
-                ControllerManager.getKursListeCtrl().initialize();
-                this.setKursInfos(new Kurs());
+                KursListeCtrl kursListeCtrl = ControllerManager.getKursListeCtrl();
+                kursListeCtrl.initialize();
+                selectedKurs = kursListeCtrl.getSelectedKurs();
+                setKursInfos(selectedKurs);
                 ControllerManager.getTraineeListeCtrl().reloadTraineeListe(selectedKurs);
             }
         }

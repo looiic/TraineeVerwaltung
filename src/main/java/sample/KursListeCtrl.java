@@ -78,4 +78,7 @@ public class KursListeCtrl {
         }
     }
 
+    public void setSelectedKurs() {
+        kursTabelle.getSelectionModel().selectLast();
+    }
 }

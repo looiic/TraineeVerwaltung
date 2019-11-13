@@ -11,7 +11,6 @@ public class UserWarnung {
         alert.showAndWait();
     };
 
-
     public ButtonType getResult() {
        return alert.getResult();
     }
