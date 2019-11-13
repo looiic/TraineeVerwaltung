@@ -14,9 +14,9 @@ import javafx.scene.control.ToggleButton;
 import logic.Kurs;
 import logic.Person;
 import java.sql.SQLException;
-import java.util.ArrayList;
 import java.util.List;
 
+/** Die Klasse beschreibt den Controller der TraineeListe */
 public class TraineeListeCtrl {
 
     @FXML
