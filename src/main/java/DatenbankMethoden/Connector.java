@@ -16,10 +16,10 @@ public final class Connector {
     }
 
     /**
-     * Gibt Connection zurueck
+     * Stellt eine Verbindung zu einer Datenbank her.
      *
-     * @return
-     * @throws Exception
+     * @return connection
+     * @throws SQLException
      */
     public static Connection getConn() throws SQLException {
         if (conn == null) {
@@ -29,6 +29,11 @@ public final class Connector {
         return conn;
     }
 
+    /**
+     * Schließt eine Verbindung zu Datenbank.
+     *
+     * @throws SQLException
+     */
     public static void closeConn() throws SQLException {
         if (conn != null) {
             conn.close();
