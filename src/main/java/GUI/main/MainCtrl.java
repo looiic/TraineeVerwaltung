@@ -1,5 +1,10 @@
-package sample;
+package GUI.main;
 
+import GUI.*;
+import GUI.kursInfo.KursInfoCtrl;
+import GUI.kursListe.KursListeCtrl;
+import GUI.traineeInfo.TraineeInfoCtrl;
+import GUI.traineeListe.TraineeListeCtrl;
 import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
 import javafx.scene.Parent;
@@ -20,7 +25,7 @@ public class MainCtrl {
     @FXML
     public void initialize() {
         try {
-            FXMLLoader kursListeLoader = new FXMLLoader(getClass().getResource("kursliste.fxml"));
+            FXMLLoader kursListeLoader = new FXMLLoader(getClass().getResource("../kursListe/kursliste.fxml"));
             KursListeCtrl kursListeController = new KursListeCtrl();
             kursListeLoader.setController(kursListeController);
             Parent kursListe = kursListeLoader.load();
@@ -30,7 +35,7 @@ public class MainCtrl {
 
             VBox vBox = new VBox();
 
-            FXMLLoader kursInfoLoader = new FXMLLoader(getClass().getResource("kursinfo.fxml"));
+            FXMLLoader kursInfoLoader = new FXMLLoader(getClass().getResource("../kursInfo/kursinfo.fxml"));
             KursInfoCtrl kursInfoController = new KursInfoCtrl();
             kursInfoLoader.setController(kursInfoController);
             Parent kursInfo = kursInfoLoader.load();
@@ -38,7 +43,7 @@ public class MainCtrl {
 
             ControllerManager.setKursInfoCtrl(kursInfoController);
 
-            FXMLLoader traineeListeLoader = new FXMLLoader(getClass().getResource("traineeliste.fxml"));
+            FXMLLoader traineeListeLoader = new FXMLLoader(getClass().getResource("../traineeListe/traineeliste.fxml"));
             TraineeListeCtrl traineeListeController = new TraineeListeCtrl();
             traineeListeLoader.setController(traineeListeController);
             Parent traineeListe = traineeListeLoader.load();
@@ -46,7 +51,7 @@ public class MainCtrl {
 
             ControllerManager.setTraineeListeCtrl(traineeListeController);
 
-            FXMLLoader traineeInfoLoader = new FXMLLoader(getClass().getResource("traineeinfo.fxml"));
+            FXMLLoader traineeInfoLoader = new FXMLLoader(getClass().getResource("../traineeInfo/traineeinfo.fxml"));
             TraineeInfoCtrl traineeInfoController = new TraineeInfoCtrl();
             traineeInfoLoader.setController(traineeInfoController);
             Parent traineeInfo = traineeInfoLoader.load();

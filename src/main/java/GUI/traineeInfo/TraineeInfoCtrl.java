@@ -1,7 +1,11 @@
-package sample;
+package GUI.traineeInfo;
 
 import DatenbankMethoden.DbPerson;
 import DatenbankMethoden.DbStandort;
+import GUI.*;
+import GUI.kursInfo.KursInfoCtrl;
+import GUI.kursListe.KursListeCtrl;
+import GUI.traineeListe.TraineeListeCtrl;
 import javafx.event.Event;
 import javafx.fxml.FXML;
 import javafx.scene.control.*;

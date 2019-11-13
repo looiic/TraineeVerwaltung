@@ -1,4 +1,10 @@
-package sample;
+package GUI;
+
+import GUI.kursInfo.KursInfoCtrl;
+import GUI.kursListe.KursListeCtrl;
+import GUI.main.MainCtrl;
+import GUI.traineeInfo.TraineeInfoCtrl;
+import GUI.traineeListe.TraineeListeCtrl;
 
 public class ControllerManager {
 

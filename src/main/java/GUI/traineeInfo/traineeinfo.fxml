@@ -1,10 +1,10 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<?import sample.TextFieldLimited.*?>
+<?import GUI.TextFieldLimited.*?>
 <?import java.lang.*?>
 <?import javafx.scene.control.*?>
 <?import javafx.scene.layout.*?>
 
-<?import sample.TextFieldLimited?>
+<?import GUI.TextFieldLimited?>
 <AnchorPane xmlns="http://javafx.com/javafx/8" xmlns:fx="http://javafx.com/fxml/1" >
        <HBox>
               <Label text="Beschreibung:" />

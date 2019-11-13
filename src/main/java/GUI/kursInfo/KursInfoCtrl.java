@@ -1,19 +1,21 @@
-package sample;
+package GUI.kursInfo;
 
 import DatenbankMethoden.DbKurs;
 import DatenbankMethoden.DbPerson;
-import javafx.beans.property.IntegerProperty;
+import GUI.AlertUserEingabeUngueltig;
+import GUI.ControllerManager;
+import GUI.traineeListe.TraineeListeCtrl;
+import GUI.UserWarnung;
+import GUI.kursListe.KursListeCtrl;
 import javafx.beans.property.SimpleStringProperty;
 import javafx.beans.property.StringProperty;
 import javafx.fxml.FXML;
-import javafx.scene.control.Alert;
 import javafx.scene.control.Button;
 import javafx.scene.control.ButtonType;
 import javafx.scene.control.TextField;
 import logic.Kurs;
 
 import java.sql.SQLException;
-import java.util.ArrayList;
 
 public class KursInfoCtrl {
 

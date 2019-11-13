@@ -1,6 +1,8 @@
-package sample;
+package GUI.kursListe;
 
 import DatenbankMethoden.DbKurs;
+import GUI.ControllerManager;
+import GUI.kursInfo.KursInfoCtrl;
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
 import javafx.event.Event;
@@ -10,9 +12,7 @@ import javafx.scene.control.Button;
 import javafx.scene.control.TableView;
 import logic.Kurs;
 
-import java.io.IOException;
 import java.sql.SQLException;
-import java.util.ArrayList;
 import java.util.List;
 
 

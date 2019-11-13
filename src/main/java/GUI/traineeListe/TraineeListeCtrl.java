@@ -1,11 +1,14 @@
-package sample;
+package GUI.traineeListe;
 
 import DatenbankMethoden.DbKurs;
 import DatenbankMethoden.DbPerson;
+import GUI.ControllerManager;
+import GUI.kursInfo.KursInfoCtrl;
+import GUI.kursListe.KursListeCtrl;
+import GUI.traineeInfo.TraineeInfoCtrl;
 import javafx.beans.binding.Bindings;
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
-import javafx.event.Event;
 import javafx.fxml.FXML;
 import javafx.scene.control.Button;
 import javafx.scene.control.Label;
