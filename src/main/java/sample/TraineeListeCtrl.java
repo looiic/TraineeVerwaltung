@@ -13,8 +13,8 @@ import javafx.scene.control.TableView;
 import javafx.scene.control.ToggleButton;
 import logic.Kurs;
 import logic.Person;
-
 import java.sql.SQLException;
+import java.util.ArrayList;
 import java.util.List;
 
 public class TraineeListeCtrl {
@@ -29,9 +29,7 @@ public class TraineeListeCtrl {
     private ToggleButton addTrainee;
 
 
-    DbPerson dbPerson;
-
-
+    private DbPerson dbPerson;
     private Person selectedPerson;
 
 

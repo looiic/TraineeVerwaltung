@@ -41,7 +41,7 @@ public class KursListeCtrl {
     }
 
     @FXML
-    public void eventNeuerKurs(){
+    public void eventNeuerKurs() throws SQLException {
         ControllerManager.getKursInfoCtrl().neuerKurs();
     }
 

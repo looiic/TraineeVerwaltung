@@ -143,11 +143,6 @@ public class TraineeInfoCtrl {
         vorkenntnisseMenu.setText(item.getText());
     }
 
-    @FXML
-    public void selectStandort(Event e){
-        System.out.println(e);
-    }
-
     /**
      * Übernimmt den UserInput für die ausgewählte Person
      *

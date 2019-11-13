@@ -17,7 +17,7 @@
               <TextField fx:id="idField" disable="true" opacity="0.0" prefHeight="25.0" prefWidth="0.0" />
               <TextFieldLimited fx:id="nachnameField" disable="true" prefHeight="25.0" prefWidth="120.0" promptText="Nachname" />
               <TextFieldLimited fx:id="vornameField" disable="true" prefWidth="120.0" promptText="Vorname" />
-              <MenuButton fx:id="standortField" disable="true" prefWidth="120.0" text="Standort" onAction="#selectStandort">
+              <MenuButton fx:id="standortField" disable="true" prefWidth="120.0" text="Standort" >
                   <items>
 
                   </items>
