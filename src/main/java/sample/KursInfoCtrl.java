@@ -95,8 +95,10 @@ public class KursInfoCtrl {
         btnBearbeiten.setDisable(true);
     }
 
-    private boolean checkFelderNichtLeer(String feld1, String feld2){
-        if (feld1.length() == 0 || feld2.length() == 0) {
+    private boolean checkFelderNichtLeer(String jahrgangName, String raumName){
+
+
+        if (jahrgangName.length() == 0 || raumName.length() == 0) {
             AlertUserEingabeUngueltig alertUserEingabeUngueltig = new AlertUserEingabeUngueltig("" +
                     "Die Felder dürfen nicht leer sein.");
             return false;
@@ -113,7 +115,7 @@ public class KursInfoCtrl {
         String jahrgangName = kursField.getText();
         String raumName = raumField.getText();
 
-        if (checkFelderNichtLeer(jahrgangName, raumName)){
+        if (checkFelderNichtLeer(jahrgangName,raumName)){
             this.selectedKurs.setJahrgang(jahrgangName);
             this.selectedKurs.setRaum(raumName);
             if (this.selectedKurs.getId() == 0) {

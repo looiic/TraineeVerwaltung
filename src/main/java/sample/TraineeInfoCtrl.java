@@ -2,9 +2,7 @@ package sample;
 
 import DatenbankMethoden.DbPerson;
 import DatenbankMethoden.DbStandort;
-import javafx.event.ActionEvent;
 import javafx.event.Event;
-import javafx.event.EventHandler;
 import javafx.fxml.FXML;
 import javafx.scene.control.*;
 import logic.Person;
@@ -58,6 +56,8 @@ public class TraineeInfoCtrl {
                 add(deleteTrainee);
             }
         };
+        System.out.println(vorkenntnisseMenu.pressedProperty().getValue());
+
         traineeListeCtrl = ControllerManager.getTraineeListeCtrl();
         kursInfoCtrl = ControllerManager.getKursInfoCtrl();
         kursListeCtrl = ControllerManager.getKursListeCtrl();
@@ -75,22 +75,44 @@ public class TraineeInfoCtrl {
         }
     }
 
+
     /**
-     * Speichert den Trainee in der Datenbank. Lädt die TraineeListe neu und gibt andere Felder wieder frei.
+     * Handler für Speichern Button gedrückt.
+     * Unterscheidet ob ein neuer Trainee angelegt werden soll oder überschrieben wird.
+     * Prüft auf vollständige Benutzereingaben. Speichert den (neuen) Trainee in der Datenbank. Lädt die TraineeListe neu und setzt den gewünschten GUI-Status.
      */
     @FXML
     public void saveEntry(Event e) throws SQLException {
 
-        if (traineeListeCtrl.getAddTrainee().selectedProperty().getValue()) {
-            createNewTrainee();
-        } else {
-            editExistingTrainee();
+            if (traineeListeCtrl.getAddTrainee().selectedProperty().getValue()) {
+                if (checkFelderNichtLeer()) {
+                    createNewTrainee();
+                    recoverDiseredGUIState();
+                }else{
+                    traineeListeCtrl.addTrainee(e);
+                }
+            } else {
+                if (checkFelderNichtLeer()) {
+                    editExistingTrainee();
+                    recoverDiseredGUIState();
+                }
+                else{
+                    traineeListeCtrl.editTrainee(e);
+                }
+            }
+
         }
 
+    /**
+     * Setzt den gewünschten Zustand der GUI Controls. Läd TraineeListe neu.
+     * @throws SQLException
+     */
+    private void recoverDiseredGUIState() throws SQLException {
         traineeListeCtrl.reloadTraineeListe(kursInfoCtrl.getSelectedKurs());
         traineeListeCtrl.getAddTrainee().setSelected(false);
         resetDisabledState(false);
     }
+
 
     /**
      * Änderungen für in Tabelle ausgewählte Person werden in Datenbank vorgenommen.
@@ -115,6 +137,25 @@ public class TraineeInfoCtrl {
         dbPerson.addNewPerson(selectedPerson);
     }
 
+    /**
+     * Überprüft ob der User die 4 Eingabefelder ausgefüllt bzw. selektiert hat. Bei Vorkenntnissen und Standort wird geprüft ob der default-Wert besteht.
+     * @return boolean
+     */
+    private boolean checkFelderNichtLeer() {
+
+        String nachname = nachnameField.getText();
+        String vorname = vornameField.getText();
+        String vorkenntnisse = vorkenntnisseMenu.getText();
+        String standort = standortField.getText();
+
+        if (nachname.length() == 0 || vorname.length() == 0 || vorkenntnisse == "Vorkenntnisse" || standort == "Standort") {
+            AlertUserEingabeUngueltig alertUserEingabeUngueltig = new AlertUserEingabeUngueltig("" +
+                    "Die Felder dürfen nicht leer sein.");
+            return false;
+        } else {
+            return true;
+        }
+    }
 
     /**
      * Löscht den Traineee in der Datenbank. Läd die TraineeListe neu und gibt andere Felder wieder frei.
@@ -140,6 +181,7 @@ public class TraineeInfoCtrl {
 
     /**
      * Schreibt den Text des gewählten Items in den MenuButton
+     *
      * @param e
      */
     @FXML
@@ -162,6 +204,7 @@ public class TraineeInfoCtrl {
 
     /**
      * Reaktiviert andere Control(s) und deaktiviert die eigenen.
+     *
      * @param bool
      */
     private void resetDisabledState(boolean bool) {
