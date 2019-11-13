@@ -1,36 +1,39 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<?import GUI.TextFieldLimited.*?>
-<?import java.lang.*?>
+
+<?import GUI.*?>
+<?import javafx.geometry.*?>
 <?import javafx.scene.control.*?>
 <?import javafx.scene.layout.*?>
 
-<?import GUI.TextFieldLimited?>
-<AnchorPane xmlns="http://javafx.com/javafx/8" xmlns:fx="http://javafx.com/fxml/1" >
+<AnchorPane xmlns="http://javafx.com/javafx/10.0.2-internal" xmlns:fx="http://javafx.com/fxml/1">
        <HBox>
-              <Label text="Beschreibung:" />
+              <Label text="Angaben ausgewählter Trainee:">
+         <padding>
+            <Insets left="30.0" />
+         </padding></Label>
        </HBox>
        <HBox alignment="bottom_right" layoutY="25.0" spacing="10" GridPane.columnIndex="0" GridPane.rowIndex="2">
-              <TextField fx:id="idField" disable="true" opacity="0.0" prefHeight="25.0" prefWidth="0.0" />
+              <TextField fx:id="idField" disable="true" opacity="0.0" prefHeight="25.0" prefWidth="20.0" />
               <TextFieldLimited fx:id="nachnameField" disable="true" prefHeight="25.0" prefWidth="120.0" promptText="Nachname" />
               <TextFieldLimited fx:id="vornameField" disable="true" prefWidth="120.0" promptText="Vorname" />
-              <MenuButton fx:id="standortField" disable="true" prefWidth="120.0" text="Standort" >
+              <MenuButton fx:id="standortField" disable="true" prefWidth="120.0" text="Standort">
                   <items>
 
                   </items>
               </MenuButton>
-              <MenuButton fx:id="vorkenntnisseMenu" disable="true" cache="true" prefWidth="120.0" text="Vorkenntnisse">
+              <MenuButton fx:id="vorkenntnisseMenu" cache="true" disable="true" prefWidth="120.0" text="Vorkenntnisse">
                   <items>
-                      <MenuItem mnemonicParsing="false" text="Keine" onAction="#selectVorkenntnisse" />
-                      <MenuItem mnemonicParsing="false" text="Theorie" onAction="#selectVorkenntnisse"/>
-                      <MenuItem mnemonicParsing="false" text="Praxis" onAction="#selectVorkenntnisse"/>
-                      <MenuItem mnemonicParsing="false" text="Experte" onAction="#selectVorkenntnisse"/>
-                      <MenuItem mnemonicParsing="false" text="Guru" onAction="#selectVorkenntnisse"/>
+                      <MenuItem mnemonicParsing="false" onAction="#selectVorkenntnisse" text="Keine" />
+                      <MenuItem mnemonicParsing="false" onAction="#selectVorkenntnisse" text="Theorie" />
+                      <MenuItem mnemonicParsing="false" onAction="#selectVorkenntnisse" text="Praxis" />
+                      <MenuItem mnemonicParsing="false" onAction="#selectVorkenntnisse" text="Experte" />
+                      <MenuItem mnemonicParsing="false" onAction="#selectVorkenntnisse" text="Guru" />
                   </items>
               </MenuButton>
               <TextField fx:id="kursId" opacity="0.0" prefHeight="25.0" prefWidth="0.0" />
-              <Button fx:id="saveTrainee" onAction="#saveEntry" text="Speichern" disable="true"/>
-              <Button fx:id="deleteTrainee" onAction="#deleteEntry"  text="Löschen" disable="true"/>
-              <Button fx:id="cancelTrainee" onAction="#cancelEntry" text="Abbrechen" disable="true" />
+              <Button fx:id="saveTrainee" disable="true" onAction="#saveEntry" text="Speichern" />
+              <Button fx:id="deleteTrainee" disable="true" onAction="#deleteEntry" text="Löschen" />
+              <Button fx:id="cancelTrainee" disable="true" onAction="#cancelEntry" text="Abbrechen" />
        </HBox>
 
 </AnchorPane>
