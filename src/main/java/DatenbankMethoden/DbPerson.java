@@ -15,7 +15,7 @@ public class DbPerson {
      * Lade alle Personen aus einem Kurs.
      *
      * @param kurs
-     * @return
+     * @return personen
      * @throws SQLException
      */
     public List<Person> getListPersonen(Kurs kurs) throws SQLException {

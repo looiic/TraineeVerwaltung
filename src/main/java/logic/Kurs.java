@@ -1,6 +1,7 @@
 package logic;
 
 public class Kurs {
+
     private int id;
     private String jahrgang;
     private String raum;

@@ -8,9 +8,10 @@ import java.sql.SQLException;
 
 public final class Connector {
 
+    /** Verbindungspunkt */
     private static Connection conn;
 
-
+    /** Default-Konstruktur */
     private Connector() {
 
     }
