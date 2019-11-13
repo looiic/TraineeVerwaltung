@@ -20,21 +20,14 @@ import java.sql.SQLException;
 public class KursInfoCtrl {
 
 
-    @FXML
-    private TextField kursField;
-    @FXML
-    private TextField raumField;
-    @FXML
-    private TextField anzahlTN;
+    @FXML private TextField kursField;
+    @FXML private TextField raumField;
+    @FXML private TextField anzahlTN;
 
-    @FXML
-    private Button btnBearbeiten;
-    @FXML
-    private Button btnSpeichern;
-    @FXML
-    private Button btnLoeschen;
-    @FXML
-    private Button btnAbbrechen;
+    @FXML private Button btnBearbeiten;
+    @FXML private Button btnSpeichern;
+    @FXML private Button btnLoeschen;
+    @FXML private Button btnAbbrechen;
 
     private Kurs selectedKurs;
     private StringProperty anzahlTeilnehmer;

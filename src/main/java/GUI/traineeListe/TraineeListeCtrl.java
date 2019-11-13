@@ -23,14 +23,10 @@ import java.util.List;
 /** Die Klasse beschreibt den Controller der TraineeListe */
 public class TraineeListeCtrl {
 
-    @FXML
-    private TableView tableView;
-    @FXML
-    private Button editTrainee;
-    @FXML
-    private Label editTraineeInfo;
-    @FXML
-    private ToggleButton addTrainee;
+    @FXML private TableView tableView;
+    @FXML private Button editTrainee;
+    @FXML private Label editTraineeInfo;
+    @FXML private ToggleButton addTrainee;
 
 
     private DbPerson dbPerson;
@@ -38,18 +34,15 @@ public class TraineeListeCtrl {
 
 
     @FXML
-    public void initialize() {
+    public void initialize() throws SQLException {
         editTrainee.disableProperty().bind(Bindings.isEmpty(tableView.getSelectionModel().getSelectedItems()));
         dbPerson = new DbPerson();
         DbKurs dbKurs = new DbKurs();
 
-        try {
-            List<Person> personenListe = dbPerson.getListPersonen(dbKurs.getKursListe().get(0));
-            ObservableList<Person> obsList = FXCollections.observableArrayList(personenListe);
-            tableView.setItems(obsList);
-        } catch (SQLException e) {
-            e.printStackTrace();
-        }
+        List<Person> personenListe = dbPerson.getListPersonen(dbKurs.getKursListe().get(0));
+        ObservableList<Person> obsList = FXCollections.observableArrayList(personenListe);
+        tableView.setItems(obsList);
+
     }
 
     /**
@@ -66,7 +59,9 @@ public class TraineeListeCtrl {
         kursInfoCtrl.setAnzahlTeilnehmer(kursInfoCtrl.getSelectedKurs());
     }
 
-
+    /**
+     * in Tabelle angeklickte Person wird ausgelesen. Und für Weiterverarbeitung in Panel traineeInfo weitergegeben.
+     */
     @FXML
     public void chooseTrainee() {
         Object selectedItem = tableView.getSelectionModel().getSelectedItem();
@@ -89,7 +84,9 @@ public class TraineeListeCtrl {
         personInfoCtrl.handleDeleteTraineeButton(true);
     }
 
-
+    /**
+     * in Tabelle angeklickte Person wird ausgelesen.
+     */
     @FXML
     public void editTrainee() {
         Object selectedItem = tableView.getSelectionModel().getSelectedItem();
@@ -102,6 +99,7 @@ public class TraineeListeCtrl {
         }
     }
 
+
     private void setEnabledState() {
         setTraineeListDisabled(true);
 
@@ -113,8 +111,6 @@ public class TraineeListeCtrl {
 
         KursListeCtrl kursListeCtrl = ControllerManager.getKursListeCtrl();
         kursListeCtrl.setKursListeDisabled(true);
-
-
     }
 
     public void setTraineeListDisabled(boolean bool){

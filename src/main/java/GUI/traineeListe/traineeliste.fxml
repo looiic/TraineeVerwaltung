@@ -48,7 +48,7 @@
         <VBox fx:id="editTraineeVBox" alignment="TOP_CENTER">
             <Label fx:id="editTraineeInfo" text="Zum Bearbeiten eines Trainees bitte eine Zeile auswählen!"/>
             <Button fx:id="editTrainee" onMouseClicked="#editTrainee" disable="true"  text="Bearbeiten"/>
-            <ToggleButton fx:id="addTrainee" onMouseClicked="#addTrainee" disable="false"  text="+"/>
+            <ToggleButton fx:id="addTrainee" onMouseClicked="#addTrainee" disable="false"  text="hinzufügen"/>
 
         </VBox>
     </HBox>

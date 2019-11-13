@@ -18,24 +18,15 @@ import java.util.List;
 
 public class TraineeInfoCtrl {
 
-    @FXML
-    private TextField idField;
-    @FXML
-    private TextFieldLimited nachnameField;
-    @FXML
-    private TextFieldLimited vornameField;
-    @FXML
-    private MenuButton standortField;
-    @FXML
-    private MenuButton vorkenntnisseMenu;
-    @FXML
-    private TextField kursId;
-    @FXML
-    private Button cancelTrainee;
-    @FXML
-    private Button saveTrainee;
-    @FXML
-    private Button deleteTrainee;
+    @FXML private TextField idField;
+    @FXML private TextFieldLimited nachnameField;
+    @FXML private TextFieldLimited vornameField;
+    @FXML private MenuButton standortField;
+    @FXML private MenuButton vorkenntnisseMenu;
+    @FXML private TextField kursId;
+    @FXML private Button cancelTrainee;
+    @FXML private Button saveTrainee;
+    @FXML private Button deleteTrainee;
 
     /**
      * Liste aller Controller-Nodes dieses Controllers
