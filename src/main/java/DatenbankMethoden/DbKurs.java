@@ -39,6 +39,14 @@ public class DbKurs {
         return kursListe;
     }
 
+    /**
+     * Holt sich aus der Datenbank die zum id zugehörige Reihe, macht aus den Werten
+     * einen Kurs-Objekt und gibt diesen zurück.
+     *
+     * @param id
+     * @return Kurs-Objekt
+     * @throws SQLException
+     */
     public Kurs getKurs(int id) throws SQLException{
         Statement stmt = null;
         String query =
@@ -60,14 +68,10 @@ public class DbKurs {
 
     /**
      * Übergebe dieser Methode einen veränderten Kurs. Anhand der id des jeweiligen Kurses
-     * wird jener Kurs in der Datenbank nach dem übergebenen Objekt Kurs verändert.
-     * <p>
-     * PS: Habe nur Author hinzugefügt, damit ihr wisst zu wen ihr euch bei Fragen zu dieser
-     * Methode wenden könnt ;)
+     * wird jener Kurs in der Datenbank nach dem übergebenen Kurs-Objekt verändert.
      *
      * @param kurs
      * @throws SQLException
-     * @Author Pradeep
      */
     public void editKurs(Kurs kurs) throws SQLException {
         Statement stmt = null;
@@ -85,21 +89,28 @@ public class DbKurs {
 
     }
 
-
+    /**
+     * Nach der id des übergebenen Kurses wird jener Kurs in der Datenbank gelöscht.
+     * @param kurs
+     * @throws SQLException
+     */
     public void deleteKurs(Kurs kurs) throws SQLException {
         deleteAllTraineesFromKurs(kurs);
         Statement stmt = null;
         stmt = Connector.getConn().createStatement(ResultSet.TYPE_SCROLL_SENSITIVE,
                 ResultSet.CONCUR_UPDATABLE);
-
         stmt.executeQuery(
                 "delete FROM " + "trainee_verwaltung" +
                         ".Kurs where Kurs.id =" + kurs.getId());
-
-            stmt.close();
-
+        stmt.close();
     }
 
+    /**
+     * Sucht sich alle Trainees des angegebenen Kurses heraus und löscht all jene einzeln.
+     * Anwendung beim löschen von einem Kurs.
+     * @param kurs
+     * @throws SQLException
+     */
     private void deleteAllTraineesFromKurs(Kurs kurs) throws SQLException {
         DbPerson dbPerson = new DbPerson();
         List<Person> personen = dbPerson.getListPersonen(kurs);
@@ -108,9 +119,14 @@ public class DbKurs {
         }
     }
 
-
+    /**
+     *
+     * @param kurs
+     * @return
+     * @throws SQLException
+     */
     public int createKurs(Kurs kurs) throws SQLException {
-        int newKursId = 0;
+        int newKursId;
 
         String query = " insert into trainee_verwaltung.kurs (jahrgang, raum) values (?, ?)";
         PreparedStatement preparedStmt = Connector.getConn().prepareStatement(query, Statement.RETURN_GENERATED_KEYS);
@@ -120,9 +136,9 @@ public class DbKurs {
         preparedStmt.executeUpdate();
 
         ResultSet resultSet = preparedStmt.getGeneratedKeys();
-        if (resultSet.next()) {
-            newKursId = resultSet.getInt(1);
-        }
+        resultSet.next();
+        newKursId = resultSet.getInt(1);
+
 
         preparedStmt.close();
         return newKursId;

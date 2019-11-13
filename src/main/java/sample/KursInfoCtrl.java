@@ -95,22 +95,38 @@ public class KursInfoCtrl {
         btnBearbeiten.setDisable(true);
     }
 
+    private boolean checkFelderNichtLeer(String feld1, String feld2){
+        if (feld1.length() == 0 || feld2.length() == 0) {
+            AlertUserEingabeUngueltig alertUserEingabeUngueltig = new AlertUserEingabeUngueltig("" +
+                    "Die Felder dürfen nicht leer sein.");
+            return false;
+        } else {
+            return true;
+        }
+    }
+
     @FXML
     public void handleSpeichern() throws SQLException {
 
         DbKurs dbKurs = new DbKurs();
-        this.selectedKurs.setJahrgang(kursField.getText());
-        this.selectedKurs.setRaum(raumField.getText());
 
-        if (this.selectedKurs.getId() == 0) {
-            this.selectedKurs.setId(dbKurs.createKurs(this.selectedKurs));
+        String jahrgangName = kursField.getText();
+        String raumName = raumField.getText();
+
+        if (checkFelderNichtLeer(jahrgangName, raumName)){
+            this.selectedKurs.setJahrgang(jahrgangName);
+            this.selectedKurs.setRaum(raumName);
+            if (this.selectedKurs.getId() == 0) {
+                this.selectedKurs.setId(dbKurs.createKurs(this.selectedKurs));
+            } else {
+                dbKurs.editKurs(this.selectedKurs);
+            }
+            ControllerManager.getKursListeCtrl().initialize();
+
+                resetDisabledState(false);
         } else {
-            dbKurs.editKurs(this.selectedKurs);
+            neuerKurs();
         }
-
-        ControllerManager.getKursListeCtrl().initialize();
-
-        resetDisabledState(false);
     }
 
     @FXML
@@ -127,7 +143,6 @@ public class KursInfoCtrl {
             }
         }
         resetDisabledState(false);
-
     }
 
     @FXML

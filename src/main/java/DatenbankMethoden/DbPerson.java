@@ -100,8 +100,6 @@ public class DbPerson {
         stmt.executeQuery(
                 "delete FROM " + "trainee_verwaltung" +
                         ".Person where Person.id =" + person.getId());
-
-
         stmt.close();
     }
 
