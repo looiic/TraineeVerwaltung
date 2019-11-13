@@ -10,6 +10,10 @@ import java.sql.SQLException;
  */
 public final class Connector {
 
+    private static String url = "jdbc:mysql://localhost:3306/trainee_verwaltung";
+    private static String user = "root";
+    private static String password = "root";
+
     /** Verbindungspunkt */
     private static Connection conn;
 
@@ -26,8 +30,7 @@ public final class Connector {
      */
     public static Connection getConn() throws SQLException {
         if (conn == null) {
-            conn = DriverManager.getConnection("jdbc:mysql://localhost:3306/trainee_verwaltung",
-                    "root", "root");
+            conn = DriverManager.getConnection(url, user, password);
         }
         return conn;
     }
