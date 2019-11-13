@@ -52,8 +52,13 @@ public class KursInfoCtrl {
 
     public StringProperty setAnzahlTeilnehmer(Kurs selectedKurs) throws SQLException {
         DbPerson dbPerson = new DbPerson();
-        Integer temp = dbPerson.getListPersonen(selectedKurs).size();
-        anzahlTeilnehmer.setValue(temp.toString());
+        try {
+            Integer temp = dbPerson.getListPersonen(selectedKurs).size();
+            anzahlTeilnehmer.setValue(temp.toString());
+
+        }catch (SQLException e) {
+            anzahlTeilnehmer.setValue("0");
+        }
         return anzahlTeilnehmer;
     }
 
@@ -73,14 +78,15 @@ public class KursInfoCtrl {
 
     }
 
-    public void neuerKurs() {
+    public void neuerKurs() throws SQLException {
         this.selectedKurs = new Kurs();
-
+        setAnzahlTeilnehmer(selectedKurs);
         kursField.clear();
         raumField.clear();
         ControllerManager.getTraineeListeCtrl().clearTable();
         resetDisabledState(true);
         btnBearbeiten.setDisable(true);
+        btnLoeschen.setDisable(true);
     }
 
     @FXML
@@ -121,18 +127,29 @@ public class KursInfoCtrl {
             }
         }
         resetDisabledState(false);
+
     }
 
     @FXML
     public void handleAbbrechen() throws SQLException{
+
         DbKurs dbKurs = new DbKurs();
-        if (this.selectedKurs.getId() == 0) {
-            kursField.clear();
-            raumField.clear();
-        } else {
-            this.selectedKurs = dbKurs.getKurs(this.selectedKurs.getId());
-            kursField.setText(selectedKurs.getJahrgang());
-            raumField.setText(selectedKurs.getRaum());
+        try {
+            if (this.selectedKurs.getId() == 0) {
+                KursListeCtrl kursListeCtrl = ControllerManager.getKursListeCtrl();
+                TraineeListeCtrl traineeListeCtrl = ControllerManager.getTraineeListeCtrl();
+
+                selectedKurs = kursListeCtrl.getSelectedKurs();
+                traineeListeCtrl.reloadTraineeListe(selectedKurs);
+                setKursInfos(selectedKurs);
+
+            } else {
+                this.selectedKurs = dbKurs.getKurs(this.selectedKurs.getId());
+                kursField.setText(selectedKurs.getJahrgang());
+                raumField.setText(selectedKurs.getRaum());
+            }
+        } catch (SQLException e) {
+            e.printStackTrace();
         }
         resetDisabledState(false);
     }
