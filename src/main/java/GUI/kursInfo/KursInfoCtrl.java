@@ -17,6 +17,7 @@ import logic.Kurs;
 
 import java.sql.SQLException;
 
+/** Controllerklasse von KursInfo*/
 public class KursInfoCtrl {
 
 
@@ -34,6 +35,8 @@ public class KursInfoCtrl {
     private DbPerson dbPerson;
     private DbKurs dbKurs;
 
+
+    /** Initialisierungsmethode */
     @FXML
     public void initialize() {
         selectedKurs = ControllerManager.getKursListeCtrl().getSelectedKurs();

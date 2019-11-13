@@ -16,6 +16,7 @@ import java.sql.SQLException;
 import java.util.ArrayList;
 import java.util.List;
 
+/** Controllerklasse von TraineeInfo */
 public class TraineeInfoCtrl {
 
     @FXML private TextField idField;
