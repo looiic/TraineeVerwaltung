@@ -9,7 +9,7 @@ import java.util.ArrayList;
 import java.util.List;
 
 /**
- * Die Klasse DbStandort verwaltet alle Datenbankabfragen zur DB Tabelle Standort
+ * Die Klasse DbStandort verwaltet alle Datenbankabfragen zur Datenbanktabelle Standort.
  */
 public class DbStandort {
 

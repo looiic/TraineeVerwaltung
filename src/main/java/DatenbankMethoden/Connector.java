@@ -6,7 +6,7 @@ import java.sql.SQLException;
 
 
 /**
- * Die Connector Klasse managed die Connection zur DB. Es kann immer nur eine Connection geben (Singleton)
+ * Die Connectorklasse zur Verwaltung der Datenbankverbindung. Hierbei kann immer nur eine Verbindung hergestellt werden.
  */
 public final class Connector {
 
