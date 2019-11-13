@@ -154,6 +154,11 @@ public class KursInfoCtrl {
         btnLoeschen.setDisable(b);
     }
 
+    public void setDisableBtnBearbeiten(boolean b) {
+        btnBearbeiten.setDisable(b);
+
+    }
+
     public Kurs getSelectedKurs() {
         return this.selectedKurs;
     }
@@ -161,7 +166,6 @@ public class KursInfoCtrl {
     private void resetDisabledState(boolean bool) {
         TraineeListeCtrl traineeListeCtrl = ControllerManager.getTraineeListeCtrl();
         traineeListeCtrl.setTraineeListDisabled(bool);
-
 
         setKursInfoDisabled(!bool);
         btnBearbeiten.setDisable(false);

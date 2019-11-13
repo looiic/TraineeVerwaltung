@@ -61,7 +61,6 @@ public class TraineeInfoCtrl {
         traineeListeCtrl = ControllerManager.getTraineeListeCtrl();
         kursInfoCtrl = ControllerManager.getKursInfoCtrl();
         kursListeCtrl = ControllerManager.getKursListeCtrl();
-        selectedPerson = traineeListeCtrl.getSelectedPerson();
         dbPerson = new DbPerson();
 
         DbStandort dbStandort = new DbStandort();
@@ -99,7 +98,7 @@ public class TraineeInfoCtrl {
     }
 
     private void editExistingTrainee() throws SQLException {
-        selectedPerson = ControllerManager.getTraineeListeCtrl().getSelectedPerson();
+        selectedPerson = traineeListeCtrl.getSelectedPerson();
         setChanges(selectedPerson);
         dbPerson.editPerson(selectedPerson);
     }
@@ -168,6 +167,8 @@ public class TraineeInfoCtrl {
     private void resetDisabledState(boolean bool) {
         traineeListeCtrl.setTraineeListDisabled(bool);
         kursListeCtrl.setKursListeDisabled(bool);
+        kursInfoCtrl.setDisableBtnBearbeiten(false);
+
         setTraineeInfoDisabled(!bool);
     }
 
