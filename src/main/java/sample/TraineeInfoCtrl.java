@@ -46,8 +46,8 @@ public class TraineeInfoCtrl {
     private DbPerson dbPerson;
 
     @FXML
-    public void initialize() {
-        traineeInfoControllers = new ArrayList<Control>(){
+    public void initialize() throws SQLException {
+        traineeInfoControllers = new ArrayList<Control>() {
             {
                 add(nachnameField);
                 add(vornameField);
@@ -64,17 +64,14 @@ public class TraineeInfoCtrl {
         dbPerson = new DbPerson();
 
         DbStandort dbStandort = new DbStandort();
-        try {
-            for(Standort standort : dbStandort.getStandorte()){
-                MenuItem menuItem = new MenuItem(standort.getStandort());
-                menuItem.setOnAction(event -> {
-                    MenuItem source = (MenuItem) event.getSource();
-                    standortField.setText(source.getText());
-                });
-                standortField.getItems().add(menuItem);
-            }
-        } catch (SQLException e) {
-            e.printStackTrace();
+
+        for (Standort standort : dbStandort.getStandorte()) {
+            MenuItem menuItem = new MenuItem(standort.getStandort());
+            menuItem.setOnAction(event -> {
+                MenuItem source = (MenuItem) event.getSource();
+                standortField.setText(source.getText());
+            });
+            standortField.getItems().add(menuItem);
         }
     }
 
@@ -86,23 +83,31 @@ public class TraineeInfoCtrl {
 
         if (traineeListeCtrl.getAddTrainee().selectedProperty().getValue()) {
             createNewTrainee();
+        } else {
+            editExistingTrainee();
         }
-        else
-            {
-                editExistingTrainee();
-            }
 
         traineeListeCtrl.reloadTraineeListe(kursInfoCtrl.getSelectedKurs());
         traineeListeCtrl.getAddTrainee().setSelected(false);
         resetDisabledState(false);
     }
 
+    /**
+     * Änderungen für in Tabelle ausgewählte Person werden in Datenbank vorgenommen.
+     *
+     * @throws SQLException
+     */
     private void editExistingTrainee() throws SQLException {
         selectedPerson = traineeListeCtrl.getSelectedPerson();
         setChanges(selectedPerson);
         dbPerson.editPerson(selectedPerson);
     }
 
+    /**
+     * eine neue Person wird erstellt, mit entsprechender Kurs-Id verknüpft und in die Datenbank geladen
+     *
+     * @throws SQLException
+     */
     private void createNewTrainee() throws SQLException {
         selectedPerson = new Person();
         setChanges(selectedPerson);
@@ -200,6 +205,11 @@ public class TraineeInfoCtrl {
         }
     }
 
+    /**
+     * Button wird via Boolean-Eingabe aktiviert resp. deaktiviert
+     *
+     * @param bool
+     */
     public void handleDeleteTraineeButton(boolean bool) {
         deleteTrainee.setDisable(bool);
     }
