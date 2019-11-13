@@ -8,7 +8,7 @@ import java.util.ArrayList;
 import java.util.List;
 
 /**
- * Die Klasse DbPerson verwaltet alle Datenbankabfragen zur DB Tabelle Person
+ * Die Klasse DbPerson verwaltet alle Datenbankabfragen zur Datenbanktabelle Person.
  */
 public class DbPerson {
 
