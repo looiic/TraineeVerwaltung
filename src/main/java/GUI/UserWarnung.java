@@ -3,10 +3,10 @@ package GUI;
 import javafx.scene.control.Alert;
 import javafx.scene.control.ButtonType;
 
-/** Klasse wo ein Benutzer eine Warnung erhalten kann */
+/** Klasse, wo ein Benutzer Warnungen erhalten kann*/
 public class UserWarnung {
 
-    /** Alarm */
+    /**Alarm */
     private Alert alert;
 
     /**Konstruktor */
@@ -15,7 +15,7 @@ public class UserWarnung {
         alert.showAndWait();
     };
 
-    /** Liefert den Alarm als Ergebnis zurück */
+    /**Liefert den Alarm als Ergebnis zurück */
     public ButtonType getResult() {
        return alert.getResult();
     }

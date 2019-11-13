@@ -16,7 +16,7 @@ public class ControllerManager {
     static private TraineeInfoCtrl traineeInfoCtrl;
 
 
-    /** Liefert den Controller der main zurück */
+    /** Liefert den Controller der Main zurück */
     public static MainCtrl getMainCtrl() {
         return mainCtrl;
     }

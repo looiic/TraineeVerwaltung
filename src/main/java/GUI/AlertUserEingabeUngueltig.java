@@ -3,10 +3,10 @@ package GUI;
 import javafx.scene.control.Alert;
 import javafx.scene.control.ButtonType;
 
-/** Klasse welche einen Benutzer bei ungültiger Eingabe alarmiert. */
+/** Klasse, welche einen Benutzer bei ungültiger Eingabe alarmiert. */
 public class AlertUserEingabeUngueltig {
 
-    /**Alarm */
+    /**Alarm*/
     private Alert alert;
 
     /**Konstuktur */
