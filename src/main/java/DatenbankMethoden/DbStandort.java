@@ -1,6 +1,6 @@
 package DatenbankMethoden;
 
-import logic.Person;
+
 import logic.Standort;
 
 import java.sql.ResultSet;
