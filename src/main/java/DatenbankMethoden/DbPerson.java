@@ -16,19 +16,18 @@ public class DbPerson {
     /**
      * Lade alle Personen aus einem Kurs.
      *
-     * @param kurs
-     * @return personen
-     * @throws SQLException
+     * @param kurs Der Kurs für welchen man die Trainees haben will
+     * @return Liste von den Trainees für einen Kurs
+     * @throws SQLException SQL Exception
      */
     public List<Person> getListPersonen(Kurs kurs) throws SQLException {
-        Statement stmt = null;
         String query =
                 "select id, vorname, nachname, " +
                         "fk_standort, vorkenntnisse, fk_kurs_id " +
                         "from trainee_verwaltung.Person where fk_kurs_id=" + kurs.getId();
 
         ArrayList<Person> personen = new ArrayList<>();
-        stmt = Connector.getConn().createStatement();
+        Statement stmt = Connector.getConn().createStatement();
         ResultSet rs = stmt.executeQuery(query);
         while (rs.next()) {
             int id = rs.getInt("id");
@@ -47,9 +46,9 @@ public class DbPerson {
     /**
      * Es wird eine neue Person in die Datenbanktabelle Person hinzugefügt.
      *
-     * @param person
-     * @return newPersonId
-     * @throws SQLException
+     * @param person Person Objekt, das man in die DB speichern will
+     * @return Neu generiete ID für das Person Objekt
+     * @throws SQLException SQL Exception
      */
     public int addNewPerson(Person person) throws SQLException {
         int newPersonId = 0;
@@ -78,12 +77,11 @@ public class DbPerson {
      * Gib die Person, wie sie in der Datenbank sein sollte. Über die id der Person
      * wird die richtige Person mit den Werten im Objekt Person.
      *
-     * @param person
-     * @throws SQLException
+     * @param person Person Objekt das man aktualisieren will in der DB
+     * @throws SQLException SQL Exception
      */
     public void editPerson(Person person) throws SQLException {
-        Statement stmt = null;
-        stmt = Connector.getConn().createStatement(ResultSet.TYPE_SCROLL_SENSITIVE,
+        Statement stmt = Connector.getConn().createStatement(ResultSet.TYPE_SCROLL_SENSITIVE,
                 ResultSet.CONCUR_UPDATABLE);
         ResultSet uprs = stmt.executeQuery(
                 "select * " +
@@ -105,12 +103,11 @@ public class DbPerson {
     /**
      * Entfernt eine Person aus der Datenbanktabelle Person.
      *
-     * @param person
-     * @throws SQLException
+     * @param person Person Objekt, das man aus der DB löchen will
+     * @throws SQLException SQL Exception
      */
     public void deletePerson(Person person) throws SQLException {
-        Statement stmt = null;
-        stmt = Connector.getConn().createStatement(ResultSet.TYPE_SCROLL_SENSITIVE,
+        Statement stmt = Connector.getConn().createStatement(ResultSet.TYPE_SCROLL_SENSITIVE,
                 ResultSet.CONCUR_UPDATABLE);
 
         stmt.executeQuery(

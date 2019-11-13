@@ -5,7 +5,6 @@ import DatenbankMethoden.DbPerson;
 import javafx.beans.binding.Bindings;
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
-import javafx.event.Event;
 import javafx.fxml.FXML;
 import javafx.scene.control.Button;
 import javafx.scene.control.Label;
@@ -13,8 +12,8 @@ import javafx.scene.control.TableView;
 import javafx.scene.control.ToggleButton;
 import logic.Kurs;
 import logic.Person;
+
 import java.sql.SQLException;
-import java.util.ArrayList;
 import java.util.List;
 
 public class TraineeListeCtrl {
@@ -49,10 +48,10 @@ public class TraineeListeCtrl {
     }
 
     /**
-     * Läd alle Personen des ausgewählten Kurses und fügt sie der Tabelle hinzu
+     * Lädt alle Personen des ausgewählten Kurses und fügt sie der Tabelle hinzu
      *
-     * @param kurs
-     * @throws SQLException
+     * @param kurs Kurs Objekt für welche die Trainees neu geladen werden sollen
+     * @throws SQLException SQL Exception
      */
     public void reloadTraineeListe(Kurs kurs) throws SQLException {
         KursInfoCtrl kursInfoCtrl = ControllerManager.getKursInfoCtrl();
@@ -64,7 +63,7 @@ public class TraineeListeCtrl {
 
 
     @FXML
-    public void chooseTrainee(Event e) {
+    public void chooseTrainee() {
         Object selectedItem = tableView.getSelectionModel().getSelectedItem();
         if (selectedItem instanceof Person) {
             selectedPerson = (Person) selectedItem;
@@ -77,7 +76,7 @@ public class TraineeListeCtrl {
      * Erstellt einen neues Trainee-Objekt. Deaktiviert den Löschen-Button. Alles weitere passiert später
      */
     @FXML
-    public void addTrainee(Event e) throws SQLException {
+    public void addTrainee() {
         TraineeInfoCtrl personInfoCtrl = ControllerManager.getTraineeInfoCtrl();
         personInfoCtrl.clearTraineeInfos();
         tableView.getSelectionModel().clearSelection();
@@ -87,7 +86,7 @@ public class TraineeListeCtrl {
 
 
     @FXML
-    public void editTrainee(Event e) {
+    public void editTrainee() {
         Object selectedItem = tableView.getSelectionModel().getSelectedItem();
         if (selectedItem instanceof Person) {
             setTraineeListDisabled(true);
@@ -116,7 +115,6 @@ public class TraineeListeCtrl {
     public void setTraineeListDisabled(boolean bool){
         tableView.setDisable(bool);
         addTrainee.setDisable(bool);
-        //editTrainee.setDisable(bool);
         tableView.getSelectionModel().clearSelection();
     }
 

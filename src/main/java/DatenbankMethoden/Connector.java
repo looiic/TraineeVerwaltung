@@ -22,7 +22,7 @@ public final class Connector {
      * Stellt eine Verbindung zu einer Datenbank her.
      *
      * @return connection
-     * @throws SQLException
+     * @throws SQLException SQL Exception
      */
     public static Connection getConn() throws SQLException {
         if (conn == null) {
@@ -35,7 +35,7 @@ public final class Connector {
     /**
      * Schließt eine Verbindung zu Datenbank.
      *
-     * @throws SQLException
+     * @throws SQLException SQL Exception
      */
     public static void closeConn() throws SQLException {
         if (conn != null) {

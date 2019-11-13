@@ -35,7 +35,7 @@ public class KursInfoCtrl {
     private Button btnAbbrechen;
 
     private Kurs selectedKurs;
-    StringProperty anzahlTeilnehmer = new SimpleStringProperty();
+    private StringProperty anzahlTeilnehmer = new SimpleStringProperty();
 
     public KursInfoCtrl() {
     }
@@ -53,8 +53,8 @@ public class KursInfoCtrl {
     public StringProperty setAnzahlTeilnehmer(Kurs selectedKurs) throws SQLException {
         DbPerson dbPerson = new DbPerson();
         try {
-            Integer temp = dbPerson.getListPersonen(selectedKurs).size();
-            anzahlTeilnehmer.setValue(temp.toString());
+            int temp = dbPerson.getListPersonen(selectedKurs).size();
+            anzahlTeilnehmer.setValue(Integer.toString(temp));
 
         }catch (SQLException e) {
             anzahlTeilnehmer.setValue("0");
@@ -65,8 +65,8 @@ public class KursInfoCtrl {
     /**
      * Informationen vom übergebenen Kurs in die Textfelder des GUIs laden
      *
-     * @param kurs
-     * @throws SQLException
+     * @param kurs Kurs Objekt, das angezeigt werden soll
+     * @throws SQLException SQL Exception
      */
     @FXML
     public void setKursInfos(Kurs kurs) throws SQLException {
@@ -97,8 +97,7 @@ public class KursInfoCtrl {
 
     private boolean checkFelderNichtLeer(String feld1, String feld2){
         if (feld1.length() == 0 || feld2.length() == 0) {
-            AlertUserEingabeUngueltig alertUserEingabeUngueltig = new AlertUserEingabeUngueltig("" +
-                    "Die Felder dürfen nicht leer sein.");
+            new AlertUserEingabeUngueltig("Die Felder dürfen nicht leer sein.");
             return false;
         } else {
             return true;
@@ -149,7 +148,7 @@ public class KursInfoCtrl {
     }
 
     @FXML
-    public void handleAbbrechen() throws SQLException{
+    public void handleAbbrechen(){
 
         DbKurs dbKurs = new DbKurs();
         try {

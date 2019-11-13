@@ -6,14 +6,10 @@
 
 <?import sample.TextFieldLimited?>
 <AnchorPane xmlns="http://javafx.com/javafx/8" xmlns:fx="http://javafx.com/fxml/1" >
-   <children>
        <HBox>
-          <children>
               <Label text="Beschreibung:" />
-          </children>
        </HBox>
        <HBox alignment="bottom_right" layoutY="25.0" spacing="10" GridPane.columnIndex="0" GridPane.rowIndex="2">
-          <children>
               <TextField fx:id="idField" disable="true" opacity="0.0" prefHeight="25.0" prefWidth="0.0" />
               <TextFieldLimited fx:id="nachnameField" disable="true" prefHeight="25.0" prefWidth="120.0" promptText="Nachname" />
               <TextFieldLimited fx:id="vornameField" disable="true" prefWidth="120.0" promptText="Vorname" />
@@ -35,8 +31,6 @@
               <Button fx:id="saveTrainee" onAction="#saveEntry" text="Speichern" disable="true"/>
               <Button fx:id="deleteTrainee" onAction="#deleteEntry"  text="Löschen" disable="true"/>
               <Button fx:id="cancelTrainee" onAction="#cancelEntry" text="Abbrechen" disable="true" />
-          </children>
        </HBox>
-   </children>
 
 </AnchorPane>

@@ -18,7 +18,7 @@ public class DbStandort {
      * Liefert alle Standorte aus der Datenbank zurück.
      *
      * @return standort
-     * @throws SQLException
+     * @throws SQLException SQL Exception
      */
     public List<Standort> getStandorte() throws SQLException {
         Statement stmt;
