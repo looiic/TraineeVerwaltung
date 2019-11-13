@@ -79,14 +79,14 @@ public class TraineeInfoCtrl {
      * Prüft auf vollständige Benutzereingaben. Speichert den (neuen) Trainee in der Datenbank. Lädt die TraineeListe neu und setzt den gewünschten GUI-Status.
      */
     @FXML
-    public void saveEntry(Event e) throws SQLException {
+    public void saveEntry() throws SQLException {
 
             if (traineeListeCtrl.getAddTrainee().selectedProperty().getValue()) {
                 if (checkFelderNichtLeer()) {
                     createNewTrainee();
                     recoverDiseredGUIState();
                 }else{
-                    traineeListeCtrl.addTrainee(e);
+                    traineeListeCtrl.addTrainee();
                 }
             } else {
                 if (checkFelderNichtLeer()) {
@@ -94,7 +94,7 @@ public class TraineeInfoCtrl {
                     recoverDiseredGUIState();
                 }
                 else{
-                    traineeListeCtrl.editTrainee(e);
+                    traineeListeCtrl.editTrainee();
                 }
             }
 
