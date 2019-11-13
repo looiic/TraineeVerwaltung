@@ -68,11 +68,11 @@ CREATE TABLE `person` (
 --
 
 INSERT INTO `person` (`id`, `vorname`, `nachname`, `fk_standort`, `vorkenntnisse`, `fk_kurs_id`) VALUES
-(1, 'Hansi', 'Hinterseer', 'Istanbul', 'Guru', 1),
-(2, 'DJ', 'Ötzi', 'Istanbul', 'Guru', 1),
-(3, 'Helene', 'Fischer', 'Istanbul', 'Guru', 1),
-(4, 'Andreas', 'Gabalier', 'Istanbul', 'Guru', 1),
-(5, 'Beatrice', 'Egli', 'Istanbul', 'Guru', 2);
+(1, 'Hansi', 'Hinterseer', 'Istanbul', 'Praxis', 1),
+(2, 'DJ', 'Ötzi', 'Edinbourgh', 'Experte', 1),
+(3, 'Helene', 'Fischer', 'Moskau', 'Theorie', 1),
+(4, 'Andreas', 'Gabalier', 'Marrakech', 'Keine', 1),
+(5, 'Beatrice', 'Egli', 'Tschappina', 'Guru', 2);
 
 
 CREATE TABLE `standort` (

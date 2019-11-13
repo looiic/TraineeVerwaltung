@@ -57,6 +57,12 @@ public class KursInfoCtrl {
         return anzahlTeilnehmer;
     }
 
+    /**
+     * Informationen vom übergebenen Kurs in die Textfelder des GUIs laden
+     *
+     * @param kurs
+     * @throws SQLException
+     */
     @FXML
     public void setKursInfos(Kurs kurs) throws SQLException {
         selectedKurs = kurs;
@@ -84,65 +90,51 @@ public class KursInfoCtrl {
     }
 
     @FXML
-    public void handleSpeichern() {
+    public void handleSpeichern() throws SQLException {
 
         DbKurs dbKurs = new DbKurs();
         this.selectedKurs.setJahrgang(kursField.getText());
         this.selectedKurs.setRaum(raumField.getText());
-        try {
-            if (this.selectedKurs.getId() == 0) {
-                this.selectedKurs.setId(dbKurs.createKurs(this.selectedKurs));
-            } else {
-                dbKurs.editKurs(this.selectedKurs);
-            }
-        } catch (SQLException e) {
-            e.printStackTrace();
+
+        if (this.selectedKurs.getId() == 0) {
+            this.selectedKurs.setId(dbKurs.createKurs(this.selectedKurs));
+        } else {
+            dbKurs.editKurs(this.selectedKurs);
         }
+
         ControllerManager.getKursListeCtrl().initialize();
 
         resetDisabledState(false);
-
     }
 
     @FXML
-    public void handleLoeschen() {
+    public void handleLoeschen() throws SQLException {
         if (this.selectedKurs.getId() != 0) {
             DbKurs dbKurs = new DbKurs();
             UserWarnung warnung = new UserWarnung("Willst du den kompletten Kurs und alle Teilnehmer wirklich löschen?");
             if (warnung.getResult() == ButtonType.YES) {
-                try {
-                    dbKurs.deleteKurs(this.selectedKurs);
-                    ControllerManager.getKursListeCtrl().initialize();
-                    this.setKursInfos(new Kurs());
-                    ControllerManager.getTraineeListeCtrl().reloadTraineeListe(selectedKurs);
-                } catch (SQLException e) {
-                    e.printStackTrace();
-                }
+
+                dbKurs.deleteKurs(this.selectedKurs);
+                ControllerManager.getKursListeCtrl().initialize();
+                this.setKursInfos(new Kurs());
+                ControllerManager.getTraineeListeCtrl().reloadTraineeListe(selectedKurs);
             }
         }
         resetDisabledState(false);
-
     }
 
     @FXML
-    public void handleAbbrechen() {
-
-
+    public void handleAbbrechen() throws SQLException{
         DbKurs dbKurs = new DbKurs();
-        try {
-            if (this.selectedKurs.getId() == 0) {
-                kursField.clear();
-                raumField.clear();
-            } else {
-                this.selectedKurs = dbKurs.getKurs(this.selectedKurs.getId());
-                kursField.setText(selectedKurs.getJahrgang());
-                raumField.setText(selectedKurs.getRaum());
-            }
-        } catch (SQLException e) {
-            e.printStackTrace();
+        if (this.selectedKurs.getId() == 0) {
+            kursField.clear();
+            raumField.clear();
+        } else {
+            this.selectedKurs = dbKurs.getKurs(this.selectedKurs.getId());
+            kursField.setText(selectedKurs.getJahrgang());
+            raumField.setText(selectedKurs.getRaum());
         }
         resetDisabledState(false);
-
     }
 
     public void setKursInfoDisabled(boolean b) {
@@ -154,6 +146,11 @@ public class KursInfoCtrl {
         btnLoeschen.setDisable(b);
     }
 
+    public void setDisableBtnBearbeiten(boolean b) {
+        btnBearbeiten.setDisable(b);
+
+    }
+
     public Kurs getSelectedKurs() {
         return this.selectedKurs;
     }
@@ -161,7 +158,6 @@ public class KursInfoCtrl {
     private void resetDisabledState(boolean bool) {
         TraineeListeCtrl traineeListeCtrl = ControllerManager.getTraineeListeCtrl();
         traineeListeCtrl.setTraineeListDisabled(bool);
-
 
         setKursInfoDisabled(!bool);
         btnBearbeiten.setDisable(false);
