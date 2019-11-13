@@ -1,17 +1,12 @@
 <?xml version="1.0" encoding="UTF-8"?>
 
-<?import javafx.scene.image.*?>
-<?import java.lang.*?>
 <?import javafx.scene.control.*?>
 <?import javafx.scene.layout.*?>
-<?import javafx.scene.text.*?>
-
+<?import javafx.scene.text.Font?>
 <?import sample.TextFieldLimited?>
 <AnchorPane xmlns="http://javafx.com/javafx/8" xmlns:fx="http://javafx.com/fxml/1">
-    <children>
         <HBox>
             <VBox>
-                <children>
                     <HBox>
                         <Label prefHeight="17.0" prefWidth="100.0" text="Kursinformation:">
                             <font>
@@ -20,19 +15,14 @@
                         </Label>
                         <TextFieldLimited fx:id="kursField" disable="true"/>
                     </HBox>
-                </children>
-                <children>
                     <HBox>
                         <Label prefHeight="25.0" prefWidth="100.0" text="Raum:"/>
                         <TextFieldLimited fx:id="raumField" disable="true"/>
                     </HBox>
-                </children>
-                <children>
                     <HBox>
                         <Label text="Anzahl Teilnehmer:"/>
                         <TextField fx:id="anzahlTN" disable="true"/>
                     </HBox>
-                </children>
             </VBox>
             <VBox>
                 <Button text="Bearbeiten" fx:id="btnBearbeiten" disable="false" onAction="#handleBearbeiten"/>
@@ -41,6 +31,5 @@
                 <Button text="Abbrechen" fx:id="btnAbbrechen" disable="true" onAction="#handleAbbrechen"/>
             </VBox>
         </HBox>
-    </children>
 
 </AnchorPane>

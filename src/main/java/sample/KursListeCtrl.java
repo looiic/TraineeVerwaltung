@@ -47,8 +47,8 @@ public class KursListeCtrl {
 
     /**
      * Handler setzt die ausgewählten Kursinfos und läd die Teilnehmerliste neu
-     * @param e
-     * @throws SQLException
+     * @param e Event, der zu behandeln ist
+     * @throws SQLException SQL Exception
      */
     @FXML
     public void handleMouseClick(Event e) throws SQLException {

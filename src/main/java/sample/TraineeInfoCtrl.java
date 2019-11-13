@@ -36,7 +36,7 @@ public class TraineeInfoCtrl {
     /**
      * Liste aller Controller-Nodes dieses Controllers
      */
-    List<Control> traineeInfoControllers;
+    private List<Control> traineeInfoControllers;
     private TraineeListeCtrl traineeListeCtrl;
     private KursInfoCtrl kursInfoCtrl;
     private KursListeCtrl kursListeCtrl;
@@ -56,8 +56,6 @@ public class TraineeInfoCtrl {
                 add(deleteTrainee);
             }
         };
-        System.out.println(vorkenntnisseMenu.pressedProperty().getValue());
-
         traineeListeCtrl = ControllerManager.getTraineeListeCtrl();
         kursInfoCtrl = ControllerManager.getKursInfoCtrl();
         kursListeCtrl = ControllerManager.getKursListeCtrl();
@@ -75,21 +73,20 @@ public class TraineeInfoCtrl {
         }
     }
 
-
     /**
      * Handler für Speichern Button gedrückt.
      * Unterscheidet ob ein neuer Trainee angelegt werden soll oder überschrieben wird.
      * Prüft auf vollständige Benutzereingaben. Speichert den (neuen) Trainee in der Datenbank. Lädt die TraineeListe neu und setzt den gewünschten GUI-Status.
      */
     @FXML
-    public void saveEntry(Event e) throws SQLException {
+    public void saveEntry() throws SQLException {
 
             if (traineeListeCtrl.getAddTrainee().selectedProperty().getValue()) {
                 if (checkFelderNichtLeer()) {
                     createNewTrainee();
                     recoverDiseredGUIState();
                 }else{
-                    traineeListeCtrl.addTrainee(e);
+                    traineeListeCtrl.addTrainee();
                 }
             } else {
                 if (checkFelderNichtLeer()) {
@@ -97,7 +94,7 @@ public class TraineeInfoCtrl {
                     recoverDiseredGUIState();
                 }
                 else{
-                    traineeListeCtrl.editTrainee(e);
+                    traineeListeCtrl.editTrainee();
                 }
             }
 
@@ -117,7 +114,7 @@ public class TraineeInfoCtrl {
     /**
      * Änderungen für in Tabelle ausgewählte Person werden in Datenbank vorgenommen.
      *
-     * @throws SQLException
+     * @throws SQLException SQL Exception
      */
     private void editExistingTrainee() throws SQLException {
         selectedPerson = traineeListeCtrl.getSelectedPerson();
@@ -128,13 +125,13 @@ public class TraineeInfoCtrl {
     /**
      * eine neue Person wird erstellt, mit entsprechender Kurs-Id verknüpft und in die Datenbank geladen
      *
-     * @throws SQLException
+     * @throws SQLException SQL Exception
      */
     private void createNewTrainee() throws SQLException {
         selectedPerson = new Person();
         setChanges(selectedPerson);
         selectedPerson.setKursId(kursInfoCtrl.getSelectedKurs().getId());
-        dbPerson.addNewPerson(selectedPerson);
+        selectedPerson.setId(dbPerson.addNewPerson(selectedPerson));
     }
 
     /**
@@ -161,7 +158,7 @@ public class TraineeInfoCtrl {
      * Löscht den Traineee in der Datenbank. Läd die TraineeListe neu und gibt andere Felder wieder frei.
      */
     @FXML
-    public void deleteEntry(Event e) throws SQLException {
+    public void deleteEntry() throws SQLException {
         String name = traineeListeCtrl.getSelectedPerson().getVorname() + " " + traineeListeCtrl.getSelectedPerson().getNachname();
         UserWarnung warnung = new UserWarnung("Willst du " + name + " wirklich löschen?");
         if (warnung.getResult() == ButtonType.YES) {
@@ -175,14 +172,13 @@ public class TraineeInfoCtrl {
      * Bricht die Trainee Bearbeitung ab. Gibt andere Felder wieder frei.
      */
     @FXML
-    public void cancelEntry(Event e) throws SQLException {
+    public void cancelEntry(){
         resetDisabledState(false);
     }
 
     /**
      * Schreibt den Text des gewählten Items in den MenuButton
-     *
-     * @param e
+     * @param e Event, der behandelt werden soll
      */
     @FXML
     public void selectVorkenntnisse(Event e) {
@@ -193,7 +189,7 @@ public class TraineeInfoCtrl {
     /**
      * Übernimmt den UserInput für die ausgewählte Person
      *
-     * @param selectedPerson
+     * @param selectedPerson Person Objekt für wechles man die UserInputs setzten will
      */
     private void setChanges(Person selectedPerson) {
         selectedPerson.setNachname(nachnameField.getText());
@@ -202,10 +198,12 @@ public class TraineeInfoCtrl {
         selectedPerson.setVorkenntnisse(vorkenntnisseMenu.getText());
     }
 
+
+    //TODO: Refactoring
+
     /**
      * Reaktiviert andere Control(s) und deaktiviert die eigenen.
-     *
-     * @param bool
+     * @param bool Boolean auf was man die Disabled states setzten möchte
      */
     private void resetDisabledState(boolean bool) {
         traineeListeCtrl.setTraineeListDisabled(bool);
@@ -228,7 +226,7 @@ public class TraineeInfoCtrl {
     /**
      * Überschreibt die Felder mit der selektierten Person
      *
-     * @param selectedPerson
+     * @param selectedPerson Person Objekt welches angezeigt werden soll
      */
     public void setTraineeInfos(Person selectedPerson) {
         nachnameField.setText(selectedPerson.getNachname());
@@ -240,7 +238,7 @@ public class TraineeInfoCtrl {
     /**
      * Deaktiviert alle eigenen Control(s)
      *
-     * @param bool
+     * @param bool Boolean ob es disabled werden soll
      */
     public void setTraineeInfoDisabled(boolean bool) {
         for (Control node : traineeInfoControllers) {
@@ -251,7 +249,7 @@ public class TraineeInfoCtrl {
     /**
      * Button wird via Boolean-Eingabe aktiviert resp. deaktiviert
      *
-     * @param bool
+     * @param bool Boolean ob es disabled werden soll
      */
     public void handleDeleteTraineeButton(boolean bool) {
         deleteTrainee.setDisable(bool);
