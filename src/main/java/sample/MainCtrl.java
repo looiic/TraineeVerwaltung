@@ -12,7 +12,10 @@ public class MainCtrl {
 
     @FXML private HBox hbox;
 
-
+    /**
+     * Für die 4 Nodes 'kursliste', 'kursinfo', 'traineeliste' und 'traineeinfo' werden die FXML-Files geladen,
+     * plus zusätzlich wird der jeweilige Controller für das FXML-File gesetzt.
+     */
     @FXML
     public void initialize() {
         try {
@@ -53,9 +56,8 @@ public class MainCtrl {
             hbox.getChildren().add(vBox);
 
         } catch (IOException e) {
+            System.err.println("Folgender Fehler ist aufgetreten: "+e);
             e.printStackTrace();
         }
     }
-
-
 }
