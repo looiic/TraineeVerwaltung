@@ -17,6 +17,7 @@ import logic.Person;
 import java.sql.SQLException;
 import java.util.List;
 
+/** Die Klasse beschreibt den Controller der TraineeListe */
 public class TraineeListeCtrl {
 
     @FXML

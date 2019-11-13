@@ -8,6 +8,7 @@ import javafx.scene.layout.VBox;
 
 import java.io.IOException;
 
+/** Klasse des Maincontrollers der Traineeanwendung */
 public class MainCtrl {
 
     @FXML private HBox hbox;

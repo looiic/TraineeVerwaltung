@@ -9,8 +9,10 @@ import DatenbankMethoden.Connector;
 
 import java.sql.SQLException;
 
+/**Die Mainklasse der Anwendung. */
 public class Main extends Application {
 
+    /** Starten der grafischen Benutzeroberfläche */
     @Override
     public void start(Stage primaryStage) throws Exception{
         FXMLLoader  loader = new FXMLLoader(getClass().getResource("main.fxml"));
@@ -25,10 +27,13 @@ public class Main extends Application {
         primaryStage.show();
     }
 
+    /** Schließen der Verbindung zur Datenbank */
     @Override
     public void stop() throws SQLException {
         Connector.closeConn();
     }
+
+    /**Main-Funktion zum Starten der Anwendung. */
     public static void main(String[] args) {
         launch(args);
     }
