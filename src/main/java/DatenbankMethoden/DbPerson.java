@@ -42,6 +42,13 @@ public class DbPerson {
     }
 
 
+    /**
+     * Es wird eine neue Person in die Datenbanktabelle Person hinzugefügt.
+     *
+     * @param person
+     * @return newPersonId
+     * @throws SQLException
+     */
     public int addNewPerson(Person person) throws SQLException {
         int newPersonId = 0;
 
@@ -92,6 +99,13 @@ public class DbPerson {
         stmt.close();
     }
 
+
+    /**
+     * Entfernt eine Person aus der Datenbanktabelle Person.
+     *
+     * @param person
+     * @throws SQLException
+     */
     public void deletePerson(Person person) throws SQLException {
         Statement stmt = null;
         stmt = Connector.getConn().createStatement(ResultSet.TYPE_SCROLL_SENSITIVE,
@@ -102,6 +116,4 @@ public class DbPerson {
                         ".Person where Person.id =" + person.getId());
         stmt.close();
     }
-
-
 }

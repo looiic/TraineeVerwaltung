@@ -11,6 +11,12 @@ import java.util.List;
 public class DbStandort {
 
 
+    /**
+     * Liefert alle Standorte aus der Datenbank zurück.
+     *
+     * @return standort
+     * @throws SQLException
+     */
     public List<Standort> getStandorte() throws SQLException {
         Statement stmt;
         String query = "select * from trainee_verwaltung.standort";

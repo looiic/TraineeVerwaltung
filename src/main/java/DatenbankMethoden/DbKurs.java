@@ -40,8 +40,8 @@ public class DbKurs {
     }
 
     /**
-     * Holt sich aus der Datenbank die zum id zugehörige Reihe, macht aus den Werten
-     * einen Kurs-Objekt und gibt diesen zurück.
+     * Holt sich aus der Datenbank die zur id zugehörigen Reihe, macht aus den Werten
+     * ein Kurs-Objekt und gibt diese zurück.
      *
      * @param id
      * @return Kurs-Objekt
@@ -67,7 +67,7 @@ public class DbKurs {
     }
 
     /**
-     * Übergebe dieser Methode einen veränderten Kurs. Anhand der id des jeweiligen Kurses
+     * Dieser Methode wird ein veränderter Kurs übergeben. Anhand der id des jeweiligen Kurses
      * wird jener Kurs in der Datenbank nach dem übergebenen Kurs-Objekt verändert.
      *
      * @param kurs
@@ -107,7 +107,7 @@ public class DbKurs {
 
     /**
      * Sucht sich alle Trainees des angegebenen Kurses heraus und löscht all jene einzeln.
-     * Anwendung beim löschen von einem Kurs.
+     * Anwendung beim Löschen von einem Kurs.
      * @param kurs
      * @throws SQLException
      */
@@ -120,9 +120,10 @@ public class DbKurs {
     }
 
     /**
+     * Es wird ein neuer Kurs erzeugt.
      *
      * @param kurs
-     * @return
+     * @return newKursId
      * @throws SQLException
      */
     public int createKurs(Kurs kurs) throws SQLException {
