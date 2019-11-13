@@ -49,6 +49,7 @@ public class KursInfoCtrl {
     /**
      * Ermittelt die Anzahl der Personen in dem ausgewählten Kurs.
      * Wenn kein Kurs ausgewählt wir bzw. der Kurs nicht existiert wird "0" als Wert gesetzt
+     *
      * @param selectedKurs
      * @return StringProperty
      */
@@ -64,6 +65,7 @@ public class KursInfoCtrl {
 
     /**
      * Informationen vom übergebenen Kurs in die Textfelder des GUIs laden
+     *
      * @param kurs Kurs Objekt, das angezeigt werden soll
      * @throws SQLException SQL Exception
      */
@@ -108,6 +110,7 @@ public class KursInfoCtrl {
     public void handleBearbeiten() {
         recoverGUIStateBearbeiten();
     }
+
     /**
      * Setzt den gewünschten Zustand der GUI Controls nach dem bearbeiten eines Kurses
      */
@@ -118,11 +121,12 @@ public class KursInfoCtrl {
 
     /**
      * Prüft ob der User etwas eingegeben hat
-     * @param jahrgangName
-     * @param raumName
+     *
      * @return boolean
      */
-    private boolean checkFelderNichtLeer(String jahrgangName, String raumName) {
+    private boolean checkFelderNichtLeer() {
+        String jahrgangName = kursField.getText();
+        String raumName = raumField.getText();
         if (jahrgangName.length() == 0 || raumName.length() == 0) {
             AlertUserEingabeUngueltig alertUserEingabeUngueltig = new AlertUserEingabeUngueltig("" +
                     "Die Felder dürfen nicht leer sein.");
@@ -135,26 +139,48 @@ public class KursInfoCtrl {
     /**
      * Unterscheidet ob ein Kurs geupdated wird oder ein neuer Kurs erstellt wird.
      * Benutzerangaben werden überprüft
+     *
      * @throws SQLException
      */
     @FXML
     public void handleSpeichern() throws SQLException {
-        String jahrgangName = kursField.getText();
-        String raumName = raumField.getText();
 
-        if (checkFelderNichtLeer(jahrgangName, raumName)) {
-            this.selectedKurs.setJahrgang(jahrgangName);
-            this.selectedKurs.setRaum(raumName);
-
-            if (this.selectedKurs.getId() == 0) {
-                this.selectedKurs.setId(dbKurs.createKurs(this.selectedKurs));
+        if (this.selectedKurs.getId() == 0) {
+            if (checkFelderNichtLeer()) {
+                createNewKurs();
+                recoverGUIStateSpeichern();
             } else {
-                dbKurs.editKurs(this.selectedKurs);
+                neuerKurs();
             }
-            recoverGUIStateSpeichern();
         } else {
-            neuerKurs();
+            if (checkFelderNichtLeer()) {
+                editExistingKurs();
+                recoverGUIStateSpeichern();
+
+            } else {
+                handleBearbeiten();
+            }
         }
+    }
+
+    /**
+     * Ändert den ausgewählten Kurs
+     * @throws SQLException
+     */
+    public void editExistingKurs() throws SQLException {
+        this.selectedKurs.setJahrgang(kursField.getText());
+        this.selectedKurs.setRaum(raumField.getText());
+        dbKurs.editKurs(this.selectedKurs);
+    }
+
+    /**
+     * Erstellt einen neuen Kurs
+     * @throws SQLException
+     */
+    public void createNewKurs() throws SQLException {
+        this.selectedKurs.setJahrgang(kursField.getText());
+        this.selectedKurs.setRaum(raumField.getText());
+        this.selectedKurs.setId(dbKurs.createKurs(this.selectedKurs));
     }
 
     /**
@@ -169,6 +195,7 @@ public class KursInfoCtrl {
 
     /**
      * Löscht den Kurs
+     *
      * @throws SQLException
      */
     @FXML
@@ -197,18 +224,19 @@ public class KursInfoCtrl {
     /**
      * Bricht das Bearbeiten ab.
      * Unterscheidet ob ein Kurs existiert oder setzt den Kurs der noch ausgewählt ist.
+     *
      * @throws SQLException
      */
     @FXML
-    public void handleAbbrechen() throws SQLException{
+    public void handleAbbrechen() throws SQLException {
 
-            if (this.selectedKurs.getId() == 0) {
-                selectedKurs = ControllerManager.getKursListeCtrl().getSelectedKurs();
-                recoverGUIStateAbbrechen();
+        if (this.selectedKurs.getId() == 0) {
+            selectedKurs = ControllerManager.getKursListeCtrl().getSelectedKurs();
+            recoverGUIStateAbbrechen();
 
-            } else {
-                recoverGUIStateAbbrechen();
-            }
+        } else {
+            recoverGUIStateAbbrechen();
+        }
     }
 
     /**
@@ -222,6 +250,7 @@ public class KursInfoCtrl {
 
     /**
      * Aktiviert/Deaktiviert alle Controls
+     *
      * @param b
      */
     public void setKursInfoDisabled(boolean b) {
@@ -235,6 +264,7 @@ public class KursInfoCtrl {
 
     /**
      * Bearbeiten Button muss hier gesondert behandelt werden
+     *
      * @param b
      */
     public void setDisableBtnBearbeiten(boolean b) {
@@ -247,6 +277,7 @@ public class KursInfoCtrl {
 
     /**
      * Reaktiviert andere Control(s) und deaktiviert die eigenen.
+     *
      * @param bool Boolean auf was man die Disabled states setzten möchte
      */
     private void resetDisabledState(boolean bool) {
