@@ -1,5 +1,6 @@
 package logic;
 
+/** Die Kursklasse zur Erzeugung von Kursen innerhalb der Traineeverwaltung*/
 public class Kurs {
 
     /** Eindeutige Identifikationskennung eines Kurses*/

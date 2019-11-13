@@ -1,6 +1,6 @@
 package logic;
 
-
+/** Die Personenklasse zur Erzeugung von Personen innerhalb der Traineeverwaltung*/
 public class Person {
 
     /** Eindeutige Indentifikationskennung einer Person */
