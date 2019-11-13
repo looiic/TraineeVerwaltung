@@ -43,6 +43,9 @@ public class TraineeInfoCtrl {
     private Person selectedPerson;
     private DbPerson dbPerson;
 
+    private String defaultValueVorkenntnisseField = "Vorkenntnisse";
+    private String defaultValueStandortField = "Standort";
+
     @FXML
     public void initialize() throws SQLException {
         traineeInfoControllers = new ArrayList<Control>() {
@@ -90,27 +93,27 @@ public class TraineeInfoCtrl {
     @FXML
     public void saveEntry() throws SQLException {
 
-            if (traineeListeCtrl.getAddTrainee().selectedProperty().getValue()) {
-                if (checkFelderNichtLeer()) {
-                    createNewTrainee();
-                    recoverDiseredGUIState();
-                }else{
-                    traineeListeCtrl.addTrainee();
-                }
+        if (traineeListeCtrl.getAddTrainee().selectedProperty().getValue()) {
+            if (checkFelderNichtLeer()) {
+                createNewTrainee();
+                recoverDiseredGUIState();
             } else {
-                if (checkFelderNichtLeer()) {
-                    editExistingTrainee();
-                    recoverDiseredGUIState();
-                }
-                else{
-                    traineeListeCtrl.editTrainee();
-                }
+                traineeListeCtrl.addTrainee();
             }
-
+        } else {
+            if (checkFelderNichtLeer()) {
+                editExistingTrainee();
+                recoverDiseredGUIState();
+            } else {
+                traineeListeCtrl.editTrainee();
+            }
         }
+
+    }
 
     /**
      * Setzt den gewünschten Zustand der GUI Controls. Läd TraineeListe neu.
+     *
      * @throws SQLException
      */
     private void recoverDiseredGUIState() throws SQLException {
@@ -145,6 +148,7 @@ public class TraineeInfoCtrl {
 
     /**
      * Überprüft ob der User die 4 Eingabefelder ausgefüllt bzw. selektiert hat. Bei Vorkenntnissen und Standort wird geprüft ob der default-Wert besteht.
+     *
      * @return boolean
      */
     private boolean checkFelderNichtLeer() {
@@ -154,7 +158,7 @@ public class TraineeInfoCtrl {
         String vorkenntnisse = vorkenntnisseMenu.getText();
         String standort = standortField.getText();
 
-        if (nachname.length() == 0 || vorname.length() == 0 || vorkenntnisse == "Vorkenntnisse" || standort == "Standort") {
+        if (nachname.length() == 0 || vorname.length() == 0 || vorkenntnisse.equals(defaultValueVorkenntnisseField) || standort.equals(defaultValueStandortField)) {
             AlertUserEingabeUngueltig alertUserEingabeUngueltig = new AlertUserEingabeUngueltig("" +
                     "Die Felder dürfen nicht leer sein.");
             return false;
@@ -181,12 +185,13 @@ public class TraineeInfoCtrl {
      * Bricht die Trainee Bearbeitung ab. Gibt andere Felder wieder frei.
      */
     @FXML
-    public void cancelEntry(){
+    public void cancelEntry() {
         resetDisabledState(false);
     }
 
     /**
      * Schreibt den Text des gewählten Items in den MenuButton
+     *
      * @param e Event, der behandelt werden soll
      */
     @FXML
@@ -212,6 +217,7 @@ public class TraineeInfoCtrl {
 
     /**
      * Reaktiviert andere Control(s) und deaktiviert die eigenen.
+     *
      * @param bool Boolean auf was man die Disabled states setzten möchte
      */
     private void resetDisabledState(boolean bool) {
@@ -228,8 +234,8 @@ public class TraineeInfoCtrl {
     public void clearTraineeInfos() {
         nachnameField.setText("");
         vornameField.setText("");
-        vorkenntnisseMenu.setText("Vorkenntnisse");
-        standortField.setText("");
+        vorkenntnisseMenu.setText(defaultValueVorkenntnisseField);
+        standortField.setText(defaultValueStandortField);
     }
 
     /**
