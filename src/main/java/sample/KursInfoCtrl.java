@@ -35,28 +35,33 @@ public class KursInfoCtrl {
     private Button btnAbbrechen;
 
     private Kurs selectedKurs;
-    private StringProperty anzahlTeilnehmer = new SimpleStringProperty();
-
-    public KursInfoCtrl() {
-    }
+    private StringProperty anzahlTeilnehmer;
+    private DbPerson dbPerson;
+    private DbKurs dbKurs;
 
     @FXML
-    public void initialize() throws SQLException {
-        Kurs selectedKurs = ControllerManager.getKursListeCtrl().getSelectedKurs();
+    public void initialize() {
+        selectedKurs = ControllerManager.getKursListeCtrl().getSelectedKurs();
+        anzahlTeilnehmer = new SimpleStringProperty();
+        dbKurs = new DbKurs();
 
         anzahlTN.textProperty().bind(setAnzahlTeilnehmer(selectedKurs));
-        if(selectedKurs != null){
+        if (selectedKurs != null) {
             setKursInfos(selectedKurs);
         }
     }
 
-    public StringProperty setAnzahlTeilnehmer(Kurs selectedKurs) throws SQLException {
-        DbPerson dbPerson = new DbPerson();
+    /**
+     * Ermittelt die Anzahl der Personen in dem ausgewählten Kurs.
+     * Wenn kein Kurs ausgewählt wir bzw. der Kurs nicht existiert wird "0" als Wert gesetzt
+     * @param selectedKurs
+     * @return StringProperty
+     */
+    public StringProperty setAnzahlTeilnehmer(Kurs selectedKurs) {
+        dbPerson = new DbPerson();
         try {
-            int temp = dbPerson.getListPersonen(selectedKurs).size();
-            anzahlTeilnehmer.setValue(Integer.toString(temp));
-
-        }catch (SQLException e) {
+            anzahlTeilnehmer.setValue(Integer.toString(dbPerson.getListPersonen(selectedKurs).size()));
+        } catch (SQLException e) {
             anzahlTeilnehmer.setValue("0");
         }
         return anzahlTeilnehmer;
@@ -64,40 +69,65 @@ public class KursInfoCtrl {
 
     /**
      * Informationen vom übergebenen Kurs in die Textfelder des GUIs laden
-     *
      * @param kurs Kurs Objekt, das angezeigt werden soll
      * @throws SQLException SQL Exception
      */
     @FXML
-    public void setKursInfos(Kurs kurs) throws SQLException {
-        selectedKurs = kurs;
-
+    public void setKursInfos(Kurs kurs) {
         kursField.setText(kurs.getJahrgang());
         raumField.setText(kurs.getRaum());
         setAnzahlTeilnehmer(selectedKurs);
-
     }
 
-    public void neuerKurs() throws SQLException {
+    /**
+     * Ermöglicht es dem Benutzer einen neuen Kurs anzulegen
+     */
+    public void neuerKurs() {
         this.selectedKurs = new Kurs();
         setAnzahlTeilnehmer(selectedKurs);
-        kursField.clear();
-        raumField.clear();
+        clearKursInfos();
+        recoverGUIStateNewKurs();
+    }
+
+    /**
+     * Setzt den gewünschten Zustand der GUI Controls nach dem setzen eines neuen Kurses
+     */
+    private void recoverGUIStateNewKurs() {
+        recoverGUIStateBearbeiten();
         ControllerManager.getTraineeListeCtrl().clearTable();
-        resetDisabledState(true);
-        btnBearbeiten.setDisable(true);
         btnLoeschen.setDisable(true);
     }
 
+    /**
+     * Löscht die Benutzereingaben
+     */
+    private void clearKursInfos() {
+        kursField.clear();
+        raumField.clear();
+    }
+
+    /**
+     * Gibt die Bearbeitung eines Kurses frei
+     */
     @FXML
     public void handleBearbeiten() {
+        recoverGUIStateBearbeiten();
+    }
+    /**
+     * Setzt den gewünschten Zustand der GUI Controls nach dem bearbeiten eines Kurses
+     */
+    private void recoverGUIStateBearbeiten() {
         resetDisabledState(true);
         btnBearbeiten.setDisable(true);
     }
 
-    private boolean checkFelderNichtLeer(String jahrgangName, String raumName){
-
-
+    /**
+     * Prüft ob der User etwas eingegeben hat
+     * @param jahrgangName
+     * @param raumName
+     * @return boolean
+     */
+    private boolean checkFelderNichtLeer(String jahrgangName, String raumName) {
         if (jahrgangName.length() == 0 || raumName.length() == 0) {
             AlertUserEingabeUngueltig alertUserEingabeUngueltig = new AlertUserEingabeUngueltig("" +
                     "Die Felder dürfen nicht leer sein.");
@@ -107,73 +137,98 @@ public class KursInfoCtrl {
         }
     }
 
+    /**
+     * Unterscheidet ob ein Kurs geupdated wird oder ein neuer Kurs erstellt wird.
+     * Benutzerangaben werden überprüft
+     * @throws SQLException
+     */
     @FXML
     public void handleSpeichern() throws SQLException {
-
-        DbKurs dbKurs = new DbKurs();
-
         String jahrgangName = kursField.getText();
         String raumName = raumField.getText();
 
-        if (checkFelderNichtLeer(jahrgangName,raumName)){
+        if (checkFelderNichtLeer(jahrgangName, raumName)) {
             this.selectedKurs.setJahrgang(jahrgangName);
             this.selectedKurs.setRaum(raumName);
+
             if (this.selectedKurs.getId() == 0) {
                 this.selectedKurs.setId(dbKurs.createKurs(this.selectedKurs));
             } else {
                 dbKurs.editKurs(this.selectedKurs);
             }
-            ControllerManager.getKursListeCtrl().initialize();
-            ControllerManager.getKursListeCtrl().setSelectedKurs();
-
-                resetDisabledState(false);
+            recoverGUIStateSpeichern();
         } else {
             neuerKurs();
         }
     }
 
+    /**
+     * Setzt den gewünschten Zustand der GUI Controls nach dem speichern eines Kurses
+     */
+    private void recoverGUIStateSpeichern() {
+        ControllerManager.getKursListeCtrl().initialize();
+        ControllerManager.getKursListeCtrl().setSelectedKurs();
+
+        resetDisabledState(false);
+    }
+
+    /**
+     * Löscht den Kurs
+     * @throws SQLException
+     */
     @FXML
     public void handleLoeschen() throws SQLException {
-        if (this.selectedKurs.getId() != 0) {
-            DbKurs dbKurs = new DbKurs();
-            UserWarnung warnung = new UserWarnung("Willst du den kompletten Kurs und alle Teilnehmer wirklich löschen?");
-            if (warnung.getResult() == ButtonType.YES) {
+        UserWarnung warnung = new UserWarnung("Willst du den kompletten Kurs und alle Teilnehmer wirklich löschen?");
+        if (warnung.getResult() == ButtonType.YES) {
 
-                dbKurs.deleteKurs(this.selectedKurs);
-                KursListeCtrl kursListeCtrl = ControllerManager.getKursListeCtrl();
-                kursListeCtrl.initialize();
-                selectedKurs = kursListeCtrl.getSelectedKurs();
-                setKursInfos(selectedKurs);
-                ControllerManager.getTraineeListeCtrl().reloadTraineeListe(selectedKurs);
-            }
+            dbKurs.deleteKurs(this.selectedKurs);
+            recoverGUIStateLoeschen();
         }
+    }
+
+    /**
+     * Setzt den gewünschten Zustand der GUI Controls nach dem löschen eines Kurses
+     */
+    private void recoverGUIStateLoeschen() throws SQLException {
+        KursListeCtrl kursListeCtrl = ControllerManager.getKursListeCtrl();
+        kursListeCtrl.initialize();
+        selectedKurs = kursListeCtrl.getSelectedKurs();
+        setKursInfos(selectedKurs);
+        ControllerManager.getTraineeListeCtrl().reloadTraineeListe(selectedKurs);
         resetDisabledState(false);
     }
 
+
+    /**
+     * Bricht das Bearbeiten ab.
+     * Unterscheidet ob ein Kurs existiert oder setzt den Kurs der noch ausgewählt ist.
+     * @throws SQLException
+     */
     @FXML
-    public void handleAbbrechen(){
+    public void handleAbbrechen() throws SQLException{
 
-        DbKurs dbKurs = new DbKurs();
-        try {
             if (this.selectedKurs.getId() == 0) {
-                KursListeCtrl kursListeCtrl = ControllerManager.getKursListeCtrl();
-                TraineeListeCtrl traineeListeCtrl = ControllerManager.getTraineeListeCtrl();
-
-                selectedKurs = kursListeCtrl.getSelectedKurs();
-                traineeListeCtrl.reloadTraineeListe(selectedKurs);
-                setKursInfos(selectedKurs);
+                selectedKurs = ControllerManager.getKursListeCtrl().getSelectedKurs();
+                recoverGUIStateAbbrechen();
 
             } else {
-                this.selectedKurs = dbKurs.getKurs(this.selectedKurs.getId());
-                kursField.setText(selectedKurs.getJahrgang());
-                raumField.setText(selectedKurs.getRaum());
+                recoverGUIStateAbbrechen();
             }
-        } catch (SQLException e) {
-            e.printStackTrace();
-        }
+    }
+
+    /**
+     * Setzt den gewünschten Zustand der GUI Controls nach dem Abbrechen
+     */
+    private void recoverGUIStateAbbrechen() throws SQLException {
+        ControllerManager.getTraineeListeCtrl().reloadTraineeListe(selectedKurs);
+        setKursInfos(selectedKurs);
         resetDisabledState(false);
     }
 
+    /**
+     * Aktiviert/Deaktiviert alle Controls
+     * @param b
+     */
     public void setKursInfoDisabled(boolean b) {
         kursField.setDisable(b);
         raumField.setDisable(b);
@@ -183,15 +238,22 @@ public class KursInfoCtrl {
         btnLoeschen.setDisable(b);
     }
 
+    /**
+     * Bearbeiten Button muss hier gesondert behandelt werden
+     * @param b
+     */
     public void setDisableBtnBearbeiten(boolean b) {
         btnBearbeiten.setDisable(b);
-
     }
 
     public Kurs getSelectedKurs() {
         return this.selectedKurs;
     }
 
+    /**
+     * Reaktiviert andere Control(s) und deaktiviert die eigenen.
+     * @param bool Boolean auf was man die Disabled states setzten möchte
+     */
     private void resetDisabledState(boolean bool) {
         TraineeListeCtrl traineeListeCtrl = ControllerManager.getTraineeListeCtrl();
         traineeListeCtrl.setTraineeListDisabled(bool);

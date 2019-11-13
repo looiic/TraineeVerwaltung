@@ -63,6 +63,15 @@ public class TraineeInfoCtrl {
 
         DbStandort dbStandort = new DbStandort();
 
+        initializeStandort(dbStandort);
+    }
+
+    /**
+     * Initialisiert den Standort
+     * @param dbStandort
+     * @throws SQLException
+     */
+    private void initializeStandort(DbStandort dbStandort) throws SQLException {
         for (Standort standort : dbStandort.getStandorte()) {
             MenuItem menuItem = new MenuItem(standort.getStandort());
             menuItem.setOnAction(event -> {
