@@ -71,6 +71,7 @@ public class KursInfoCtrl {
      */
     @FXML
     public void setKursInfos(Kurs kurs) {
+        selectedKurs = kurs;
         kursField.setText(kurs.getJahrgang());
         raumField.setText(kurs.getRaum());
         setAnzahlTeilnehmer(selectedKurs);
