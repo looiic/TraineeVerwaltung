@@ -1,4 +1,4 @@
-package logic;
+package DTO;
 
 /** Die Standortklasse zur Erzeugung von Standorten innerhalb der Traineeverwaltung*/
 public class Standort {

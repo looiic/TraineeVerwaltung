@@ -10,7 +10,7 @@ import javafx.fxml.FXML;
 import javafx.scene.control.Alert;
 import javafx.scene.control.Button;
 import javafx.scene.control.TableView;
-import logic.Kurs;
+import DTO.Kurs;
 
 import java.sql.SQLException;
 import java.util.List;

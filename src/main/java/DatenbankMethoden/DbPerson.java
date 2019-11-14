@@ -1,7 +1,7 @@
 package DatenbankMethoden;
 
-import logic.Kurs;
-import logic.Person;
+import DTO.Kurs;
+import DTO.Person;
 
 import java.sql.*;
 import java.util.ArrayList;

@@ -14,8 +14,8 @@ import javafx.scene.control.Button;
 import javafx.scene.control.Label;
 import javafx.scene.control.TableView;
 import javafx.scene.control.ToggleButton;
-import logic.Kurs;
-import logic.Person;
+import DTO.Kurs;
+import DTO.Person;
 
 import java.sql.SQLException;
 import java.util.List;

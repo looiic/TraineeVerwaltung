@@ -1,4 +1,4 @@
-package logic;
+package DTO;
 
 /** Die Kursklasse zur Erzeugung von Kursen innerhalb der Traineeverwaltung*/
 public class Kurs {

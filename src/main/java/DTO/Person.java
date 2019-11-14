@@ -1,4 +1,4 @@
-package logic;
+package DTO;
 
 /** Die Personenklasse zur Erzeugung von Personen innerhalb der Traineeverwaltung*/
 public class Person {

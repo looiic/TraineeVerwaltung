@@ -13,7 +13,7 @@ import javafx.fxml.FXML;
 import javafx.scene.control.Button;
 import javafx.scene.control.ButtonType;
 import javafx.scene.control.TextField;
-import logic.Kurs;
+import DTO.Kurs;
 
 import java.sql.SQLException;
 

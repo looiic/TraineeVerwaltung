@@ -1,7 +1,7 @@
 package DatenbankMethoden;
 
 
-import logic.Standort;
+import DTO.Standort;
 import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.sql.Statement;

@@ -9,8 +9,8 @@ import GUI.traineeListe.TraineeListeCtrl;
 import javafx.event.Event;
 import javafx.fxml.FXML;
 import javafx.scene.control.*;
-import logic.Person;
-import logic.Standort;
+import DTO.Person;
+import DTO.Standort;
 
 import java.sql.SQLException;
 import java.util.ArrayList;
