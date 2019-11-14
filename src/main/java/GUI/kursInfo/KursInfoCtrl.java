@@ -182,6 +182,7 @@ public class KursInfoCtrl {
         this.selectedKurs.setJahrgang(kursField.getText());
         this.selectedKurs.setRaum(raumField.getText());
         this.selectedKurs.setId(dbKurs.createKurs(this.selectedKurs));
+        ControllerManager.getKursListeCtrl().setSelectedKurs();
     }
 
     /**
@@ -189,7 +190,7 @@ public class KursInfoCtrl {
      */
     private void recoverGUIStateSpeichern() {
         ControllerManager.getKursListeCtrl().initialize();
-        ControllerManager.getKursListeCtrl().setSelectedKurs();
+
 
         resetDisabledState(false);
     }
