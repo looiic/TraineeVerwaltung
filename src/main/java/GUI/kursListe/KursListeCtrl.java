@@ -32,7 +32,7 @@ public class KursListeCtrl {
             List<Kurs> kursListe = dbKurs.getKursListe();
             ObservableList<Kurs> obsList = FXCollections.observableArrayList(kursListe);
             kursTabelle.setItems(obsList);
-            kursTabelle.getSelectionModel().select(0);
+            kursTabelle.getSelectionModel().selectFirst();
 
         } catch (SQLException e) {
             Alert error = new Alert(Alert.AlertType.ERROR);
