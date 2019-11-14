@@ -1,35 +1,79 @@
 <?xml version="1.0" encoding="UTF-8"?>
 
+<?import GUI.*?>
+<?import javafx.geometry.*?>
 <?import javafx.scene.control.*?>
 <?import javafx.scene.layout.*?>
-<?import javafx.scene.text.Font?>
-<?import GUI.TextFieldLimited?>
-<AnchorPane xmlns="http://javafx.com/javafx/8" xmlns:fx="http://javafx.com/fxml/1">
+<?import javafx.scene.text.*?>
+
+<AnchorPane xmlns="http://javafx.com/javafx/10.0.2-internal" xmlns:fx="http://javafx.com/fxml/1">
         <HBox>
             <VBox>
                     <HBox>
                         <Label prefHeight="17.0" prefWidth="100.0" text="Kursinformation:">
                             <font>
-                                <Font name="System Bold" size="12.0"/>
+                                <Font name="System Bold" size="12.0" />
                             </font>
+               <HBox.margin>
+                  <Insets bottom="5.0" top="5.0" />
+               </HBox.margin>
                         </Label>
-                        <TextFieldLimited fx:id="kursField" disable="true"/>
+                        <TextFieldLimited fx:id="kursField" disable="true">
+               <padding>
+                  <Insets bottom="5.0" top="5.0" />
+               </padding></TextFieldLimited>
+            <padding>
+               <Insets bottom="5.0" top="5.0" />
+            </padding>
                     </HBox>
                     <HBox>
-                        <Label prefHeight="25.0" prefWidth="100.0" text="Raum:"/>
-                        <TextFieldLimited fx:id="raumField" disable="true"/>
+                        <Label prefHeight="25.0" prefWidth="100.0" text="Raum:">
+               <HBox.margin>
+                  <Insets />
+               </HBox.margin></Label>
+                        <TextFieldLimited fx:id="raumField" disable="true" />
+            <padding>
+               <Insets bottom="5.0" top="5.0" />
+            </padding>
                     </HBox>
                     <HBox>
-                        <Label text="Anzahl Teilnehmer:"/>
-                        <TextField fx:id="anzahlTN" disable="true"/>
+                        <Label text="Anzahl Teilnehmer:">
+               <HBox.margin>
+                  <Insets right="1.0" />
+               </HBox.margin></Label>
+                        <TextField fx:id="anzahlTN" disable="true" />
+            <padding>
+               <Insets bottom="5.0" top="5.0" />
+            </padding>
                     </HBox>
+         <HBox.margin>
+            <Insets right="5.0" />
+         </HBox.margin>
             </VBox>
             <VBox>
-                <Button text="Bearbeiten" fx:id="btnBearbeiten" disable="false" onAction="#handleBearbeiten"/>
-                <Button text="Speichern" fx:id="btnSpeichern" disable="true" onAction="#handleSpeichern"/>
-                <Button text="Löschen" fx:id="btnLoeschen" disable="true" onAction="#handleLoeschen" />
-                <Button text="Abbrechen" fx:id="btnAbbrechen" disable="true" onAction="#handleAbbrechen"/>
+                <Button fx:id="btnBearbeiten" disable="false" onAction="#handleBearbeiten" text="Bearbeiten">
+            <VBox.margin>
+               <Insets bottom="1.0" left="1.0" right="1.0" top="1.0" />
+            </VBox.margin></Button>
+                <Button fx:id="btnSpeichern" disable="true" onAction="#handleSpeichern" text="Speichern">
+            <VBox.margin>
+               <Insets bottom="1.0" left="1.0" right="1.0" top="1.0" />
+            </VBox.margin></Button>
+                <Button fx:id="btnLoeschen" disable="true" onAction="#handleLoeschen" text="Löschen">
+            <VBox.margin>
+               <Insets bottom="1.0" left="1.0" right="1.0" top="1.0" />
+            </VBox.margin></Button>
+                <Button fx:id="btnAbbrechen" disable="true" onAction="#handleAbbrechen" text="Abbrechen">
+            <VBox.margin>
+               <Insets bottom="1.0" left="1.0" right="1.0" top="1.0" />
+            </VBox.margin></Button>
+         <padding>
+            <Insets left="5.0" />
+         </padding>
             </VBox>
+      <padding>
+         <Insets bottom="5.0" left="30.0" top="5.0" />
+      </padding>
         </HBox>
 
 </AnchorPane>

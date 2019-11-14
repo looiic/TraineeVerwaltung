@@ -15,15 +15,15 @@ import logic.Kurs;
 import java.sql.SQLException;
 import java.util.List;
 
-
+/**Controllerklasse der Kursliste */
 public class KursListeCtrl {
 
     @FXML private TableView kursTabelle;
     @FXML private Button addKurs;
 
     /**
-     * in einer Tabelle werden die bestehenden Kurse aus der Datenbank geladen.
-     * Exception Handling: Falls keine initiale Verbindung zur Datenbank hergestellt werden kann, zeigt Popup-Fenster die Fehlermeldung an
+     * In einer Tabelle werden die bestehenden Kurse aus der Datenbank geladen.
+     * Exception Handling: Falls keine initiale Verbindung zur Datenbank hergestellt werden kann, zeigt ein Popup-Fenster die Fehlermeldung an
      */
     @FXML
     public void initialize() {
